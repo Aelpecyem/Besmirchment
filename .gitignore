@@ -31,3 +31,6 @@ bin/
 # fabric
 
 run/
+
+# hacky flatDir dependencies
+libs/
