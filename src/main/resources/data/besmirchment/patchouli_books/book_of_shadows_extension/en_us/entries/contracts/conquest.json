@@ -1,0 +1,14 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Conquest",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "entry_color": "C15600",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The forgotten horseman of $(marked)Conquest$() fights but with a $(item)Bow$().$(br)While under this contract, damage from $(marked)projectiles$() is doubled.$(br)This may count both ways. "
+    }
+  ]
+}
