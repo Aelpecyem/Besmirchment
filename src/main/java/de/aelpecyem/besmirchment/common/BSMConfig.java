@@ -1,0 +1,11 @@
+package de.aelpecyem.besmirchment.common;
+
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.RequiresRestart;
+
+@Config(name = Besmirchment.MODID)
+public class BSMConfig implements ConfigData {
+    @RequiresRestart
+    public boolean enableFinalBroom = true;
+}

@@ -1,0 +1,42 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "PJH",
+    "ESD",
+    "FCP"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "J": {
+      "item": "bewitchment:juniper_broom"
+    },
+    "C": {
+      "item": "bewitchment:cypress_broom"
+    },
+    "E": {
+      "item": "bewitchment:elder_broom"
+    },
+    "D": {
+      "item": "bewitchment:dragons_blood_broom"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "F": {
+      "item": "bewitchment:fiery_serum"
+    },
+    "H": {
+      "item": "bewitchment:heaven_extract"
+    }
+  },
+  "result": {
+    "item": "besmirchment:final_broom"
+  },
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "final_broom"
+    }
+  ]
+}

@@ -22,11 +22,20 @@
     ],
     "client": [
       "de.aelpecyem.besmirchment.client.BesmirchmentClient"
+    ],
+    "modmenu": [
+      "de.aelpecyem.besmirchment.client.compat.BSMModMenu"
     ]
   },
   "mixins": [
     "besmirchment.mixins.json"
   ],
+
+  "custom": {
+    "modmenu": {
+      "parent": "bewitchment"
+    }
+  },
 
   "depends": {
     "fabricloader": ">=0.7.4",

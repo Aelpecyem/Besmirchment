@@ -6,7 +6,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.math.MathHelper;
@@ -22,8 +21,8 @@ public class FinalBroomEntity extends DragonsBloodBroomEntity {
     @Override
     public void tick() {
         super.tick();
-        if (age % 20 == 0 && getPrimaryPassenger() instanceof LivingEntity){
-            ((LivingEntity) getPrimaryPassenger()).addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 60, 1, true, false, false));
+        if (age % 20 == 0 && getPrimaryPassenger() instanceof LivingEntity && !((LivingEntity) getPrimaryPassenger()).hasStatusEffect(StatusEffects.RESISTANCE)){
+            ((LivingEntity) getPrimaryPassenger()).addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 40, 1, true, false, false));
         }
         List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox().expand(0.20000000298023224D, -0.009999999776482582D, 0.20000000298023224D), EntityPredicates.canBePushedBy(this));
         if (!list.isEmpty()) {

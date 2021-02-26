@@ -1,4 +1,6 @@
 {
   "itemGroup.besmirchment.group": "Besmirchment",
-  "item.besmirchment.final_broom": "§cFi§6na§el §aB§br§9oo§dm"
+  "item.besmirchment.final_broom": "§cFi§6na§el §aB§br§9oo§dm",
+  "text.autoconfig.besmirchment.title": "Besmirchment",
+  "text.autoconfig.besmirchment.option.enableFinalBroom": "Enable Final Broom"
 }

@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:tools",
+  "name": "The Final Broom",
+  "icon": "besmirchment:final_broom",
+  "entry_color": "C15600",
+  "flag": "bsm_final_broom",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Final Broom$() is the truest of them all.$(br)By combining the four base $(l:bewitchment:tools/brooms)Brooms$() with a $(item)Nether Star$() and the four cardinal elements, one can acquire the fastest broom.$(br)"
+    },
+    {
+      "type": "crafting",
+      "recipe": "besmirchment:final_broom",
+      "text": "Other than being fast, this broom will also apply $(marked)Resistance$() to whoever rides it.$(br)$(l:bewitchment:sigils/using_sigils)Sigils$() may also also be applied to it."
+    }
+  ]
+}
