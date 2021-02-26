@@ -9,9 +9,13 @@
     "Aelpecyem"
   ],
   "contact": {
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/Aelpecyem/Besmirchment",
+    "issues": "https://github.com/Aelpecyem/Besmirchment/issues"
   },
 
+  "contributors": [
+    "CyberCat5555"
+  ],
   "license": "CC0-1.0",
   "icon": "assets/besmirchment/icon.png",
 

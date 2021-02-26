@@ -1,9 +1,9 @@
-# Fabric Example Mod
+# Besmirchment
+Besmirchment - the first [Bewitchment](https://github.com/MoriyaShiine/bewitchment) addon!
+Besmirchment is a satire addon -but we both know people are going to play it unironically, so it is highly configurable.
 
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+Besmirchment's design is usually self-ironic, impractical or just "why not".
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Currently, Besmirchment is available under the CC0 license. Don't steal art tho.
