@@ -4,9 +4,13 @@
   "package": "de.aelpecyem.besmirchment.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BWHostileEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
-    "client.ClientPlayNetworkHandlerMixin"
+    "client.ClientPlayNetworkHandlerMixin",
+    "client.PlayerEntityRendererMixin",
+    "client.WerewolfEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

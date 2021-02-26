@@ -35,8 +35,8 @@ public class FinalBroomEntityRenderer extends BroomEntityRenderer<FinalBroomEnti
         matrices.translate(0.0D, -1.0D, 0.0D);
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90.0F - yaw + 90.0F));
         matrices.translate(0.0D, 0.0D, -0.35D);
-        this.bristleModel.setAngles(entity, yaw, 0.0F, (float)(entity.age + entity.getEntityId()), 0.0F, 0.0F);
-        this.bristleModel.render(matrices, vertexConsumers.getBuffer(this.bristleModel.getLayer(this.getTexture(entity))), light, OverlayTexture.DEFAULT_UV, currentColors[0] * (1.0F - delta) + nextColors[0] * delta, currentColors[1] * (1.0F - delta) + nextColors[1] * delta, currentColors[2] * (1.0F - delta) + nextColors[2] * delta, 1.0F);
+        bristleModel.setAngles(entity, yaw, 0.0F, (float)(entity.age + entity.getEntityId()), 0.0F, 0.0F);
+        bristleModel.render(matrices, vertexConsumers.getBuffer(bristleModel.getLayer(TEXTURE_BRISTLES)), light, OverlayTexture.DEFAULT_UV, currentColors[0] * (1.0F - delta) + nextColors[0] * delta, currentColors[1] * (1.0F - delta) + nextColors[1] * delta, currentColors[2] * (1.0F - delta) + nextColors[2] * delta, 1.0F);
         matrices.pop();
     }
 

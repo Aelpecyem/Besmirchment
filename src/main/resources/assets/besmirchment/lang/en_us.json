@@ -1,6 +1,12 @@
 {
   "itemGroup.besmirchment.group": "Besmirchment",
   "item.besmirchment.final_broom": "§cFi§6na§el §aB§br§9oo§dm",
+  "item.besmirchment.witchy_dye": "Witchy Dye",
+  "item.besmirchment.witchy_bleach": "Witchy Bleach",
+  "entity.besmirchment.final_broom": "§cFi§6na§el §aB§br§9oo§dm",
+  "entity.besmirchment.witchy_dye": "Witchy Dye",
+  "entity.besmirchment.witchy_bleach": "Witchy Bleach",
   "text.autoconfig.besmirchment.title": "Besmirchment",
-  "text.autoconfig.besmirchment.option.enableFinalBroom": "Enable Final Broom"
+  "text.autoconfig.besmirchment.option.enableFinalBroom": "Enable Final Broom",
+  "text.autoconfig.besmirchment.option.enableWitchyDye": "Enable Witchy Dye"
 }

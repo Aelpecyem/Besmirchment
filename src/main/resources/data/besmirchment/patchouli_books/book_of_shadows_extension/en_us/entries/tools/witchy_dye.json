@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Witchy Dye",
+  "icon": "besmirchment:witchy_dye{Color:15479455}",
+  "entry_color": "C15600",
+  "flag": "bsm_witchy_dye",
+  "pages": [
+    {
+      "type": "text",
+      "text": "By simply mixing some $(l:bewitchment:brewing/elemental_oils)Aqua Cerate$() with $(item)Dye$(), handy, throwable Dye can be crafted.$(br)This $(item)Witchy Dye$() is used primarily to tint worn equipment, but it can also be used to dye $(l:bewitchment:creatures/werewolf)Werewolves$()."
+    },
+    {
+      "type": "bewitchment:oil_crafting",
+      "recipe": "besmirchment:oil_crafting/witchy_bleach",
+      "text": "To create $(item)Witchy Dye$(), first brew $(item)Witchy Bleach$() in your $(l:bewitchment:tools/cauldron)Cauldron$().$(br)You can add its dyeing properties by combining it with any $(item)Dye$(), otherwise it'll act as a bleach to remove color."
+    }
+  ]
+}

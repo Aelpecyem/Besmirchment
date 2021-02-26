@@ -1,6 +1,7 @@
 package de.aelpecyem.besmirchment.mixin.client;
 
 import de.aelpecyem.besmirchment.common.entity.FinalBroomEntity;
+import de.aelpecyem.besmirchment.common.entity.WitchyDyeEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,6 +31,8 @@ public class ClientPlayNetworkHandlerMixin {
         Entity entity = null;
         if (type == BSMEntityTypes.FINAL_BROOM) {
             entity = new FinalBroomEntity(BSMEntityTypes.FINAL_BROOM, world);
+        }else if (type == BSMEntityTypes.WITCHY_DYE){
+            entity = new WitchyDyeEntity(BSMEntityTypes.WITCHY_DYE, world);
         }
         if (entity != null) {
             int id = packet.getId();

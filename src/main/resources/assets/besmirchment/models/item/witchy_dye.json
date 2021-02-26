@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+	"layer0": "besmirchment:item/thin_bottle",
+    "layer1": "besmirchment:item/thin_bottle_overlay"
+  }
+}

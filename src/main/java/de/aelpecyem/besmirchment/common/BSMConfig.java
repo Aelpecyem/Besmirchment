@@ -8,4 +8,6 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.RequiresRestart;
 public class BSMConfig implements ConfigData {
     @RequiresRestart
     public boolean enableFinalBroom = true;
+    @RequiresRestart
+    public boolean enableWitchyDye = true;
 }
