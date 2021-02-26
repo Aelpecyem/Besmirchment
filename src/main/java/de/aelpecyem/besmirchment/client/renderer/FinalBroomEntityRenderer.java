@@ -9,14 +9,15 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
+
+import java.awt.*;
 
 public class FinalBroomEntityRenderer extends BroomEntityRenderer<FinalBroomEntity> {
     private final BroomEntityModel bristleModel = new BroomEntityModel(); //because the original model is private;; agony
-    private static final Identifier TEXTURE = Besmirchment.id("textures/entity/broom/final.png");
-    private static final Identifier TEXTURE_BRISTLES = Besmirchment.id("textures/entity/broom/final_bristles.png");
+    private static final Identifier TEXTURE = Besmirchment.id("textures/entity/broom/final_broom_base.png");
+    private static final Identifier TEXTURE_BRISTLES = Besmirchment.id("textures/entity/broom/final_broom_tintable.png");
     public FinalBroomEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher);
     }
@@ -24,19 +25,13 @@ public class FinalBroomEntityRenderer extends BroomEntityRenderer<FinalBroomEnti
     @Override
     public void render(FinalBroomEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
-        int age = entity.age / 25 + entity.getEntityId();
-        int totalColor = DyeColor.values().length;
-        int currentColor = age % totalColor;
-        int nextColor = (age + 1) % totalColor;
-        float delta = ((float)(entity.age % 25) + tickDelta) / 25.0F;
-        float[] currentColors = SheepEntity.getRgbColor(DyeColor.byId(currentColor));
-        float[] nextColors = SheepEntity.getRgbColor(DyeColor.byId(nextColor));
+        Vec3d rgb = Vec3d.unpackRgb(Color.HSBtoRGB(((entity.age + tickDelta) % 100) / 100F, 1, 1));
         matrices.push();
         matrices.translate(0.0D, -1.0D, 0.0D);
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90.0F - yaw + 90.0F));
         matrices.translate(0.0D, 0.0D, -0.35D);
         bristleModel.setAngles(entity, yaw, 0.0F, (float)(entity.age + entity.getEntityId()), 0.0F, 0.0F);
-        bristleModel.render(matrices, vertexConsumers.getBuffer(bristleModel.getLayer(TEXTURE_BRISTLES)), light, OverlayTexture.DEFAULT_UV, currentColors[0] * (1.0F - delta) + nextColors[0] * delta, currentColors[1] * (1.0F - delta) + nextColors[1] * delta, currentColors[2] * (1.0F - delta) + nextColors[2] * delta, 1.0F);
+        bristleModel.render(matrices, vertexConsumers.getBuffer(bristleModel.getLayer(TEXTURE_BRISTLES)), 15728640, OverlayTexture.DEFAULT_UV, (float) rgb.x, (float)rgb.y, (float)rgb.z, 1.0F);
         matrices.pop();
     }
 
