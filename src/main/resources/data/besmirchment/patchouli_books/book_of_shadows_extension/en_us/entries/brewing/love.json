@@ -1,0 +1,19 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Love",
+  "icon": "minecraft:rose_bush",
+  "flag": "bsm_love_potion",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This potion affects $(marked)animals$() and $(marked)Villagers$().$(br)While under this potion effect, the affected entity will be willing to breed.$(br)Additionally, almost anything under this potion effect can, theoretically, be bound as a $(l:bewitchment:rituals/binding)familiar$()."
+    },
+    {
+      "type": "spotlight",
+      "title": "Love",
+      "item": "minecraft:rose_bush",
+      "text": "Normal breeding cooldowns still apply."
+    }
+  ]
+}

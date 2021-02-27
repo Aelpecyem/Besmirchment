@@ -22,6 +22,7 @@ public class Besmirchment implements ModInitializer {
         BSMContracts.init();
         BSMEntityTypes.init();
         BSMObjects.init();
+        BSMStatusEffects.init();
         BSMRecipeTypes.init();
     }
 

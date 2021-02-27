@@ -1,0 +1,13 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+    "item": "rose_bush"
+  },
+  "effect": "besmirchment:love",
+  "time": 600,
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "love_potion"
+    }
+  ]
+}

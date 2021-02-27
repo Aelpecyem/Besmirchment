@@ -6,7 +6,8 @@
   "mixins": [
     "BWHostileEntityMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "VillagerEntityMixin"
   ],
   "client": [
     "client.ClientPlayNetworkHandlerMixin",

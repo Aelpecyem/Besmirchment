@@ -12,4 +12,6 @@ public class BSMConfig implements ConfigData {
     public boolean enableWitchyDye = true;
     @RequiresRestart
     public boolean enableEliteCoffin = true;
+    @RequiresRestart
+    public boolean enableLovePotion = true;
 }
