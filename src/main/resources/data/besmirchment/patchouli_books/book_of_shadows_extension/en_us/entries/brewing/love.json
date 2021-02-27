@@ -7,7 +7,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "This potion affects $(marked)animals$() and $(marked)Villagers$().$(br)While under this potion effect, the affected entity will be willing to breed.$(br)Additionally, almost anything under this potion effect can, theoretically, be bound as a $(l:bewitchment:rituals/binding)familiar$()."
+      "text": "This potion affects $(marked)animals$() and $(marked)Villagers$().$(br)While under this potion effect, the affected entity will be willing to breed.$(br)Additionally, almost anything under this potion effect can, theoretically, be bound as $(l:bewitchment:rituals/binding)familiar$()."
     },
     {
       "type": "spotlight",
