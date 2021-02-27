@@ -10,4 +10,6 @@ public class BSMConfig implements ConfigData {
     public boolean enableFinalBroom = true;
     @RequiresRestart
     public boolean enableWitchyDye = true;
+    @RequiresRestart
+    public boolean enableEliteCoffin = true;
 }

@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PlayerEntityRendererMixin {
     @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
     private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
-        if (player.isInvisible()) {
+        if (!player.isInvisible()) {
             int color = ((DyeableEntity) player).getColor();
             if (BewitchmentAPI.isWerewolf(player, false) && color > -1) {
                 if (!((TrueInvisibleAccessor) player).getTrueInvisible()) {

@@ -1,0 +1,45 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "123",
+    "RGB",
+    "456"
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft:red_dye"
+    },
+    "2": {
+      "item": "minecraft:orange_dye"
+    },
+    "3": {
+      "item": "minecraft:yellow_dye"
+    },
+    "4": {
+      "item": "minecraft:green_dye"
+    },
+    "5": {
+      "item": "minecraft:blue_dye"
+    },
+    "6": {
+      "item": "minecraft:purple_dye"
+    },
+    "R": {
+      "item": "bewitchment:red_coffin"
+    },
+    "G": {
+      "item": "bewitchment:green_coffin"
+    },
+    "B": {
+      "item": "bewitchment:blue_coffin"
+    }
+  },
+  "result": {
+    "item": "besmirchment:elite_coffin"
+  },
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "elite_coffin"
+    }
+  ]
+}

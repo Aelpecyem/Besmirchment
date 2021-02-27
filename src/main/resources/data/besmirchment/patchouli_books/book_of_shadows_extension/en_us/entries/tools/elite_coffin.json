@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Elite Coffin",
+  "icon": "besmirchment:elite_coffin",
+  "entry_color": "C15600",
+  "flag": "bsm_elite_coffin",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Elite Coffin$() is the only $(l:bewitchment:tools/coffins)Coffin$() for the truest witches. Using the power of the primal colors, it conjures an emissive glow of light around it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "besmirchment:elite_coffin",
+      "text": "$(o)Finally, RGB-Coffin$()."
+    }
+  ]
+}

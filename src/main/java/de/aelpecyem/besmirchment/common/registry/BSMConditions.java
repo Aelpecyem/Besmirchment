@@ -9,14 +9,18 @@ public class BSMConditions {
     public static void init(){
         PatchouliAPI.get().setConfigFlag("bsm_final_broom", Besmirchment.config.enableFinalBroom);
         PatchouliAPI.get().setConfigFlag("bsm_witchy_dye", Besmirchment.config.enableWitchyDye);
+        PatchouliAPI.get().setConfigFlag("bsm_elite_coffin", Besmirchment.config.enableEliteCoffin);
         Util.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
     }
 
     public static boolean getOption(String key){
-        if ("final_broom".equals(key)) {
-            return Besmirchment.config.enableFinalBroom;
-        }else if ("witchy_dye".equals(key)){
-            return Besmirchment.config.enableWitchyDye;
+        switch (key) {
+            case "final_broom":
+                return Besmirchment.config.enableFinalBroom;
+            case "witchy_dye":
+                return Besmirchment.config.enableWitchyDye;
+            case "elite_coffin":
+                return Besmirchment.config.enableEliteCoffin;
         }
         return false;
     }

@@ -71,6 +71,7 @@ public class WitchyDyeItem extends Item implements DyeableItem {
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         if (isIn(group)) {
+            stacks.add(new ItemStack(this));
             for (DyeColor value : DyeColor.values()) {
                 ItemStack stack = new ItemStack(this);
                 stacks.add(DyeableItem.blendAndSetColor(stack, Collections.singletonList(DyeItem.byColor(value))));

@@ -3,8 +3,6 @@ package de.aelpecyem.besmirchment.common;
 import de.aelpecyem.besmirchment.common.registry.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -13,12 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class Besmirchment implements ModInitializer {
     public static final String MODID = "besmirchment";
-    public static final ItemGroup BESMIRCHMENT = FabricItemGroupBuilder.create(Besmirchment.id("group")).icon(() -> new ItemStack(BSMObjects.FINAL_BROOM))
-            .appendItems(itemStacks -> {
-                ItemStack contractStack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
-                contractStack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(BSMContracts.CONQUEST).toString());
-                itemStacks.add(contractStack);
-            }).build();
+    public static final ItemGroup BESMIRCHMENT = FabricItemGroupBuilder.create(Besmirchment.id("group")).icon(() -> new ItemStack(BSMObjects.FINAL_BROOM)).build();
     public static BSMConfig config;
 
     @Override
