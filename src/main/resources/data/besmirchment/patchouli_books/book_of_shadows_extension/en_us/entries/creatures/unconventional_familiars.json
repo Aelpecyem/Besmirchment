@@ -1,0 +1,25 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Unconventional Familiars",
+  "icon": "minecraft:villager_spawn_egg",
+  "flag": "bsm_universal_familiars",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "By using a $(l:besmirchment:brewing/love)Love Potion$() and casting a Ritual of $(l:bewitchment:rituals/binding)Binding$(), one can force rather unconventional familiars.$(br)These familiars generally do not grant extraordinary powers that help with witchcraft, though they do offer some benefits."
+    },{
+      "type": "text",
+      "text": "Such forced familiars will usually not bow themselves to the will of their owner. Generally speaking, forcing anything to become a familiar is a horrible idea, and you really should $(o)not$() do that.$(br)Nevertheless, some unconventional familiars will be listed here."
+    },
+    {
+      "type": "entity",
+      "entity": "minecraft:villager",
+      "text": "Binding with a $(marked)Villager will arrange a pagan marriage."
+    },
+    {
+      "type": "text",
+      "text": "This is a very ceremonial act, so make sure you dress properly!$(br)When married to a Villager, other Villagers will hardly ever think bad of you. Most damages to reputation are drastically reduced, so you may have an easier time becoming popular. "
+    }
+  ]
+}

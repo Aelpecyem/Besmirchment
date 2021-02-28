@@ -14,4 +14,6 @@ public class BSMConfig implements ConfigData {
     public boolean enableEliteCoffin = true;
     @RequiresRestart
     public boolean enableLovePotion = true;
+
+    public boolean universalFamiliars = true;
 }

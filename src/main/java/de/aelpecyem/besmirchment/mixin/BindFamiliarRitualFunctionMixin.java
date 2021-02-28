@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
+import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.registry.BSMStatusEffects;
 import de.aelpecyem.besmirchment.common.registry.BSMTags;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
@@ -32,13 +33,13 @@ public abstract class BindFamiliarRitualFunctionMixin extends RitualFunction {
 
     @Inject(method = "start", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/entity/LivingEntity.saveSelfToTag(Lnet/minecraft/nbt/CompoundTag;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar, CallbackInfo ci, boolean succeeded, ItemStack taglock, LivingEntity livingEntity, PlayerEntity closestPlayer, CompoundTag entityTag){
-        if (livingEntity.hasStatusEffect(BSMStatusEffects.LOVE) && !livingEntity.getType().isIn(BSMTags.ILLEGAL_FAMILIARS)){
+        if (Besmirchment.config.universalFamiliars && livingEntity.hasStatusEffect(BSMStatusEffects.LOVE) && !livingEntity.getType().isIn(BSMTags.ILLEGAL_FAMILIARS)){
             ((FamiliarAccessor)livingEntity).setFamiliar(true);
             BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
             CompoundTag familiarTag = new CompoundTag();
             familiarTag.putUuid("UUID", entityTag.getUuid("UUID"));
             familiarTag.putString("id", Registry.ENTITY_TYPE.getId(livingEntity.getType()).toString());
-            worldState.familiars.add(new Pair(closestPlayer.getUuid(), familiarTag));
+            worldState.familiars.add(new Pair<>(closestPlayer.getUuid(), familiarTag));
             worldState.markDirty();
             super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
             ci.cancel();
