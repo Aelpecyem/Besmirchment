@@ -17,7 +17,7 @@ public class LoveStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity instanceof AnimalEntity && ((AnimalEntity) entity).getLoveTicks() <= 0){
+        if (entity instanceof AnimalEntity && !entity.isBaby() && ((AnimalEntity) entity).getLoveTicks() <= 0){
             ((AnimalEntity) entity).setLoveTicks(80);
         }
         super.applyUpdateEffect(entity, amplifier);
