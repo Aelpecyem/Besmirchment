@@ -4,6 +4,7 @@
   "package": "de.aelpecyem.besmirchment.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BindFamiliarRitualFunctionMixin",
     "BWHostileEntityMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
