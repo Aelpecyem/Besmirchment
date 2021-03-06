@@ -13,5 +13,9 @@
   "text.autoconfig.besmirchment.option.enableFinalBroom": "Enable Final Broom",
   "text.autoconfig.besmirchment.option.enableWitchyDye": "Enable Witchy Dye",
   "text.autoconfig.besmirchment.option.enableEliteCoffin": "Enable Elite Coffin",
-  "text.autoconfig.besmirchment.option.enableLovePotion": "Enable Love Potion"
+  "text.autoconfig.besmirchment.option.enableLovePotion": "Enable Love Potion",
+  "text.autoconfig.besmirchment.option.universalFamiliars": "Universal Familiars",
+  "text.autoconfig.besmirchment.option.universalFamiliars.enable": "Enable Universal Familiars",
+  "text.autoconfig.besmirchment.option.universalFamiliars.villagerFamiliarReputationBase": "Villager: Reputation Gain",
+  "text.autoconfig.besmirchment.option.universalFamiliars.chickenFamiliarEggChance": "Chicken: Egg Chance"
 }

@@ -51,7 +51,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
         if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){
-            if (!isOnGround() && hasStatusEffect(StatusEffects.SLOW_FALLING)){
+            if (!isOnGround() && !hasStatusEffect(StatusEffects.SLOW_FALLING)){
                 addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 20, 0, false, false, false));
             }
             if (random.nextFloat() < Besmirchment.config.universalFamiliars.chickenFamiliarEggChance){
