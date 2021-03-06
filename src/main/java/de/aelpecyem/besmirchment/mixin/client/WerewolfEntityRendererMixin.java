@@ -1,6 +1,6 @@
 package de.aelpecyem.besmirchment.mixin.client;
 
-import de.aelpecyem.besmirchment.client.renderer.DyedWerewolfFeatureRender;
+import de.aelpecyem.besmirchment.client.renderer.DyedWerewolfFeatureRenderer;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
@@ -28,7 +28,7 @@ public abstract class WerewolfEntityRendererMixin extends MobEntityRenderer<Were
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void injectConstructor(EntityRenderDispatcher entityRenderDispatcher, CallbackInfo ci){
-        this.addFeature(new DyedWerewolfFeatureRender((WerewolfEntityRenderer) (Object) this));
+        this.addFeature(new DyedWerewolfFeatureRenderer((WerewolfEntityRenderer) (Object) this));
     }
 
     //when colored, use only the untinted parts for the model, the rest is done with the layer

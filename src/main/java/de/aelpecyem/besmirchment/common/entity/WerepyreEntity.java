@@ -17,6 +17,6 @@ public class WerepyreEntity extends BWHostileEntity {
 
     @Override
     public int getVariants() {
-        return 0;
+        return 5;
     }
 }

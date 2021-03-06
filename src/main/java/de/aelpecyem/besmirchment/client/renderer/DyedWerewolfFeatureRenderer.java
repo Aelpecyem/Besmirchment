@@ -14,10 +14,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 @Environment(EnvType.CLIENT)
-public class DyedWerewolfFeatureRender extends FeatureRenderer<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> {
+public class DyedWerewolfFeatureRenderer extends FeatureRenderer<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> {
     private static final Identifier TINTED_TEXTURE = Besmirchment.id("textures/entity/werewolf/tinted.png");
 
-    public DyedWerewolfFeatureRender(FeatureRendererContext<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> featureRendererContext) {
+    public DyedWerewolfFeatureRenderer(FeatureRendererContext<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> featureRendererContext) {
         super(featureRendererContext);
     }
 

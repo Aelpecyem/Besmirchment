@@ -48,10 +48,6 @@ repositories {
 		url = "https://maven.blamejared.com"
 	}
 	maven {
-		name = "somnus"
-		url = "https://maven.theillusivec4.top"
-	}
-	maven {
 		name = "Mod Menu"
 		url =  "https://maven.terraformersmc.com/releases"
 	}
