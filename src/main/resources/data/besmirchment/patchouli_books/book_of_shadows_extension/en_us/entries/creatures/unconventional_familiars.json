@@ -15,7 +15,7 @@
     {
       "type": "entity",
       "entity": "minecraft:villager",
-      "text": "Binding with a $(marked)Villager will arrange a pagan marriage."
+      "text": "Binding with a Villager will arrange a pagan marriage."
     },
     {
       "type": "text",
@@ -25,17 +25,27 @@
       "type": "entity",
       "entity": "minecraft:chicken",
       "scale": 0.6,
-      "text": "Binding to a $(marked)Chicken$() lets you lay eggs and fall slowly, both when $(marked)sneaking$()."
+      "text": "Binding to a Chickenlets you lay eggs and fall slowly, both when sneaking."
     },{
       "type": "entity",
       "entity": "minecraft:pig",
       "scale": 0.6,
-      "text": "With a $(marked)Pig$() familiar, food buffs you. You also drop $(item)Porkchop$()."
+      "text": "With a Pig familiar, food buffs you. You also drop $(item)Porkchop$()."
     },{
       "type": "entity",
       "entity": "minecraft:sheep",
       "scale": 0.6,
-      "text": "A $(marked)Sheep$() familiar allows you to eat grass by pressing $(k:besmirchment.familiar_ability) when you're hungry."
+      "text": "A Sheep familiar allows you to eat grass by pressing $(k:besmirchment.familiar_ability) when you're hungry."
+    },{
+      "type": "entity",
+      "entity": "minecraft:parrot",
+      "scale": 0.6,
+      "text": "Parrot-witches can use their active familiar ability to assume another player's identity for a bit."
+    },{
+      "type": "entity",
+      "entity": "minecraft:cow",
+      "scale": 0.6,
+      "text": "Press $(k:besmirchment.familiar_ability) while holding an $(item)Empty Bucket$() and find out what this wonderful familiar does!"
     }
   ]
 }
