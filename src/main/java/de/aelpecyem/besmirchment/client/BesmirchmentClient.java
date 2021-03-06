@@ -2,6 +2,7 @@ package de.aelpecyem.besmirchment.client;
 
 import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
 import de.aelpecyem.besmirchment.client.renderer.FinalBroomEntityRenderer;
+import de.aelpecyem.besmirchment.client.renderer.WerepyreEntityRenderer;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
@@ -25,6 +26,8 @@ public class BesmirchmentClient implements ClientModInitializer {
     public void onInitializeClient() {
         EntityRendererRegistry.INSTANCE.register(BSMEntityTypes.FINAL_BROOM, (dispatcher, context) -> new FinalBroomEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(BSMEntityTypes.WITCHY_DYE, (dispatcher, context) -> new FlyingItemEntityRenderer<>(dispatcher, context.getItemRenderer()));
+        EntityRendererRegistry.INSTANCE.register(BSMEntityTypes.WEREPYRE, (dispatcher, context) -> new WerepyreEntityRenderer(dispatcher));
+
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? BSMObjects.WITCHY_DYE.getColor(stack): 0xFFFFFF, BSMObjects.WITCHY_DYE);
 
         KeyBindingRegistryImpl.registerKeyBinding(FAMILIAR_ABILITY);
