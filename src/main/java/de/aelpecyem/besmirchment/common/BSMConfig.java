@@ -23,6 +23,7 @@ public class BSMConfig implements ConfigData {
 
         @ConfigEntry.BoundedDiscrete(min = -200, max = 200)
         public int villagerFamiliarReputationBase = 20;
+
         public float chickenFamiliarEggChance = 0.005F;
     }
 

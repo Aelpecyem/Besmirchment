@@ -11,7 +11,6 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	jcenter()
 	maven {
 		name = "jitpack"
 		url = "https://jitpack.io"
@@ -25,12 +24,16 @@ repositories {
 		url = "https://maven.terraformersmc.com/"
 	}
 	maven {
-		name = "mod menu"
-		url =  "https://maven.terraformersmc.com/releases"
-	}
-	maven {
 		name = "reach"
 		url = "https://maven.jamieswhiteshirt.com/libs-release"
+	}
+	maven {
+		name = "pal"
+		url = "https://dl.bintray.com/ladysnake/libs"
+	}
+	maven {
+		name = "somnus"
+		url = "https://maven.theillusivec4.top"
 	}
 	maven {
 		name = "cardinal"
@@ -43,6 +46,14 @@ repositories {
 	maven {
 		name = "patchouli"
 		url = "https://maven.blamejared.com"
+	}
+	maven {
+		name = "somnus"
+		url = "https://maven.theillusivec4.top"
+	}
+	maven {
+		name = "Mod Menu"
+		url =  "https://maven.terraformersmc.com/releases"
 	}
 	maven {
 		name = "Conditional Crafting"
@@ -58,20 +69,24 @@ dependencies {
 	modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
 	include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
 	modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 	include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cca_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cca_version}"
+	modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
+	include "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
 
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
+	modImplementation "top.theillusivec4.somnus:somnus-fabric:${project.somnus_version}"
 	modImplementation "curse.maven:Pehkui-319596:${project.pehkui_version}"
-	modImplementation "io.github.ladysnake:Impersonate:${project.impersonate_version}"
+	modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
 	modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
-	modImplementation "com.github.emilyalexandra:trinkets:${project.trinkets_version}"
+	modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
 
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+//	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 	modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+//	modCompileOnly "io.github.emilyalexandra:nourish:${project.nourish_version}"
+	modRuntime "io.github.emilyalexandra:nourish:${project.nourish_version}"
 
 	modImplementation "curse.maven:bewitchment-394915:${project.bewitchment_version}"
 	include(modImplementation("io.github.ytg1234:fabric-recipe-conditions:${project.conditional_recipes_version}"))
