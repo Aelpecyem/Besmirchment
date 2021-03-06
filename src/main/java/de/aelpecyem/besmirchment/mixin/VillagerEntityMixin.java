@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
+import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.registry.BSMStatusEffects;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.Entity;
@@ -52,8 +53,8 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
     }
     @Inject(method = "getReputation", at = @At("RETURN"), cancellable = true)
     private void getReputation(PlayerEntity player, CallbackInfoReturnable<Integer> cir){
-        if (cir.getReturnValue() < 20 && BewitchmentAPI.getFamiliar(player) == EntityType.VILLAGER){
-            cir.setReturnValue(20);
+        if (cir.getReturnValue() < Besmirchment.config.universalFamiliars.villagerFamiliarReputationBase && BewitchmentAPI.getFamiliar(player) == EntityType.VILLAGER){
+            cir.setReturnValue(Besmirchment.config.universalFamiliars.villagerFamiliarReputationBase);
         }
     }
 }

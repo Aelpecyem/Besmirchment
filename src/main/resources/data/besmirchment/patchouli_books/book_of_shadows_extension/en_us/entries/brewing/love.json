@@ -3,7 +3,6 @@
   "name": "Love",
   "icon": "minecraft:rose_bush",
   "flag": "bsm_love_potion",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
     {
       "type": "text",

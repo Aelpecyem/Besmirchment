@@ -1,5 +1,5 @@
 {
-  "category": "bewitchment:brewing",
+  "category": "bewitchment:creatures",
   "name": "Unconventional Familiars",
   "icon": "minecraft:villager_spawn_egg",
   "flag": "bsm_universal_familiars",
@@ -20,6 +20,17 @@
     {
       "type": "text",
       "text": "This is a very ceremonial act, so make sure you dress properly!$(br)When married to a Villager, other Villagers will hardly ever think bad of you. Most damages to reputation are drastically reduced, so you may have an easier time becoming popular. "
+    },
+    {
+      "type": "entity",
+      "entity": "minecraft:chicken",
+      "scale": 0.6,
+      "text": "Binding to a $(marked)Chicken$() lets you lay eggs and fall slowly, both when $(marked)sneaking$()."
+    },{
+      "type": "entity",
+      "entity": "minecraft:pig",
+      "scale": 0.6,
+      "text": "With a $(marked)Pig$() familiar, food buffs you. You also drop $(item)Porkchop$()."
     }
   ]
 }

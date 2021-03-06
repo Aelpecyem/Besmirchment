@@ -11,6 +11,7 @@ public class BSMConditions {
         PatchouliAPI.get().setConfigFlag("bsm_witchy_dye", Besmirchment.config.enableWitchyDye);
         PatchouliAPI.get().setConfigFlag("bsm_elite_coffin", Besmirchment.config.enableEliteCoffin);
         PatchouliAPI.get().setConfigFlag("bsm_love_potion", Besmirchment.config.enableLovePotion);
+        PatchouliAPI.get().setConfigFlag("bsm_universal_familiars", Besmirchment.config.universalFamiliars.enable);
         Util.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
     }
 
@@ -24,6 +25,8 @@ public class BSMConditions {
                 return Besmirchment.config.enableEliteCoffin;
             case "love_potion":
                 return Besmirchment.config.enableLovePotion;
+            case "universal_familiars":
+                return Besmirchment.config.universalFamiliars.enable;
         }
         return false;
     }
