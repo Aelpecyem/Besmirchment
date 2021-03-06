@@ -7,6 +7,8 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.block.Block;
@@ -35,6 +37,8 @@ import net.minecraft.world.World;
 
 public class FamiliarAbilityPacket {
     public static final Identifier ID = Besmirchment.id("familiar_ability");
+
+    @Environment(EnvType.CLIENT)
     public static void send(){
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         ClientPlayNetworking.send(ID, buf);

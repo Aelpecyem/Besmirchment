@@ -4,6 +4,8 @@ import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -11,6 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
+@Environment(EnvType.CLIENT)
 public class DyedWerewolfFeatureRender extends FeatureRenderer<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> {
     private static final Identifier TINTED_TEXTURE = Besmirchment.id("textures/entity/werewolf/tinted.png");
 

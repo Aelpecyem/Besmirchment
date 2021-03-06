@@ -4,6 +4,8 @@ import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.FinalBroomEntity;
 import moriyashiine.bewitchment.api.client.model.BroomEntityModel;
 import moriyashiine.bewitchment.api.client.renderer.BroomEntityRenderer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -14,6 +16,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
 
+@Environment(EnvType.CLIENT)
 public class FinalBroomEntityRenderer extends BroomEntityRenderer<FinalBroomEntity> {
     private final BroomEntityModel bristleModel = new BroomEntityModel(); //because the original model is private;; agony
     private static final Identifier TEXTURE = Besmirchment.id("textures/entity/broom/final_broom_base.png");

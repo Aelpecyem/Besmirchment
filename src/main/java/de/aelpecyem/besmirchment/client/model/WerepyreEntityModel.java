@@ -5,11 +5,14 @@
 package de.aelpecyem.besmirchment.client.model;
 
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 
+@Environment(EnvType.CLIENT)
 public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityModel<WerepyreEntity> {
     private final ModelPart body;
     private final ModelPart head;
