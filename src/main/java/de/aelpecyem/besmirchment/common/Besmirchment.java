@@ -1,10 +1,12 @@
 package de.aelpecyem.besmirchment.common;
 
+import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
 import de.aelpecyem.besmirchment.common.registry.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -24,6 +26,7 @@ public class Besmirchment implements ModInitializer {
         BSMObjects.init();
         BSMStatusEffects.init();
         BSMRecipeTypes.init();
+        ServerPlayNetworking.registerGlobalReceiver(FamiliarAbilityPacket.ID, FamiliarAbilityPacket::handle);
     }
 
     public static Identifier id(String path) {
