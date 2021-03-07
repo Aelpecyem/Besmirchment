@@ -35,10 +35,9 @@ public class PlayerEntityRendererMixin {
         if (!player.isInvisible() && !((TrueInvisibleAccessor) player).getTrueInvisible()) {
             int color = ((DyeableEntity) player).getColor();
             LivingEntity entity = null;
-            if (BSMTransformations.isWerepyre(player, false)){ //change alternate form lol
+            if (BSMTransformations.isWerepyre(player, false)){
                 entity = BSMEntityTypes.WEREPYRE.create(player.world);
-               // entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
-                //todo proper werepyre accessor stuff, includes stuff like last double jump time so you can sort of flap around
+                entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerepyreAccessor) player).getWerepyreVariant());
                 ((DyeableEntity) entity).setColor(color);
                 ((WerepyreEntity) entity).setLastJumpTime(((WerepyreAccessor) player).getLastJumpTicks());
             }else if (BewitchmentAPI.isWerewolf(player, false) && color > -1) {
