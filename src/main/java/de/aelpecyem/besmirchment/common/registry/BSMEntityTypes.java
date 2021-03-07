@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.common.registry;
 
+import de.aelpecyem.besmirchment.common.entity.BeelzebubEntity;
 import de.aelpecyem.besmirchment.common.entity.FinalBroomEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.entity.WitchyDyeEntity;
@@ -24,13 +25,16 @@ public class BSMEntityTypes {
     public static final EntityType<FinalBroomEntity> FINAL_BROOM = FabricEntityTypeBuilder.create(SpawnGroup.MISC, FinalBroomEntity::new).dimensions(EntityType.ARROW.getDimensions()).build();
     public static final EntityType<WitchyDyeEntity> WITCHY_DYE = FabricEntityTypeBuilder.<WitchyDyeEntity>create(SpawnGroup.MISC, WitchyDyeEntity::new).dimensions(EntityType.POTION.getDimensions()).trackable(4, 10).build();
     public static final EntityType<WerepyreEntity> WEREPYRE = FabricEntityTypeBuilder.<WerepyreEntity>create(SpawnGroup.MONSTER, WerepyreEntity::new).dimensions(EntityDimensions.fixed(0.8F, 2.8F)).build();
+    public static final EntityType<BeelzebubEntity> BEELZEBUB = FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BeelzebubEntity::new).dimensions(EntityDimensions.fixed(1F, 4.2F)).build();
 
+    public static final String BEELZEBUB_PLEDGE = "pledge.besmirchment.beelzebub";
     public static void init(){
         Util.register(Registry.ENTITY_TYPE, "final_broom", FINAL_BROOM);
         Util.register(Registry.ENTITY_TYPE, "witchy_dye", WITCHY_DYE);
         Util.register(Registry.ENTITY_TYPE, "werepyre", WEREPYRE);
         FabricDefaultAttributeRegistry.register(WEREPYRE, WerewolfEntity.createAttributes());
-
+        Util.register(Registry.ENTITY_TYPE, "beelzebub", BEELZEBUB);
+        FabricDefaultAttributeRegistry.register(BEELZEBUB, BeelzebubEntity.createAttributes());
         if (config.mobs.werepyreWeight > 0) {
             BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BSMEntityTypes.WEREPYRE.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN && (context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.EXTREME_HILLS)), BSMEntityTypes.WEREPYRE.getSpawnGroup(), BSMEntityTypes.WEREPYRE, config.mobs.werepyreWeight, config.mobs.werepyreMinGroupCount, config.mobs.werepyreMaxGroupCount);
             SpawnRestrictionAccessor.callRegister(BSMEntityTypes.WEREPYRE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, WerepyreEntity::canSpawn);

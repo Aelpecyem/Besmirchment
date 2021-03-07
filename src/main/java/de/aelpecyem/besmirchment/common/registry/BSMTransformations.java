@@ -1,6 +1,7 @@
 package de.aelpecyem.besmirchment.common.registry;
 
 import de.aelpecyem.besmirchment.common.transformation.WerepyreTransformation;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -23,6 +24,6 @@ public class BSMTransformations {
     }
 
     public static boolean hasWerepyrePledge(PlayerEntity player){
-        return true/*BewitchmentAPI.isPledged(player.world, "pledge.besmirchment.beelzebub", player.getUuid())*/;
+        return BewitchmentAPI.isPledged(player.world, "pledge.besmirchment.beelzebub", player.getUuid());
     }
 }
