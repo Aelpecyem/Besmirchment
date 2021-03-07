@@ -2,6 +2,8 @@ package de.aelpecyem.besmirchment.mixin.client;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
@@ -35,9 +37,10 @@ public class PlayerEntityRendererMixin {
             LivingEntity entity = null;
             if (Besmirchment.isWerepyre(player, true)){ //change alternate form lol
                 entity = BSMEntityTypes.WEREPYRE.create(player.world);
-                entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
+               // entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
                 //todo proper werepyre accessor stuff, includes stuff like last double jump time so you can sort of flap around
                 ((DyeableEntity) entity).setColor(color);
+                ((WerepyreEntity) entity).setLastJumpTime(((WerepyreAccessor) player).getLastJumpTicks());
             }else if (BewitchmentAPI.isWerewolf(player, false) && color > -1) {
                 entity = BWEntityTypes.WEREWOLF.create(player.world);
                 entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());

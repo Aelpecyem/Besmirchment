@@ -34,12 +34,12 @@ public abstract class BWHostileEntityMixin extends HostileEntity implements Dyea
 
     @Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
     private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-        setColor(tag.getInt("Color"));
+        setColor(tag.getInt("BSMColor"));
     }
 
     @Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
     private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-        tag.putInt("Color", getColor());
+        tag.putInt("BSMColor", getColor());
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))

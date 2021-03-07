@@ -2,6 +2,7 @@ package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -27,15 +28,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements DyeableEntity {
+public abstract class PlayerEntityMixin extends LivingEntity implements DyeableEntity, WerepyreAccessor {
+    private static final TrackedData<Integer> JUMP_TICKS = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> COLOR = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    private static final TrackedData<Integer> WEREPYRE_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     @Shadow @Nullable
     public abstract ItemEntity dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership);
 
-    private static final TrackedData<Integer> COLOR = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public void setWerepyreVariant(int variant) {
+        dataTracker.set(WEREPYRE_VARIANT, variant);
+    }
+
+    @Override
+    public int getWerepyreVariant() {
+        return dataTracker.get(WEREPYRE_VARIANT);
+    }
+
+    @Override
+    public void setLastJumpTicks(int ticks) {
+        dataTracker.set(JUMP_TICKS, ticks);
+    }
+
+    @Override
+    public int getLastJumpTicks() {
+        return dataTracker.get(JUMP_TICKS);
     }
 
     @Override
@@ -50,6 +74,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
+        if (getLastJumpTicks() < 200){
+            setLastJumpTicks(getLastJumpTicks() + 1);
+        }
         if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){
             if (!isOnGround() && !hasStatusEffect(StatusEffects.SLOW_FALLING)){
                 addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 20, 0, false, false, false));
@@ -84,16 +111,22 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
 
     @Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
     private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-        setColor(tag.getInt("Color"));
+        setColor(tag.getInt("BSMColor"));
+        setLastJumpTicks(tag.getInt("BSMLastJumpTicks"));
+        setWerepyreVariant(tag.getInt("BSMWerepyreVariant"));
     }
 
     @Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
     private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-        tag.putInt("Color", getColor());
+        tag.putInt("BSMColor", getColor());
+        tag.putInt("BSMLastJumpTicks", getLastJumpTicks());
+        tag.putInt("BSMWerepyreVariant", getWerepyreVariant());
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void initDataTracker(CallbackInfo callbackInfo) {
         dataTracker.startTracking(COLOR, -1);
+        dataTracker.startTracking(JUMP_TICKS, 0);
+        dataTracker.startTracking(WEREPYRE_VARIANT, 0);
     }
 }

@@ -5,6 +5,7 @@ import io.github.ytg1234.recipeconditions.api.RecipeConds;
 import io.github.ytg1234.recipeconditions.api.condition.util.RecipeCondsUtil;
 import vazkii.patchouli.api.PatchouliAPI;
 
+@SuppressWarnings("ConstantConditions")
 public class BSMConditions {
     public static void init(){
         PatchouliAPI.get().setConfigFlag("bsm_final_broom", Besmirchment.config.enableFinalBroom);
@@ -12,6 +13,8 @@ public class BSMConditions {
         PatchouliAPI.get().setConfigFlag("bsm_elite_coffin", Besmirchment.config.enableEliteCoffin);
         PatchouliAPI.get().setConfigFlag("bsm_love_potion", Besmirchment.config.enableLovePotion);
         PatchouliAPI.get().setConfigFlag("bsm_universal_familiars", Besmirchment.config.universalFamiliars.enable);
+        PatchouliAPI.get().setConfigFlag("bsm_werepyres_spawn", Besmirchment.config.mobs.werepyreWeight > 0);
+        PatchouliAPI.get().setConfigFlag("bsm_werepyrism", Besmirchment.config.enableWerepyrism);
         Util.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
     }
 

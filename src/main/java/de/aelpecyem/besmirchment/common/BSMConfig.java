@@ -15,6 +15,19 @@ public class BSMConfig implements ConfigData {
     public boolean enableEliteCoffin = true;
     @RequiresRestart
     public boolean enableLovePotion = true;
+    @RequiresRestart
+    public boolean enableWerepyrism = true;
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public Mobs mobs = new Mobs();
+    public static class Mobs{
+        @RequiresRestart
+        public final int werepyreWeight = 10;
+        @RequiresRestart
+        public final int werepyreMinGroupCount = 1;
+        @RequiresRestart
+        public final int werepyreMaxGroupCount = 1;
+    }
 
     @ConfigEntry.Gui.CollapsibleObject
     public UniversalFamiliars universalFamiliars = new UniversalFamiliars();
@@ -26,5 +39,4 @@ public class BSMConfig implements ConfigData {
 
         public float chickenFamiliarEggChance = 0.005F;
     }
-
 }

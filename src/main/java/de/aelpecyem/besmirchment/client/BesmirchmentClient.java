@@ -1,9 +1,11 @@
 package de.aelpecyem.besmirchment.client;
 
 import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
+import de.aelpecyem.besmirchment.client.packet.WerepyreJumpPacket;
 import de.aelpecyem.besmirchment.client.renderer.FinalBroomEntityRenderer;
 import de.aelpecyem.besmirchment.client.renderer.WerepyreEntityRenderer;
 import de.aelpecyem.besmirchment.common.Besmirchment;
+import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
 import net.fabricmc.api.ClientModInitializer;
@@ -33,6 +35,10 @@ public class BesmirchmentClient implements ClientModInitializer {
         KeyBindingRegistryImpl.registerKeyBinding(FAMILIAR_ABILITY);
 
         ClientTickEvents.END_CLIENT_TICK.register(minecraftClient -> {
+            if (minecraftClient.player != null && minecraftClient.player.input.jumping && Besmirchment.isWerepyre(minecraftClient.player, true) && !minecraftClient.player.isOnGround() && ((WerepyreAccessor) minecraftClient.player).getLastJumpTicks() > 5){
+                minecraftClient.player.jump();
+                WerepyreJumpPacket.send();
+            }
             if (FAMILIAR_ABILITY.wasPressed() && abilityCooldown <= 0){
                 FamiliarAbilityPacket.send();
                 abilityCooldown = 20;

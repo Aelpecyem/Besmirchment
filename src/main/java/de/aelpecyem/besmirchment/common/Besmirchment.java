@@ -1,6 +1,7 @@
 package de.aelpecyem.besmirchment.common;
 
 import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
+import de.aelpecyem.besmirchment.client.packet.WerepyreJumpPacket;
 import de.aelpecyem.besmirchment.common.registry.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -31,6 +32,7 @@ public class Besmirchment implements ModInitializer {
         BSMRecipeTypes.init();
         BSMTransformations.init();
         ServerPlayNetworking.registerGlobalReceiver(FamiliarAbilityPacket.ID, FamiliarAbilityPacket::handle);
+        ServerPlayNetworking.registerGlobalReceiver(WerepyreJumpPacket.ID, WerepyreJumpPacket::handle);
     }
 
     public static Identifier id(String path) {

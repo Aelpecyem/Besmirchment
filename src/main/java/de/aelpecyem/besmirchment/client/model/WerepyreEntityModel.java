@@ -20,7 +20,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
     private final ModelPart rWing01;
     private final ModelPart neck;
     private final ModelPart body;
- //   private final ModelPart rightHandItem;
+    private final ModelPart rightHandItem;
     private final ModelPart tail01;
     private final ModelPart lLeg01;
     private final ModelPart rLeg01;
@@ -492,9 +492,9 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(rClaw03, 0.1047F, 0.0F, -0.2269F);
         rClaw03.setTextureOffset(27, 0).addCuboid(-0.6F, 1.2F, -0.5F, 2.0F, 5.0F, 1.0F, 0.0F, true);
 
-        /*rightHandItem = new ModelPart(this);
+        rightHandItem = new ModelPart(this);
         rightHandItem.setPivot(1.0F, 8.5F, -0.5F);
-        rArm02.addChild(rightHandItem);*/
+        rArm02.addChild(rightHandItem);
     }
 
     @Override
@@ -529,6 +529,16 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         rLeg01.yaw -= -0.2269f;
         rLeg01.roll += 0.0873f;
         tail01.roll = MathHelper.sin(ageInTicks / 8) / 8;
+
+        lWing01.yaw = 0.5236F;
+        rWing01.yaw = -0.5236F;
+        if (entity.getLastJumpTime() < 10){
+            lWing01.yaw += (1 + MathHelper.sin(ageInTicks)) / 3;
+            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks)) / 3;
+        }else{
+            lWing01.yaw += (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+        }
         if (entity.isSneaking()) {
             neck.pivotY += 2;
             neck.pivotZ -= 4;
@@ -544,12 +554,12 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
 
     @Override
     public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        body.render(matrixStack, buffer, packedLight, packedOverlay);
-        neck.render(matrixStack, buffer, packedLight, packedOverlay);
-        lArm01.render(matrixStack, buffer, packedLight, packedOverlay);
-        rArm01.render(matrixStack, buffer, packedLight, packedOverlay);
-        lLeg01.render(matrixStack, buffer, packedLight, packedOverlay);
-        rLeg01.render(matrixStack, buffer, packedLight, packedOverlay);
+        body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        neck.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        lArm01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        rArm01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        lLeg01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        rLeg01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     public void setRotationAngle(ModelPart bone, float x, float y, float z) {
