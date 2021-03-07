@@ -526,7 +526,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
 
         lWing01.yaw = 0.5236F;
         rWing01.yaw = -0.5236F;
-        if (entity.getLastJumpTime() < 10){
+        if (entity.getLastJumpTime() < 20){
             lWing01.yaw += (1 + MathHelper.sin(ageInTicks)) / 3;
             rWing01.yaw -= (1 + MathHelper.sin(ageInTicks)) / 3;
         }else{

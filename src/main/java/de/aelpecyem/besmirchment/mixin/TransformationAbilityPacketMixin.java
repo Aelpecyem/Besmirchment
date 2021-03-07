@@ -5,6 +5,7 @@ import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.registry.BWScaleTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.EntityType;
@@ -16,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import virtuoel.pehkui.api.ScaleData;
 
 @Mixin(value = TransformationAbilityPacket.class, remap = false)
@@ -31,12 +31,15 @@ public class TransformationAbilityPacketMixin {
         }
     }
 
-    @Inject(method = "useAbility", at = @At(value = "INVOKE_ASSIGN", target = "virtuoel/pehkui/api/ScaleType.getScaleData(Lnet/minecraft/entity/Entity;)Lvirtuoel/pehkui/api/ScaleData;", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private static void useAbility(PlayerEntity player, boolean forced, CallbackInfo ci, World world, boolean isInAlternateForm, ScaleData width, ScaleData height){
+    @SuppressWarnings("UnresolvedMixinReference")
+    @Inject(method = "Lmoriyashiine/bewitchment/common/network/packet/TransformationAbilityPacket;useAbility(Lnet/minecraft/class_1657;Z)V", at = @At(value = "HEAD"), cancellable = true)
+    private static void useAbility(PlayerEntity player, boolean forced, CallbackInfo ci){
         if (((TransformationAccessor)player).getTransformation() == BSMTransformations.WEREPYRE && (forced || BSMTransformations.hasWerepyrePledge(player))){
-            PlayerLookup.tracking(player).forEach((foundPlayer) -> {
-                SpawnSmokeParticlesPacket.send(foundPlayer, player);
-            });
+            World world = player.world;
+            boolean isInAlternateForm = ((TransformationAccessor)player).getAlternateForm();
+            ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
+            ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);
+            PlayerLookup.tracking(player).forEach((foundPlayer) -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
             SpawnSmokeParticlesPacket.send(player, player);
             world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1.0F, 1.0F);
             ((TransformationAccessor)player).setAlternateForm(!isInAlternateForm);
