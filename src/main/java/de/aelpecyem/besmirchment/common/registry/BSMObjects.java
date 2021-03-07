@@ -21,8 +21,6 @@ public class BSMObjects {
 
     public static final Item WEREPYRE_SPAWN_EGG = new SpawnEggItem(BSMEntityTypes.WEREPYRE, 0x844400, 0x880000, new FabricItemSettings().group(Besmirchment.BESMIRCHMENT));
     public static void init(){
-        //todo determine proper spawn place for werepyres and have this reflect in the entry
-        //also do beelzebub pledging
         Util.registerBlock("elite_coffin", ELITE_COFFIN);
         Util.register(Registry.ITEM,"final_broom", FINAL_BROOM);
         Util.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
