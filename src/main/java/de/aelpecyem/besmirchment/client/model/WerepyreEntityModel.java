@@ -20,7 +20,6 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
     private final ModelPart rWing01;
     private final ModelPart neck;
     private final ModelPart body;
-    private final ModelPart rightHandItem;
     private final ModelPart tail01;
     private final ModelPart lLeg01;
     private final ModelPart rLeg01;
@@ -491,10 +490,6 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         rClawJoint.addChild(rClaw03);
         setRotationAngle(rClaw03, 0.1047F, 0.0F, -0.2269F);
         rClaw03.setTextureOffset(27, 0).addCuboid(-0.6F, 1.2F, -0.5F, 2.0F, 5.0F, 1.0F, 0.0F, true);
-
-        rightHandItem = new ModelPart(this);
-        rightHandItem.setPivot(1.0F, 8.5F, -0.5F);
-        rArm02.addChild(rightHandItem);
     }
 
     @Override
