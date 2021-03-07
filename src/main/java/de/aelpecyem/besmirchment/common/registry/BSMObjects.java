@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
 
@@ -17,9 +18,14 @@ public class BSMObjects {
 
     public static final Item FINAL_BROOM = new BroomItem(new FabricItemSettings().maxCount(1).group(Besmirchment.BESMIRCHMENT), BSMEntityTypes.FINAL_BROOM);
     public static final WitchyDyeItem WITCHY_DYE = new WitchyDyeItem(new FabricItemSettings().maxCount(16).group(Besmirchment.BESMIRCHMENT));
+
+    public static final Item WEREPYRE_SPAWN_EGG = new SpawnEggItem(BSMEntityTypes.WEREPYRE, 0x844400, 0x880000, new FabricItemSettings().group(Besmirchment.BESMIRCHMENT));
     public static void init(){
+        //todo determine proper spawn place for werepyres and have this reflect in the entry
+        //also do beelzebub pledging
         Util.registerBlock("elite_coffin", ELITE_COFFIN);
         Util.register(Registry.ITEM,"final_broom", FINAL_BROOM);
         Util.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
+        Util.register(Registry.ITEM,"werepyre_spawn_egg", WEREPYRE_SPAWN_EGG);
     }
 }

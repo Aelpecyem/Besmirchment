@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Werepyre",
+  "icon": "besmirchment:werepyre_spawn_egg",
+  "flag": "bsm_werepyres_spawn",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This horrid offspring between a $(l:bewitchment:creatures/vampire)Vampire$() and $(l:bewitchment:creatures/werewolf)Werewolf$() spawns in yea.$(br)Due to their size, they are not able to fly freely, though they may use their wings to fling themselves towards their prey, which is usually humanoid.$(br)Werepyres only appear on full moons and turn back to their non-beast form when morning breaks$()."
+    },
+    {
+      "type": "entity",
+      "entity": "besmirchment:werepyre",
+      "offset": 0.1
+    }
+  ]
+}
