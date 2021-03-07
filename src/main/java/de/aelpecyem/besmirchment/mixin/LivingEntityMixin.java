@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
+import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMContracts;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
@@ -9,6 +10,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
+import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -77,6 +79,17 @@ public abstract class LivingEntityMixin extends Entity {
                     PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
                     if ((Object) this instanceof PlayerEntity) {
                         SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
+                    }
+                    if (this instanceof WerepyreAccessor) {
+                        int variant = -1;
+                        if (source.getSource() instanceof WerepyreEntity) {
+                            variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
+                        } else if (source.getSource() instanceof WerepyreAccessor && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource())) {
+                            variant = ((WerepyreAccessor) source.getSource()).getWerepyreVariant();
+                        }
+                        if (variant > -1) {
+                            ((WerepyreAccessor) this).setWerepyreVariant(variant);
+                        }
                     }
                     world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
                 }

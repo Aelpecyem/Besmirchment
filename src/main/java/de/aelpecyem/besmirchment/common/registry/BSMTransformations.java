@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.common.registry;
 
+import de.aelpecyem.besmirchment.common.transformation.WerepyreTransformation;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -8,7 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class BSMTransformations {
-    public static final Transformation WEREPYRE = new Transformation();
+    public static final Transformation WEREPYRE = new WerepyreTransformation();
     public static void init(){
         Util.register(BWRegistries.TRANSFORMATIONS, "werepyre", WEREPYRE);
     }
