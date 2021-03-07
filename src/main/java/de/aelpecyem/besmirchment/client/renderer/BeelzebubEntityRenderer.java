@@ -8,7 +8,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -18,7 +17,7 @@ public class BeelzebubEntityRenderer extends MobEntityRenderer<BeelzebubEntity, 
 
     public BeelzebubEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher, new BeelzebubEntityModel<>(), 0.5F);
-        this.addFeature(new HeldItemFeatureRenderer<>(this));
+      //  this.addFeature(new HeldItemFeatureRenderer<>(this));
     }
 
     @Override

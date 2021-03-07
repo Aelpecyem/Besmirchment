@@ -6,11 +6,14 @@ package de.aelpecyem.besmirchment.client.model;
 
 import de.aelpecyem.besmirchment.common.entity.BeelzebubEntity;
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Arm;
+import net.minecraft.util.math.MathHelper;
 
-public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntityModel<T> {
+public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntityModel<BeelzebubEntity> {
     private final ModelPart chest;
     private final ModelPart chest2_r1;
     private final ModelPart stomach;
@@ -55,7 +58,6 @@ public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntity
     private final ModelPart rFLegClaw01;
     private final ModelPart rFLeg2;
     private final ModelPart rFLegSpur;
-    private final ModelPart head;
     private final ModelPart hoodLTop;
     private final ModelPart hoodRTop;
     private final ModelPart hoodLSide01;
@@ -110,8 +112,10 @@ public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntity
     private final ModelPart rWing02;
     private final ModelPart rWing03;
     private final ModelPart rWingMembrane;
+
+    private boolean realArm = false;
     public BeelzebubEntityModel() {
-        super(1.0F, 0.0F, 128, 128);
+        super(RenderLayer::getEntityCutoutNoCull, 1, 0, 128, 128);
         chest = new ModelPart(this);
         chest.setPivot(0.0F, -19.5F, 0.0F);
         chest.setTextureOffset(0, 0).addCuboid(-7.5F, -9.0F, -5.5F, 15.0F, 9.0F, 11.0F, 0.0F, false);
@@ -695,7 +699,56 @@ public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntity
     }
     @Override
     public void setAngles(BeelzebubEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        //previously the render function, render code was moved to a method below
+        realArm = false;
+        super.setAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        realArm = true;
+        head.setPivot(0.0F, -8.9F, 0.0F);
+        copyRotation(lArm01, super.leftArm);
+        lArm01.setPivot(6.8F, -8.0F, 0.0F);
+        lArm01.pitch += 0.1745f;
+        lArm01.yaw -= 0.0873f;
+        lArm01.roll -= 0.2356f;
+        copyRotation(rArm01, super.rightArm);
+        rArm01.setPivot(-6.8F, -8.0F, 0.0F);
+        rArm01.pitch += 0.1745f;
+        rArm01.yaw += 0.0873f;
+        rArm01.roll += 0.2356f;
+        lWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+        rWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+      /*  lWingLower01.yaw = (1 + MathHelper.sin(ageInTicks / 8)) / 4;
+        rWingLower01.yaw = (1 -MathHelper.sin(ageInTicks / 8)) / 4;*/
+      /*  copyRotation(lLeg01, super.leftLeg);
+        lLeg01.pitch /= 2;
+        lLeg01.pitch -= 3 / 4f;
+        lLeg01.yaw += -0.2269f;
+        lLeg01.roll -= 0.0873f;
+        copyRotation(rLeg01, super.rightLeg);
+        rLeg01.pitch /= 2;
+        rLeg01.pitch -= 3 / 4f;
+        rLeg01.yaw -= -0.2269f;
+        rLeg01.roll += 0.0873f;
+        tail01.roll = MathHelper.sin(ageInTicks / 8) / 8;
+
+        lWing01.yaw = 0.5236F;
+        rWing01.yaw = -0.5236F;
+        if (entity.getLastJumpTime() < 10){
+            lWing01.yaw += (1 + MathHelper.sin(ageInTicks)) / 3;
+            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks)) / 3;
+        }else{
+            lWing01.yaw += (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+        }
+        if (entity.isSneaking()) {
+            neck.pivotY += 2;
+            neck.pivotZ -= 4;
+            body.pivotY += 2;
+            body.pivotZ -= 4;
+            body.pitch += 0.5f;
+            lArm01.pivotY += 2;
+            lArm01.pivotZ -= 4;
+            rArm01.pivotY += 2;
+            rArm01.pivotZ -= 4;
+        }*/
     }
 
     @Override
@@ -703,10 +756,18 @@ public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntity
         chest.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
+    protected ModelPart getArm(Arm arm) {
+        return this.realArm ? (arm == Arm.LEFT ? this.lArm01 : this.rArm01) : super.getArm(arm);
+    }
+
     public void setRotationAngle(ModelPart bone, float x, float y, float z) {
         bone.pitch = x;
         bone.yaw = y;
         bone.roll = z;
     }
-
+    private void copyRotation(ModelPart to, ModelPart from) {
+        to.pitch = from.pitch;
+        to.yaw = from.yaw;
+        to.roll = from.roll;
+    }
 }

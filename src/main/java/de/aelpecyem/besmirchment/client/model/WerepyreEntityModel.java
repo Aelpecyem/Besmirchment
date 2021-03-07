@@ -265,7 +265,6 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(rLeg01, -0.6109F, 0.2269F, 0.0873F);
         rLeg01.setTextureOffset(11, 46).addCuboid(-2.7F, -1.1F, -1.9F, 5.0F, 13.0F, 5.0F, 0.0F, true);
 
-        //   private final ModelPart BipedRightLeg;
         ModelPart rLeg02 = new ModelPart(this);
         rLeg02.setPivot(0.0F, 9.8F, 0.5F);
         rLeg01.addChild(rLeg02);
