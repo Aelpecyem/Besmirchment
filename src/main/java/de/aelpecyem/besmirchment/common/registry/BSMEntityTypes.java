@@ -32,7 +32,7 @@ public class BSMEntityTypes {
         FabricDefaultAttributeRegistry.register(WEREPYRE, WerewolfEntity.createAttributes());
 
         if (config.mobs.werepyreWeight > 0) {
-            BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BSMEntityTypes.WEREPYRE.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN && (context.getBiome().getCategory() == Biome.Category.FOREST || context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.ICY)), BSMEntityTypes.WEREPYRE.getSpawnGroup(), BSMEntityTypes.WEREPYRE, config.mobs.werepyreWeight, config.mobs.werepyreMinGroupCount, config.mobs.werepyreMaxGroupCount);
+            BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BSMEntityTypes.WEREPYRE.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN && (context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.EXTREME_HILLS)), BSMEntityTypes.WEREPYRE.getSpawnGroup(), BSMEntityTypes.WEREPYRE, config.mobs.werepyreWeight, config.mobs.werepyreMinGroupCount, config.mobs.werepyreMaxGroupCount);
             SpawnRestrictionAccessor.callRegister(BSMEntityTypes.WEREPYRE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, WerepyreEntity::canSpawn);
         }
     }
