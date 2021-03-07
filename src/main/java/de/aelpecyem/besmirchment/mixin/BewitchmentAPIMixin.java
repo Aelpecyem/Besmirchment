@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(BewitchmentAPI.class)
+@Mixin(value = BewitchmentAPI.class, remap = false)
 public class BewitchmentAPIMixin {
     @Inject(method = "isVampire", at = @At("HEAD"), cancellable = true)
     private static void isVampire(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){

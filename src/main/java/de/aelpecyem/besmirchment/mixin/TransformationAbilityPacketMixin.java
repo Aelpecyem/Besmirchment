@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import virtuoel.pehkui.api.ScaleData;
 
-@Mixin(TransformationAbilityPacket.class)
+@Mixin(value = TransformationAbilityPacket.class, remap = false)
 public class TransformationAbilityPacketMixin {
     private static final float WEREPYRE_WIDTH = BSMEntityTypes.WEREPYRE.getWidth() / EntityType.PLAYER.getWidth();
     private static final float WEREPYRE_HEIGHT = BSMEntityTypes.WEREPYRE.getHeight() / EntityType.PLAYER.getHeight();

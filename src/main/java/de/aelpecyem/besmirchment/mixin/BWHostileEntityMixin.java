@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(BWHostileEntity.class)
+@Mixin(value = BWHostileEntity.class, remap = false)
 public abstract class BWHostileEntityMixin extends HostileEntity implements DyeableEntity {
     private static final TrackedData<Integer> COLOR = DataTracker.registerData(BWHostileEntity.class, TrackedDataHandlerRegistry.INTEGER);
 

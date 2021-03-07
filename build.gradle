@@ -85,7 +85,7 @@ dependencies {
 	modCompileOnly "io.github.emilyalexandra:nourish:${project.nourish_version}"
 	modRuntime "io.github.emilyalexandra:nourish:${project.nourish_version}"
 
-	modImplementation "curse.maven:bewitchment-394915:${project.bewitchment_version}"
+	modApi "curse.maven:bewitchment-394915:${project.bewitchment_version}"
 	include(modImplementation("io.github.ytg1234:fabric-recipe-conditions:${project.conditional_recipes_version}"))
 }
 

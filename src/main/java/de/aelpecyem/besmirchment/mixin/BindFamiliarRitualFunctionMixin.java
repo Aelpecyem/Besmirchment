@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.function.Predicate;
 
-@Mixin(BindFamiliarRitualFunction.class)
+@Mixin(value = BindFamiliarRitualFunction.class, remap = false)
 public abstract class BindFamiliarRitualFunctionMixin extends RitualFunction {
     public BindFamiliarRitualFunctionMixin(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
         super(startParticle, sacrifice);
