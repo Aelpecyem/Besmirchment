@@ -163,7 +163,7 @@ public class WerepyreEntity extends BWHostileEntity{
 
     public static boolean isValidMoonPhase(WorldAccess world) {
         int phase = BewitchmentAPI.getMoonPhase(world);
-        return phase == 2 || phase == 6;
+        return phase == 0;
     }
     public static boolean canSpawn(EntityType<WerepyreEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return world.getDifficulty() != Difficulty.PEACEFUL && world.getLevelProperties().getTime() > 24000L && isValidMoonPhase(world);

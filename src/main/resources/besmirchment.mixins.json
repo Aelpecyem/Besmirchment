@@ -7,8 +7,10 @@
     "BewitchmentAPIMixin",
     "BindFamiliarRitualFunctionMixin",
     "BWHostileEntityMixin",
+    "BWUtilMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
+    "TransformationAbilityPacketMixin",
     "VillagerEntityMixin"
   ],
   "client": [

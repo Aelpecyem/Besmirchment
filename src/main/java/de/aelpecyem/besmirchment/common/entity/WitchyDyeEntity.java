@@ -28,7 +28,7 @@ public class WitchyDyeEntity extends ThrownItemEntity {
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
         if (!this.world.isClient) {
-            Box box = this.getBoundingBox().expand(4.0D, 2.0D, 4.0D);
+            Box box = this.getBoundingBox().expand(2.0D, 2.0D, 2.0D);
             List<LivingEntity> list = this.world.getNonSpectatingEntities(LivingEntity.class, box);
             int color = getItem().hasTag() && getItem().getTag().contains("Color") ? getStack().getTag().getInt("Color") : -1;
             for (LivingEntity livingEntity : list) {

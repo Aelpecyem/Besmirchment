@@ -81,7 +81,8 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 //	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 	modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-//	modCompileOnly "io.github.emilyalexandra:nourish:${project.nourish_version}"
+
+	modCompileOnly "io.github.emilyalexandra:nourish:${project.nourish_version}"
 	modRuntime "io.github.emilyalexandra:nourish:${project.nourish_version}"
 
 	modImplementation "curse.maven:bewitchment-394915:${project.bewitchment_version}"

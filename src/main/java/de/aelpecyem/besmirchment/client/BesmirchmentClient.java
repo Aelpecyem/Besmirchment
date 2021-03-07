@@ -8,6 +8,7 @@ import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
+import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,9 +34,8 @@ public class BesmirchmentClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? BSMObjects.WITCHY_DYE.getColor(stack): 0xFFFFFF, BSMObjects.WITCHY_DYE);
 
         KeyBindingRegistryImpl.registerKeyBinding(FAMILIAR_ABILITY);
-
         ClientTickEvents.END_CLIENT_TICK.register(minecraftClient -> {
-            if (minecraftClient.player != null && minecraftClient.player.input.jumping && Besmirchment.isWerepyre(minecraftClient.player, true) && !minecraftClient.player.isOnGround() && ((WerepyreAccessor) minecraftClient.player).getLastJumpTicks() > 5){
+            if (minecraftClient.player != null && minecraftClient.player.input.jumping && BSMTransformations.isWerepyre(minecraftClient.player, false) && !minecraftClient.player.isOnGround() && ((WerepyreAccessor) minecraftClient.player).getLastJumpTicks() > 5){
                 minecraftClient.player.jump();
                 WerepyreJumpPacket.send();
             }
