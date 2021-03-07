@@ -13,7 +13,7 @@ public class BewitchmentAPIMixin {
     @Inject(method = "isVampire", at = @At("HEAD"), cancellable = true)
     private static void isVampire(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){
         if (BSMTransformations.isWerepyre(entity, includeHumanForm)){
-            cir.setReturnValue(true);
+            cir.setReturnValue(includeHumanForm);
         }
     }
 
