@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = BWUtil.class, remap = false)
 public class BWUtilMixin {
-    @Inject(method = "doVampireLogic", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "doVampireLogic(Lnet/minecraft/class_1657;Z)V", at = @At("HEAD"), cancellable = true)
     private static void doVampireLogic(PlayerEntity player, boolean alternateForm, CallbackInfo ci) {
         if (BSMTransformations.isWerepyre(player, true)) {
             boolean pledged = BSMTransformations.hasWerepyrePledge(player);
@@ -54,7 +54,7 @@ public class BWUtilMixin {
         }
     }
 
-    @Inject(method = "doWerewolfLogic", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "doWerewolfLogic(Lnet/minecraft/class_1657;Z)V", at = @At("HEAD"), cancellable = true)
     private static void doWerewolfLogic(PlayerEntity player, boolean alternateForm, CallbackInfo ci){
         if (BSMTransformations.isWerepyre(player, true)) {
             boolean forced = ((WerewolfAccessor) player).getForcedTransformation();

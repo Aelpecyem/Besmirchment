@@ -713,7 +713,7 @@ public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntity
         rArm01.pitch += 0.1745f;
         rArm01.yaw += 0.0873f;
         rArm01.roll += 0.2356f;
-        lWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+        lWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8; //adjust values
         rWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8;
       /*  lWingLower01.yaw = (1 + MathHelper.sin(ageInTicks / 8)) / 4;
         rWingLower01.yaw = (1 -MathHelper.sin(ageInTicks / 8)) / 4;*/

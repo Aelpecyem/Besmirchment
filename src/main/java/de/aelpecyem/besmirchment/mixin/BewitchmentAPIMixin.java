@@ -10,14 +10,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = BewitchmentAPI.class, remap = false)
 public class BewitchmentAPIMixin {
-    @Inject(method = "isVampire", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isVampire(Lnet/minecraft/class_1297;Z)Z", at = @At("HEAD"), cancellable = true)
     private static void isVampire(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){
         if (BSMTransformations.isWerepyre(entity, includeHumanForm)){
             cir.setReturnValue(includeHumanForm);
         }
     }
 
-    @Inject(method = "isWerewolf", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isWerewolf(Lnet/minecraft/class_1297;Z)Z", at = @At("HEAD"), cancellable = true)
     private static void isWerewolf(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){
         if (BSMTransformations.isWerepyre(entity, includeHumanForm)){
             cir.setReturnValue(true);
