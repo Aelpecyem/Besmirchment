@@ -705,50 +705,32 @@ public class BeelzebubEntityModel<T extends BeelzebubEntity> extends BipedEntity
         head.setPivot(0.0F, -8.9F, 0.0F);
         copyRotation(lArm01, super.leftArm);
         lArm01.setPivot(6.8F, -8.0F, 0.0F);
-        lArm01.pitch += 0.1745f;
+        lArm01.pitch /= 3;
+        lArm01.pitch -= 0.1745f;
         lArm01.yaw -= 0.0873f;
         lArm01.roll -= 0.2356f;
         copyRotation(rArm01, super.rightArm);
         rArm01.setPivot(-6.8F, -8.0F, 0.0F);
-        rArm01.pitch += 0.1745f;
+        rArm01.pitch /= 3;
+        rArm01.pitch -= 0.1745f;
         rArm01.yaw += 0.0873f;
         rArm01.roll += 0.2356f;
-        lWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8; //adjust values
-        rWing01.pitch = (1 + MathHelper.sin(ageInTicks / 8)) / 8;
-      /*  lWingLower01.yaw = (1 + MathHelper.sin(ageInTicks / 8)) / 4;
-        rWingLower01.yaw = (1 -MathHelper.sin(ageInTicks / 8)) / 4;*/
-      /*  copyRotation(lLeg01, super.leftLeg);
-        lLeg01.pitch /= 2;
-        lLeg01.pitch -= 3 / 4f;
-        lLeg01.yaw += -0.2269f;
-        lLeg01.roll -= 0.0873f;
-        copyRotation(rLeg01, super.rightLeg);
-        rLeg01.pitch /= 2;
-        rLeg01.pitch -= 3 / 4f;
-        rLeg01.yaw -= -0.2269f;
-        rLeg01.roll += 0.0873f;
-        tail01.roll = MathHelper.sin(ageInTicks / 8) / 8;
 
-        lWing01.yaw = 0.5236F;
-        rWing01.yaw = -0.5236F;
-        if (entity.getLastJumpTime() < 10){
-            lWing01.yaw += (1 + MathHelper.sin(ageInTicks)) / 3;
-            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks)) / 3;
+        this.rBLeg01.pitch = MathHelper.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
+        this.lBLeg01.pitch = MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 0.3F * limbSwingAmount;
+        this.rFLeg01.pitch = MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 0.3F * limbSwingAmount;
+        this.lFLeg01.pitch = MathHelper.cos(limbSwing * 0.6662F) * 0.3F * limbSwingAmount;
+        if(entity.hurtTime > 0){
+            lWing01.pitch = 0.0873f + (1 + MathHelper.sin(ageInTicks)) / 8;
+            rWing01.pitch = 0.0873f + (1 + MathHelper.sin(ageInTicks)) / 8;
+            lWingLower01.yaw = 0.0349F + (1 + MathHelper.sin(ageInTicks)) / 8;
+            rWingLower01.yaw = -0.0349F - (1 + MathHelper.sin(ageInTicks)) / 8;
         }else{
-            lWing01.yaw += (1 + MathHelper.sin(ageInTicks / 8)) / 8;
-            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+            lWing01.pitch = 0.0873f + (1 + MathHelper.sin(ageInTicks / 12)) / 8; //adjust values
+            rWing01.pitch = 0.0873f + (1 + MathHelper.sin(ageInTicks / 12)) / 8;
+            lWingLower01.yaw = 0.0349F + (1 + MathHelper.sin(ageInTicks / 12)) / 8;
+            rWingLower01.yaw = -0.0349F - (1 + MathHelper.sin(ageInTicks / 12)) / 8;
         }
-        if (entity.isSneaking()) {
-            neck.pivotY += 2;
-            neck.pivotZ -= 4;
-            body.pivotY += 2;
-            body.pivotZ -= 4;
-            body.pitch += 0.5f;
-            lArm01.pivotY += 2;
-            lArm01.pivotZ -= 4;
-            rArm01.pivotY += 2;
-            rArm01.pivotZ -= 4;
-        }*/
     }
 
     @Override
