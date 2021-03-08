@@ -97,13 +97,13 @@ public class WerepyreEntity extends BWHostileEntity{
         if (this.dataTracker.get(VARIANT) != 0) {
             switch (world.getBiome(this.getBlockPos()).getCategory()) {
                 case FOREST:
-                    this.dataTracker.set(VARIANT, 1);
+                    this.dataTracker.set(VARIANT, random.nextBoolean() ? 2 : 3);
                     break;
                 case TAIGA:
-                    this.dataTracker.set(VARIANT, 2);
+                    this.dataTracker.set(VARIANT, random.nextBoolean() ? 1 : 4);
                     break;
                 case ICY:
-                    this.dataTracker.set(VARIANT, 3);
+                    this.dataTracker.set(VARIANT, random.nextBoolean() ? 3 : 4);
                     break;
                 default:
                     this.dataTracker.set(VARIANT, this.random.nextInt(this.getVariants() - 1) + 1);
