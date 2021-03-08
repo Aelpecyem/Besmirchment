@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Werepyrism",
+  "icon": "bewitchment:garlic_bread",
+  "entry_color": "C15600",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Werepyrism is a hybrid $(l:bewitchment:curses/conducting_curses)Curse$() formed by combining $(l:bewitchment:curses/lycanthropy)Lycanthropy$() with $(l:bewitchment:curses/vampirism)Vampirism$().$(br)$(l:besmirchment:creatures/werepyres)Werepyres$() suffer the same symptoms as the other two, though they may not fly in their beast form. Instead, they are able to flap vigorously."
+    },
+    {
+      "type": "text",
+      "text": "There are two ways become a $(l:besmirchment:creatures/werepyres)Werepyre$():$(li)Become infected by a $(l:besmirchment:creatures)Werepyre$(), under the same conditions as you would for $(l:bewitchment:curses/lycanthropy)Lycanthropy$() or$(li1)Become infected by a $(l:bewitchment:creatures/vampire)Vampire$() under the same conditions as you would for $(l:bewitchment:curses/vampirism)Vamprisim$(), but as a Werewolf.$(br2)$(o)You should probably ashamed for wanting this.$()"
+    }
+  ]
+}

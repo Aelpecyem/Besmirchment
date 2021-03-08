@@ -26,7 +26,7 @@
       "type": "entity",
       "entity": "minecraft:chicken",
       "scale": 0.6,
-      "text": "Binding to a Chickenlets you lay eggs and fall slowly, both when sneaking."
+      "text": "Binding to a Chicken lets you lay eggs and fall slowly, both when sneaking."
     },{
       "type": "entity",
       "entity": "minecraft:pig",

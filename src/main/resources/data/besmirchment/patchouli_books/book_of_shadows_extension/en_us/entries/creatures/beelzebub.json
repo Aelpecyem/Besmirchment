@@ -1,0 +1,23 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Beelzebub",
+  "icon": "besmirchment:beelzebub_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "entry_color": "C15600",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Beelzebub, first to Filth from and to the Pit, is the patron of $(l:besmirchment:creatures/werepyres)Werepyres$().$(br)They can be $(l:bewitchment:tools/grotesque_stew)Pledged$() to, allowing total control over the $(l:bewitchment:curses/conducting_curses)Curse$().$(br)You may also offer Beelzebub $(l:bewitchment:introduction/crops)Garlic Bread$(), clearing you from Werepyrism.$(br2)Summoning Beelzebub is rather elaborate, and will be outlined in this entry."
+    },
+    {
+      "type": "entity",
+      "entity": "besmirchment:beelzebub",
+      "offset": 0.2
+    },
+    {
+      "type": "text",
+      "title": "Summoning Beelzebub",
+      "text": ""
+    }
+  ]
+}
