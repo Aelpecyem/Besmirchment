@@ -2,6 +2,7 @@
   "category": "bewitchment:creatures",
   "name": "Werepyre",
   "icon": "besmirchment:werepyre_spawn_egg",
+  "entry_color": "C15600",
   "flag": "bsm_werepyres_spawn",
   "pages": [
     {

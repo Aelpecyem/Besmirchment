@@ -3,6 +3,7 @@
   "name": "Unconventional Familiars",
   "icon": "minecraft:villager_spawn_egg",
   "flag": "bsm_universal_familiars",
+  "entry_color": "C15600",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {

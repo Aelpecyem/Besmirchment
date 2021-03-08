@@ -1,13 +1,8 @@
 package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
-import dev.emi.nourish.NourishComponent;
-import dev.emi.nourish.NourishMain;
-import dev.emi.nourish.groups.NourishGroup;
-import dev.emi.nourish.groups.NourishGroups;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
@@ -41,14 +36,7 @@ public class BWUtilMixin {
                         hungerManager.add(1, 20);
                     }
                 }
-                if (Bewitchment.isNourishLoaded) {
-                    NourishComponent nourishComponent = NourishMain.NOURISH.get(player);
-                    for (NourishGroup group : NourishGroups.groups) {
-                        if (nourishComponent.getValue(group) != group.getDefaultValue()) {
-                            nourishComponent.setValue(group, group.getDefaultValue());
-                        }
-                    }
-                }
+                BSMTransformations.handleNourish(player);
             }
             ci.cancel();
         }

@@ -2,6 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Love",
   "icon": "minecraft:rose_bush",
+  "entry_color": "C15600",
   "flag": "bsm_love_potion",
   "pages": [
     {
