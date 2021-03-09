@@ -28,6 +28,7 @@ public class Besmirchment implements ModInitializer {
         BSMStatusEffects.init();
         BSMRecipeTypes.init();
         BSMTransformations.init();
+        BSMSounds.init();
         ServerPlayNetworking.registerGlobalReceiver(FamiliarAbilityPacket.ID, FamiliarAbilityPacket::handle);
         ServerPlayNetworking.registerGlobalReceiver(WerepyreJumpPacket.ID, WerepyreJumpPacket::handle);
     }

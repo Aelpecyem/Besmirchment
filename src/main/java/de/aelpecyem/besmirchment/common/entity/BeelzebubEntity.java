@@ -2,6 +2,7 @@ package de.aelpecyem.besmirchment.common.entity;
 
 import com.google.common.collect.Sets;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
+import de.aelpecyem.besmirchment.common.registry.BSMSounds;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
@@ -36,7 +37,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -110,7 +110,7 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
         InfectiousSpitEntity spit = BSMEntityTypes.INFECTIOUS_SPIT.create(world);
         spit.init(this, target, selectPotionEffects());
         if (!this.isSilent()) {
-            this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_LLAMA_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+            this.world.playSound(null, this.getX(), this.getY(), this.getZ(), BSMSounds.ENTITY_GENERIC_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
         }
         this.world.spawnEntity(spit);
         timeSinceLastAttack = 0;
@@ -157,17 +157,17 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SPIDER_AMBIENT;
+        return BSMSounds.BEELZEBUB_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_SPIDER_HURT;
+        return BSMSounds.BEELZEBUB_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SPIDER_DEATH;
+        return BSMSounds.BEELZEBUB_DEATH;
     }
 
 
