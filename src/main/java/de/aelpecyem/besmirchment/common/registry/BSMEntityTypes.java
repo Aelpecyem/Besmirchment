@@ -1,9 +1,6 @@
 package de.aelpecyem.besmirchment.common.registry;
 
-import de.aelpecyem.besmirchment.common.entity.BeelzebubEntity;
-import de.aelpecyem.besmirchment.common.entity.FinalBroomEntity;
-import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
-import de.aelpecyem.besmirchment.common.entity.WitchyDyeEntity;
+import de.aelpecyem.besmirchment.common.entity.*;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -24,6 +21,7 @@ import static de.aelpecyem.besmirchment.common.Besmirchment.config;
 public class BSMEntityTypes {
     public static final EntityType<FinalBroomEntity> FINAL_BROOM = FabricEntityTypeBuilder.create(SpawnGroup.MISC, FinalBroomEntity::new).dimensions(EntityType.ARROW.getDimensions()).build();
     public static final EntityType<WitchyDyeEntity> WITCHY_DYE = FabricEntityTypeBuilder.<WitchyDyeEntity>create(SpawnGroup.MISC, WitchyDyeEntity::new).dimensions(EntityType.POTION.getDimensions()).trackable(4, 10).build();
+    public static final EntityType<InfectiousSpitEntity> INFECTIOUS_SPIT = FabricEntityTypeBuilder.<InfectiousSpitEntity>create(SpawnGroup.MISC, InfectiousSpitEntity::new).dimensions(EntityType.LLAMA_SPIT.getDimensions()).trackable(4, 10).build();
     public static final EntityType<WerepyreEntity> WEREPYRE = FabricEntityTypeBuilder.<WerepyreEntity>create(SpawnGroup.MONSTER, WerepyreEntity::new).dimensions(EntityDimensions.fixed(0.8F, 2.8F)).build();
     public static final EntityType<BeelzebubEntity> BEELZEBUB = FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BeelzebubEntity::new).dimensions(EntityDimensions.fixed(1F, 4.2F)).build();
 
@@ -31,6 +29,7 @@ public class BSMEntityTypes {
     public static void init(){
         Util.register(Registry.ENTITY_TYPE, "final_broom", FINAL_BROOM);
         Util.register(Registry.ENTITY_TYPE, "witchy_dye", WITCHY_DYE);
+        Util.register(Registry.ENTITY_TYPE, "infectious_spit", INFECTIOUS_SPIT);
         Util.register(Registry.ENTITY_TYPE, "werepyre", WEREPYRE);
         FabricDefaultAttributeRegistry.register(WEREPYRE, WerewolfEntity.createAttributes());
         Util.register(Registry.ENTITY_TYPE, "beelzebub", BEELZEBUB);

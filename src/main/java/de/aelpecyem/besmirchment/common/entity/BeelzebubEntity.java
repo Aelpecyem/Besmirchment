@@ -24,6 +24,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
@@ -43,9 +44,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
+import java.util.*;
 
 public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
+    private static final StatusEffect[] POSSIBLE_EFFECTS = {
+            StatusEffects.INSTANT_DAMAGE,
+            StatusEffects.INSTANT_DAMAGE,
+            StatusEffects.POISON,
+            StatusEffects.POISON,
+            StatusEffects.SLOWNESS,
+            StatusEffects.SLOWNESS,
+            BWStatusEffects.CORROSION,
+            StatusEffects.WITHER,
+            StatusEffects.WEAKNESS,
+            StatusEffects.NAUSEA,
+            BWStatusEffects.MORTAL_COIL
+    };
     private final ServerBossBar bossBar;
     private int timeSinceLastAttack = 0;
     public BeelzebubEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -76,8 +90,8 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
                     timeSinceLastAttack = 0;
                 }
                 lookAtEntity(target, 360, 360);
-                if (timer % 80 == 0) {
-                    //todo infectious spit entity
+                if (timer % 80 == 0 && canSee(target)) {
+                    spitAt(target);
                 }
                 if (timer % 600 == 0) {
                     summonMinions(this);
@@ -92,6 +106,29 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
         }
     }
 
+    private void spitAt(LivingEntity target) {
+        InfectiousSpitEntity spit = BSMEntityTypes.INFECTIOUS_SPIT.create(world);
+        spit.init(this, target, selectPotionEffects());
+        if (!this.isSilent()) {
+            this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_LLAMA_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+        }
+        this.world.spawnEntity(spit);
+        timeSinceLastAttack = 0;
+    }
+
+    private Set<StatusEffectInstance> selectPotionEffects(){
+        Map<StatusEffect, Integer> effects = new HashMap<>();
+        int count = 1 + random.nextInt(2);
+        for (int i = 0; i < count; i++) {
+            StatusEffect effect = POSSIBLE_EFFECTS[random.nextInt(POSSIBLE_EFFECTS.length)];
+            effects.compute(effect, (key, value) -> value != null ? ++value : 1);
+        }
+        Set<StatusEffectInstance> statusEffects = new HashSet<>();
+        for (StatusEffect effect : effects.keySet()) {
+            statusEffects.add(new StatusEffectInstance(effect, effect == BWStatusEffects.MORTAL_COIL ? 1200 : 400 / effects.get(effect), effects.get(effect) - 1));
+        }
+        return statusEffects;
+    }
     @Override
     public String getPledgeID() {
         return BSMEntityTypes.BEELZEBUB_PLEDGE;
@@ -104,7 +141,7 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
 
     @Override
     public Collection<StatusEffectInstance> getMinionBuffs() {
-        return Sets.newHashSet(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1), new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+        return Sets.newHashSet(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1), new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 0), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
     }
 
     @Override
@@ -185,7 +222,7 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
         boolean flag = super.tryAttack(target);
         if (flag && target instanceof LivingEntity) {
             ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(BWStatusEffects.MORTAL_COIL, 1200));
-            target.setOnFireFor(16);
+            ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 80, 0));
             target.addVelocity(0, 0.2, 0);
             swingHand(Hand.MAIN_HAND);
         }
