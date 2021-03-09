@@ -1,7 +1,11 @@
 package de.aelpecyem.besmirchment.client.packet;
 
+import com.google.common.collect.Sets;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import de.aelpecyem.besmirchment.common.Besmirchment;
+import de.aelpecyem.besmirchment.common.entity.InfectiousSpitEntity;
+import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
+import de.aelpecyem.besmirchment.common.registry.BSMSounds;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
@@ -54,10 +58,7 @@ public class FamiliarAbilityPacket {
 
     private static boolean canUseAbility(PlayerEntity player) {
         EntityType<?> familiar = BewitchmentAPI.getFamiliar(player);
-        if (familiar == EntityType.SHEEP || familiar == EntityType.PARROT || familiar == EntityType.COW) {
-            return true;
-        }
-        return false;
+        return familiar == EntityType.SHEEP || familiar == EntityType.PARROT || familiar == EntityType.COW || familiar == EntityType.LLAMA || familiar == EntityType.TRADER_LLAMA;
     }
 
     public static void useAbility(PlayerEntity player){
@@ -82,6 +83,15 @@ public class FamiliarAbilityPacket {
             ItemStack milk = ItemUsage.method_30012(player.getStackInHand(hand), player, new ItemStack(Items.MILK_BUCKET));
             player.setStackInHand(hand, milk);
             player.swingHand(hand);
+        }else if (EntityType.LLAMA.equals(familiar) || EntityType.TRADER_LLAMA.equals(familiar)){
+            InfectiousSpitEntity spit = BSMEntityTypes.INFECTIOUS_SPIT.create(world);
+            spit.init(player, null, Sets.newHashSet(player.getStatusEffects()));
+            spit.setProperties(player, player.pitch, player.headYaw, 0, 2, 0);
+            if (!player.isSilent()) {
+                player.world.playSound(null, player.getX(), player.getY(), player.getZ(), BSMSounds.ENTITY_GENERIC_SPIT, player.getSoundCategory(), 1.0F, 1.0F + (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F);
+            }
+
+            player.world.spawnEntity(spit);
         }
         if (player.canModifyBlocks()) {
             if (EntityType.SHEEP.equals(familiar) && (player.getHungerManager().isNotFull() || player.isCreative())) {

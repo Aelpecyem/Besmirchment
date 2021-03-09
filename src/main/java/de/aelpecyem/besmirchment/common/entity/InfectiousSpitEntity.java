@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.LlamaSpitEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.hit.EntityHitResult;
@@ -51,12 +52,14 @@ public class InfectiousSpitEntity extends LlamaSpitEntity implements DyeableEnti
 
     public void init(LivingEntity owner, LivingEntity target, Set<StatusEffectInstance> effects){
         setOwner(owner);
-        this.updatePosition(owner.getX() - (double)(owner.getWidth() + 1.0F) * 0.5D * (double)MathHelper.sin(owner.bodyYaw * 0.017453292F), owner.getEyeY() - 0.10000000149011612D, owner.getZ() + (double)(owner.getWidth() + 1.0F) * 0.5D * (double)MathHelper.cos(owner.bodyYaw * 0.017453292F));
-        double targetX = target.getX() - this.getX();
-        double targetY = target.getBodyY(0.3333333333333333D) - getY();
-        double targetZ = target.getZ() - this.getZ();
-        float g = MathHelper.sqrt(targetX * targetX + targetZ * targetZ) * 0.2F;
-        setVelocity(targetX, targetY + (double)g, targetZ, 1.5F, 10.0F);
+        this.updatePosition(owner.getX() - (double) (owner.getWidth() + 1.0F) * 0.5D * (double) MathHelper.sin(owner.bodyYaw * 0.017453292F), owner.getEyeY() - 0.10000000149011612D, owner.getZ() + (double) (owner.getWidth() + 1.0F) * 0.5D * (double) MathHelper.cos(owner.bodyYaw * 0.017453292F));
+        if (target != null) {
+            double targetX = target.getX() - this.getX();
+            double targetY = target.getBodyY(0.3333333333333333D) - getY();
+            double targetZ = target.getZ() - this.getZ();
+            float g = MathHelper.sqrt(targetX * targetX + targetZ * targetZ) * 0.2F;
+            setVelocity(targetX, targetY + (double) g, targetZ, 1.5F, 10.0F);
+        }
         this.effects.addAll(effects);
         initColor();
     }
@@ -103,7 +106,7 @@ public class InfectiousSpitEntity extends LlamaSpitEntity implements DyeableEnti
             double f = (double)(j >> 0 & 255) / 255.0D;
 
             for(int k = 0; k < count; ++k) {
-                this.world.addParticle(ParticleTypes.SMOKE, this.getParticleX(0.5D), this.getRandomBodyY(), this.getParticleZ(0.5D), d, e, f);
+                this.world.addParticle(new DustParticleEffect((float) d, (float)e, (float) f, 1.5F), this.getParticleX(0.5D), this.getRandomBodyY(), this.getParticleZ(0.5D), getVelocity().x, getVelocity().y, getVelocity().z);
             }
 
         }

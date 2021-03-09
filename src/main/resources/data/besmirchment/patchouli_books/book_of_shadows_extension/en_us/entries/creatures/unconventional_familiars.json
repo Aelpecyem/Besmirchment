@@ -47,6 +47,12 @@
       "entity": "minecraft:cow",
       "scale": 0.6,
       "text": "Press $(k:besmirchment.familiar_ability) while holding an $(item)Empty Bucket$() and find out what this wonderful familiar does!"
+    },
+    {
+      "type": "entity",
+      "entity": "minecraft:llama",
+      "scale": 0.6,
+      "text": "A Llama familiar allows you to spit, transferring all of your potion effects."
     }
   ]
 }

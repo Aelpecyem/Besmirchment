@@ -35,7 +35,7 @@ public class ClientPlayNetworkHandlerMixin {
         }else if (type == BSMEntityTypes.WITCHY_DYE){
             entity = new WitchyDyeEntity(BSMEntityTypes.WITCHY_DYE, world);
         }else if (type == BSMEntityTypes.INFECTIOUS_SPIT){
-            entity = new InfectiousSpitEntity(BSMEntityTypes.INFECTIOUS_SPIT, world);
+            entity = new InfectiousSpitEntity(world, x, y, z, packet.getVelocityX(), packet.getVelocityY(), packet.getVelocityZ());
         }
         if (entity != null) {
             int id = packet.getId();
