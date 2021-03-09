@@ -136,7 +136,7 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
 
     @Override
     public EntityType<?> getMinionType() {
-        return EntityType.CAVE_SPIDER;
+        return random.nextBoolean() ? EntityType.BEE : EntityType.CAVE_SPIDER;
     }
 
     @Override
