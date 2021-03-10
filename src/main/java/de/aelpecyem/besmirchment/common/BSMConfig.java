@@ -25,10 +25,10 @@ public class BSMConfig implements ConfigData {
         @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
         public final int werepyreWeight = 10;
         @RequiresRestart
-        @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = 10)
         public final int werepyreMinGroupCount = 1;
         @RequiresRestart
-        @ConfigEntry.BoundedDiscrete(min = 1, max = 100)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = 10)
         public final int werepyreMaxGroupCount = 1;
         @RequiresRestart
         public boolean enableBeelzebub = true;
