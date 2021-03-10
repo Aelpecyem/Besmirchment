@@ -8,6 +8,7 @@ import de.aelpecyem.besmirchment.client.renderer.InfectiousSpitEntityRenderer;
 import de.aelpecyem.besmirchment.client.renderer.WerepyreEntityRenderer;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.packet.SparklePacket;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
@@ -15,6 +16,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;
@@ -50,5 +52,7 @@ public class BesmirchmentClient implements ClientModInitializer {
                 abilityCooldown--;
             }
         });
+
+        ClientPlayNetworking.registerGlobalReceiver(SparklePacket.ID, SparklePacket::handle);
     }
 }

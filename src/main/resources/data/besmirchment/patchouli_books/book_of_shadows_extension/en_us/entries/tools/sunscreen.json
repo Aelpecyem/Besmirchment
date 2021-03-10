@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Vampire Sunscreen",
+  "icon": "besmirchment:vampire_sunscreen",
+  "entry_color": "C15600",
+  "flag": "bsm_sunscreen",
+  "pages": [
+    {
+      "type": "text",
+      "text": "As it turns out, the burning wrath of the sun is a terrible inconvenience for $(l:bewitchment:creatures/vampire)Vampires$(). Thankfully, there is a solution to this.$(br)$(item)Vampire Sunscreen$(), when applied, will reflect all sun rays from Vampires, causing them to gently sparkle instead."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "besmirchment:oil_crafting/sunscreen",
+      "text": "Vampire Sunscreen is crafted using a $(l:bewitchment:tools/witch_cauldron)Witch Cauldron$(). One dose lasts around three minutes."
+    }
+  ]
+}

@@ -16,6 +16,7 @@ public class BSMConditions {
         PatchouliAPI.get().setConfigFlag("bsm_werepyres_spawn", Besmirchment.config.mobs.werepyreWeight > 0);
         PatchouliAPI.get().setConfigFlag("bsm_werepyrism", Besmirchment.config.enableWerepyrism);
         PatchouliAPI.get().setConfigFlag("bsm_beelzebub", Besmirchment.config.mobs.enableBeelzebub);
+        PatchouliAPI.get().setConfigFlag("bsm_sunscreen", Besmirchment.config.enableSunscreen);
         Util.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
     }
 
@@ -31,6 +32,8 @@ public class BSMConditions {
                 return Besmirchment.config.enableLovePotion;
             case "universal_familiars":
                 return Besmirchment.config.universalFamiliars.enable;
+            case "sunscreen":
+                return Besmirchment.config.enableSunscreen;
         }
         return false;
     }

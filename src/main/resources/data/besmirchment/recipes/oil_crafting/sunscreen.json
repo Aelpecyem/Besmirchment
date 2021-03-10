@@ -1,0 +1,26 @@
+{
+  "type": "bewitchment:oil_recipe",
+  "ingredients": [
+    {
+      "item": "bewitchment:grim_elixir"
+    },
+    {
+      "item": "bewitchment:aqua_cerate"
+    },
+    {
+      "item": "honeycomb"
+    },
+    {
+      "item": "bewitchment:ectoplasm"
+    }
+  ],
+  "result": {
+    "item": "besmirchment:vampire_sunscreen"
+  },
+  "color": 13565804,
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "sunscreen"
+    }
+  ]
+}

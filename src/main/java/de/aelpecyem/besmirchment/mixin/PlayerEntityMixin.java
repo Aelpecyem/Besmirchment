@@ -3,7 +3,6 @@ package de.aelpecyem.besmirchment.mixin;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
-import de.aelpecyem.besmirchment.common.registry.BSMStatusEffects;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -18,7 +17,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -76,9 +74,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci){
-        if(world.isClient && age % 20 == 0 && hasStatusEffect(BSMStatusEffects.SUNSCREEN) && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
-            world.addParticle(ParticleTypes.END_ROD, getParticleX(1), getRandomBodyY(), getParticleZ(1), 0, 0, 0);
-        }
         if (getLastJumpTicks() < 200){
             setLastJumpTicks(getLastJumpTicks() + 1);
         }

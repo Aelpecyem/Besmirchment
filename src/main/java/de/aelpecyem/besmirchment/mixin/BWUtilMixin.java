@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
+import de.aelpecyem.besmirchment.common.packet.SparklePacket;
 import de.aelpecyem.besmirchment.common.registry.BSMStatusEffects;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -27,6 +28,8 @@ public class BWUtilMixin {
             if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
                 if (!player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
                     player.setOnFireFor(8);
+                }else if (player.age % 20 == 0){
+                    SparklePacket.send(player);
                 }
             }
             HungerManager hungerManager = player.getHungerManager();
@@ -50,8 +53,11 @@ public class BWUtilMixin {
     private static void setOnFire(PlayerEntity player, int duration){
         if (!player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
             player.setOnFireFor(duration);
+        }else if(player.age % 20 == 0){
+            SparklePacket.send(player);
         }
     }
+
     @Inject(method = "doWerewolfLogic(Lnet/minecraft/class_1657;Z)V", at = @At("HEAD"), cancellable = true)
     private static void doWerewolfLogic(PlayerEntity player, boolean alternateForm, CallbackInfo ci){
         if (BSMTransformations.isWerepyre(player, true)) {
