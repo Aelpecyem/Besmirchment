@@ -35,7 +35,7 @@ public abstract class DemonEntityMixin extends BWHostileEntity {
 
     @Unique
     private static void addTrades(TradeOfferList offers, Random random) {
-        if (Besmirchment.config.enableBeelzebub && random.nextBoolean()) {
+        if (Besmirchment.config.mobs.enableBeelzebub && random.nextBoolean()) {
             offers.add(new TradeOffer(new ItemStack(BWObjects.DEMON_HEART), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, 3 + random.nextInt(4)), new ItemStack(BSMObjects.SCROLL_OF_TORMENT), 1, 69, 1));
         }
     }

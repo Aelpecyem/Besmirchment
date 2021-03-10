@@ -63,7 +63,7 @@ public class ScrollOfTormentItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (Besmirchment.config.enableBeelzebub && world.isNight() && BewitchmentAPI.usePlayerMagic(user, 99, true)) {
+        if (Besmirchment.config.mobs.enableBeelzebub && world.isNight() && BewitchmentAPI.usePlayerMagic(user, 99, true)) {
             user.setCurrentHand(hand);
             return TypedActionResult.consume(itemStack);
         } else {
