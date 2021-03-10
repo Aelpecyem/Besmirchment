@@ -25,7 +25,6 @@ public class VampireSunscreenItem extends Item {
 
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         super.finishUsing(stack, world, user);
-        System.out.println(world.isDay());
         if (user instanceof ServerPlayerEntity) {
             ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)user;
             Criteria.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
