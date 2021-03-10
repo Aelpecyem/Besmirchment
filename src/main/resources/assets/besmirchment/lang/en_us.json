@@ -28,9 +28,11 @@
   "text.autoconfig.besmirchment.option.enableLovePotion": "Enable Love Potion",
   "text.autoconfig.besmirchment.option.enableWerepyrism": "Enable Werepyrism",
   "text.autoconfig.besmirchment.option.mobs.enableBeelzebub": "Enable Beelzebub",
+  "text.autoconfig.besmirchment.option.mobs": "Mobs",
   "text.autoconfig.besmirchment.option.mobs.werepyreWeight": "Werepyre Weight",
   "text.autoconfig.besmirchment.option.mobs.werepyreMinGroupCount": "Werepyre Group Minimum",
   "text.autoconfig.besmirchment.option.mobs.werepyreMaxGroupCount": "Werepyre Group Maximum",
+  "text.autoconfig.besmirchment.option.universalFamiliars": "Universal Familiars",
   "text.autoconfig.besmirchment.option.universalFamiliars.enable": "Enable Universal Familiars",
   "text.autoconfig.besmirchment.option.universalFamiliars.villagerFamiliarReputationBase": "Villager: Reputation Gain",
   "text.autoconfig.besmirchment.option.universalFamiliars.chickenFamiliarEggChance": "Chicken: Egg Chance"
