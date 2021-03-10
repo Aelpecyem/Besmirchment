@@ -32,7 +32,6 @@ public class BSMConfig implements ConfigData {
         public final int werepyreMaxGroupCount = 1;
         @RequiresRestart
         public boolean enableBeelzebub = true;
-
     }
 
     @ConfigEntry.Gui.CollapsibleObject
