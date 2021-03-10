@@ -1,6 +1,5 @@
 package de.aelpecyem.besmirchment.client.packet;
 
-import com.google.common.collect.Sets;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.InfectiousSpitEntity;
@@ -11,6 +10,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -19,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+
+import java.util.stream.Collectors;
 
 public class FamiliarAbilityPacket {
     public static final Identifier ID = Besmirchment.id("familiar_ability");
@@ -85,7 +88,7 @@ public class FamiliarAbilityPacket {
             player.swingHand(hand);
         }else if (EntityType.LLAMA.equals(familiar) || EntityType.TRADER_LLAMA.equals(familiar)){
             InfectiousSpitEntity spit = BSMEntityTypes.INFECTIOUS_SPIT.create(world);
-            spit.init(player, null, Sets.newHashSet(player.getStatusEffects()));
+            spit.init(player, null, player.getStatusEffects().stream().filter(instance -> ((StatusEffectAccessor) instance.getEffectType()).bw_getType() == StatusEffectType.HARMFUL).map(instance -> new StatusEffectInstance(instance.getEffectType(), 200, instance.getAmplifier())).collect(Collectors.toSet()));
             spit.setProperties(player, player.pitch, player.headYaw, 0, 2, 0);
             if (!player.isSilent()) {
                 player.world.playSound(null, player.getX(), player.getY(), player.getZ(), BSMSounds.ENTITY_GENERIC_SPIT, player.getSoundCategory(), 1.0F, 1.0F + (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F);
