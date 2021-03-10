@@ -4,6 +4,7 @@
   "icon": "bewitchment:garlic_bread",
   "entry_color": "C15600",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "flag": "bsm_werepyrism",
   "pages": [
     {
       "type": "text",

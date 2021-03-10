@@ -3,11 +3,15 @@
   "name": "Beelzebub",
   "icon": "besmirchment:beelzebub_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "flag": "bsm_beelzebub",
+  "extra_recipe_mappings": {
+    "besmirchment:scroll_of_torment": 2
+  },
   "entry_color": "C15600",
   "pages": [
     {
       "type": "text",
-      "text": "Beelzebub, first to Filth from and to the Pit, is the patron of $(l:besmirchment:creatures/werepyres)Werepyres$().$(br)They can be $(l:bewitchment:tools/grotesque_stew)Pledged$() to, allowing total control over the $(l:bewitchment:curses/conducting_curses)Curse$().$(br)You may also offer Beelzebub $(l:bewitchment:introduction/crops)Garlic Bread$(), clearing you from Werepyrism.$(br2)Summoning Beelzebub is rather elaborate, and will be outlined in this entry."
+      "text": "Beelzebub, first to Filth from and to the Pit, is the patron of $(l:besmirchment:creatures/werepyres)Werepyres$().$(br)They can be $(l:bewitchment:tools/grotesque_stew)Pledged$() to, allowing total control over the $(l:bewitchment:curses/conducting_curses)Curse$().$(br)You may also offer Beelzebub $(l:bewitchment:introduction/crops)Garlic Bread$(), clearing you from Werepyrism.$(br2)Summoning Beelzebub will be outlined in this entry."
     },
     {
       "type": "entity",
@@ -15,9 +19,14 @@
       "offset": 0.2
     },
     {
-      "type": "text",
+      "type": "spotlight",
+      "item": "besmirchment:scroll_of_torment",
       "title": "Summoning Beelzebub",
-      "text": ""
+      "text": "To summon Beelzebub, you will need to acquire a $(item)Scroll of Torment$(), which is sometimes sold by $(l:bewitchment:creatures/demons)Demons$().$(br)Use this Scroll on a Pig at night. You will need all of your $(l:bewitchment:introduction/altar)ME$() for this, and you might want to wear $(l:bewitchment:tools/besmirched_armor)Besmirched Armor$() for what will happen next."
+    },
+    {
+      "type": "text",
+      "text": "The location for this is flexible, so choose it wisely. You will need to keep Beelzebub around."
     }
   ]
 }

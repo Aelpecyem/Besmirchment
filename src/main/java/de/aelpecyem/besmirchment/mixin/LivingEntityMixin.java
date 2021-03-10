@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
+import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMContracts;
@@ -58,7 +59,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tryUseTotem", at = @At("RETURN"))
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir){
-        if (cir.getReturnValue() && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)){
+        if (Besmirchment.config.enableWerepyrism && cir.getReturnValue() && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)){
             TransformationAccessor transformationAccessor = (TransformationAccessor) this;
             if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF){ //no vampire because they can't use totems
                 if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {

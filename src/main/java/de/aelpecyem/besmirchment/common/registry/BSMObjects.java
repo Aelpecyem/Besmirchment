@@ -1,6 +1,7 @@
 package de.aelpecyem.besmirchment.common.registry;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
+import de.aelpecyem.besmirchment.common.item.ScrollOfTormentItem;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import moriyashiine.bewitchment.api.item.BroomItem;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
@@ -18,6 +19,7 @@ public class BSMObjects {
 
     public static final Item FINAL_BROOM = new BroomItem(new FabricItemSettings().maxCount(1).group(Besmirchment.BESMIRCHMENT), BSMEntityTypes.FINAL_BROOM);
     public static final WitchyDyeItem WITCHY_DYE = new WitchyDyeItem(new FabricItemSettings().maxCount(16).group(Besmirchment.BESMIRCHMENT));
+    public static final Item SCROLL_OF_TORMENT = new ScrollOfTormentItem();
 
     public static final Item WEREPYRE_SPAWN_EGG = new SpawnEggItem(BSMEntityTypes.WEREPYRE, 0x844400, 0x880000, new FabricItemSettings().group(Besmirchment.BESMIRCHMENT));
     public static final Item BEELZEBUB_SPAWN_EGG = new SpawnEggItem(BSMEntityTypes.BEELZEBUB, 0x1E0000, 0xEC0000, new FabricItemSettings().group(Besmirchment.BESMIRCHMENT));
@@ -25,6 +27,7 @@ public class BSMObjects {
         Util.registerBlock("elite_coffin", ELITE_COFFIN);
         Util.register(Registry.ITEM,"final_broom", FINAL_BROOM);
         Util.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
+        Util.register(Registry.ITEM,"scroll_of_torment", SCROLL_OF_TORMENT);
         Util.register(Registry.ITEM,"werepyre_spawn_egg", WEREPYRE_SPAWN_EGG);
         Util.register(Registry.ITEM,"beelzebub_spawn_egg", BEELZEBUB_SPAWN_EGG);
     }

@@ -116,6 +116,11 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
         timeSinceLastAttack = 0;
     }
 
+    @Override
+    public boolean isFireImmune() {
+        return true;
+    }
+
     private Set<StatusEffectInstance> selectPotionEffects(){
         Map<StatusEffect, Integer> effects = new HashMap<>();
         int count = 1 + random.nextInt(2);

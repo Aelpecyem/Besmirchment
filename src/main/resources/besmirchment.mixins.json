@@ -8,6 +8,7 @@
     "BindFamiliarRitualFunctionMixin",
     "BWHostileEntityMixin",
     "BWUtilMixin",
+    "DemonEntityMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "TransformationAbilityPacketMixin",

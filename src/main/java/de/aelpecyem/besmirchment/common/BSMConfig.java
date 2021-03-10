@@ -17,6 +17,8 @@ public class BSMConfig implements ConfigData {
     public boolean enableLovePotion = true;
     @RequiresRestart
     public boolean enableWerepyrism = true;
+    @RequiresRestart
+    public boolean enableBeelzebub = true;
 
     @ConfigEntry.Gui.CollapsibleObject
     public Mobs mobs = new Mobs();
