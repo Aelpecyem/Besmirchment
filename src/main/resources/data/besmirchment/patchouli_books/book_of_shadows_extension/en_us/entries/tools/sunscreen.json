@@ -4,6 +4,7 @@
   "icon": "besmirchment:vampire_sunscreen",
   "entry_color": "C15600",
   "flag": "bsm_sunscreen",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",

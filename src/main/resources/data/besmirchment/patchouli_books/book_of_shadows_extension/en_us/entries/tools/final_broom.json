@@ -4,6 +4,7 @@
   "icon": "besmirchment:final_broom",
   "entry_color": "C15600",
   "flag": "bsm_final_broom",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",

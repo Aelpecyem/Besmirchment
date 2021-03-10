@@ -4,6 +4,7 @@
   "icon": "minecraft:rose_bush",
   "entry_color": "C15600",
   "flag": "bsm_love_potion",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
     {
       "type": "text",
