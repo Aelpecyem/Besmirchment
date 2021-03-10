@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
+import de.aelpecyem.besmirchment.common.registry.BSMStatusEffects;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
@@ -14,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = BWUtil.class, remap = false)
@@ -23,7 +25,9 @@ public class BWUtilMixin {
         if (BSMTransformations.isWerepyre(player, true)) {
             boolean pledged = BSMTransformations.hasWerepyrePledge(player);
             if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
-                player.setOnFireFor(8);
+                if (!player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
+                    player.setOnFireFor(8);
+                }
             }
             HungerManager hungerManager = player.getHungerManager();
             if (((BloodAccessor) player).getBlood() > 0) {
@@ -42,6 +46,12 @@ public class BWUtilMixin {
         }
     }
 
+    @Redirect(method = "doVampireLogic(Lnet/minecraft/class_1657;Z)V", at = @At(value = "INVOKE", target = "net/minecraft/entity/player/PlayerEntity.setOnFireFor(I)V", remap = true))
+    private static void setOnFire(PlayerEntity player, int duration){
+        if (!player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
+            player.setOnFireFor(duration);
+        }
+    }
     @Inject(method = "doWerewolfLogic(Lnet/minecraft/class_1657;Z)V", at = @At("HEAD"), cancellable = true)
     private static void doWerewolfLogic(PlayerEntity player, boolean alternateForm, CallbackInfo ci){
         if (BSMTransformations.isWerepyre(player, true)) {
