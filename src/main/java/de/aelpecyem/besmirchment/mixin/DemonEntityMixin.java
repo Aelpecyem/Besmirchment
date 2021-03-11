@@ -52,7 +52,7 @@ import java.util.UUID;
 
 @Mixin(DemonEntity.class)
 public abstract class DemonEntityMixin extends BWHostileEntity implements TameableDemon {
-    @Shadow
+    @Shadow(remap = false)
     private TradeOfferList tradeOffers;
     private static final TrackedData<Byte> TAMEABLE_FLAGS = DataTracker.registerData(TameableEntity.class, TrackedDataHandlerRegistry.BYTE);
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(TameableEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
@@ -115,7 +115,7 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
         }
     }
 
-    @Inject(method = "getOffers", at = @At(value = "INVOKE_ASSIGN", target = "moriyashiine/bewitchment/common/entity/living/DemonEntity$TradeGenerator.build(Ljava/util/Random;)Lnet/minecraft/village/TradeOfferList;", shift = At.Shift.AFTER))
+    @Inject(method = "getOffers", at = @At(value = "INVOKE_ASSIGN", target = "moriyashiine/bewitchment/common/entity/living/DemonEntity$TradeGenerator.build(Ljava/util/Random;)Lnet/minecraft/class_1916;", remap = false))
     private void addScrollOfTorment(CallbackInfoReturnable<TradeOfferList> ci) {
         addTrades(tradeOffers, random);
     }
