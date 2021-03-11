@@ -9,13 +9,16 @@
     "BWHostileEntityMixin",
     "BWUtilMixin",
     "DemonEntityMixin",
+    "EntityMixin",
     "LivingEntityMixin",
+    "MobEntityMixin",
     "PlayerEntityMixin",
     "TransformationAbilityPacketMixin",
     "VillagerEntityMixin"
   ],
   "client": [
     "client.ClientPlayNetworkHandlerMixin",
+    "client.DemonEntityRendererMixin",
     "client.HeldItemFeatureRendererMixin",
     "client.PlayerEntityRendererMixin",
     "client.WerewolfEntityRendererMixin"

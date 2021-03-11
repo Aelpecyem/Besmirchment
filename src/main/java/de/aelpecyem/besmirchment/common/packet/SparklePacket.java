@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -27,9 +28,15 @@ public class SparklePacket {
     }
 
     public static void handle(MinecraftClient client, ClientPlayNetworkHandler networkHandler, PacketByteBuf buf, PacketSender sender) {
-        Entity entity = client.world.getEntityById(buf.readInt());
+        int id = buf.readInt();
         client.execute(() -> {
-            entity.world.addParticle(ParticleTypes.END_ROD, entity.getParticleX(1), entity.getRandomBodyY(), entity.getParticleZ(1), 0, 0, 0);
+            ClientWorld world = client.world;
+            if (world != null) {
+                Entity entity = world.getEntityById(id);
+                if (entity != null) {
+                    entity.world.addParticle(ParticleTypes.END_ROD, entity.getParticleX(1), entity.getRandomBodyY(), entity.getParticleZ(1), 0, 0, 0);
+                }
+            }
         });
     }
 }

@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
-@Mixin(value = WerewolfEntityRenderer.class, remap = false)
+@Mixin(value = WerewolfEntityRenderer.class)
 public abstract class WerewolfEntityRendererMixin extends MobEntityRenderer<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> {
     private static final Identifier UNTINTED_TEXTURE = Besmirchment.id("textures/entity/werewolf/untinted.png");
 
