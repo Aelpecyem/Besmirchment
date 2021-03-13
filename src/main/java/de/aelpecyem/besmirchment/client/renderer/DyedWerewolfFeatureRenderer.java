@@ -1,7 +1,7 @@
 package de.aelpecyem.besmirchment.client.renderer;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import net.fabricmc.api.EnvType;

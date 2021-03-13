@@ -2,7 +2,7 @@ package de.aelpecyem.besmirchment.mixin.client;
 
 import de.aelpecyem.besmirchment.client.renderer.DyedWerewolfFeatureRenderer;
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
 import moriyashiine.bewitchment.client.renderer.entity.living.WerewolfEntityRenderer;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;

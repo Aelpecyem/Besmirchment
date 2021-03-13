@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.common.entity;
 
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
 import moriyashiine.bewitchment.api.BewitchmentAPI;

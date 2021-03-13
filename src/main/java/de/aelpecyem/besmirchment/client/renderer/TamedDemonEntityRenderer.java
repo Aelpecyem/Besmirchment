@@ -1,7 +1,7 @@
 package de.aelpecyem.besmirchment.client.renderer;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.TameableDemon;
+import de.aelpecyem.besmirchment.common.entity.interfaces.TameableDemon;
 import moriyashiine.bewitchment.client.model.entity.living.DemonEntityModel;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import net.fabricmc.api.EnvType;

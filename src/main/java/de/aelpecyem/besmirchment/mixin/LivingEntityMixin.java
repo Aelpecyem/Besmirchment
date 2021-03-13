@@ -1,7 +1,7 @@
 package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMContracts;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;

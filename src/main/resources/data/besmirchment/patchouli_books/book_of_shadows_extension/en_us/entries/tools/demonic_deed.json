@@ -1,0 +1,20 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Demonic Deed",
+  "icon": "besmirchment:demonic_deed",
+  "entry_color": "C15600",
+  "flag": "bsm_tamable_demons",
+  "advancement": "besmirchment:demonic_deed",
+  "hidden": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "This certificate of filth shows that you have slain $(l:besmirchment:creatures/beelzebub)Beelzebub$()... probably.$(br)It can be signed using a $(l:bewitchment:tools/taglock)Taglock$().$(br)The signed Demonic Deed can in turn be used to tame $(l:bewitchment:creatures/demon)Demons$() to whoever it is bound to."
+    },
+    {
+      "type": "spotlight",
+      "item": "besmirchment:demonic_deed",
+      "text": "Tamed $(l:bewitchment:creatures/demon)Demons$() behave much like wolves in that they will help you in combat.$(br)They can be commanded to remain at their position or follow you, and will still offer their trades.$(br)Additionally, they can be fed cake to regenerate health."
+    }
+  ]
+}

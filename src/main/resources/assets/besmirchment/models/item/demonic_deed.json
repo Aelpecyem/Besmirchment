@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "besmirchment:item/demonic_deed"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "besmirchment:variant": 1
+      },
+      "model": "besmirchment:item/demonic_deed_signed"
+    }
+  ]
+}

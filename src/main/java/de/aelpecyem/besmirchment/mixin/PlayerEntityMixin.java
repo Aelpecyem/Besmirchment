@@ -1,8 +1,8 @@
 package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
-import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

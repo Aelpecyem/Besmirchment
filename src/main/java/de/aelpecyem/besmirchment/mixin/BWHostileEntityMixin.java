@@ -1,6 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
-import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;

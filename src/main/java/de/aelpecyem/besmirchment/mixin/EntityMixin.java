@@ -1,6 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
-import de.aelpecyem.besmirchment.common.entity.TameableDemon;
+import de.aelpecyem.besmirchment.common.entity.interfaces.TameableDemon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.scoreboard.AbstractTeam;

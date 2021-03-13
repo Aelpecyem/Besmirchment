@@ -21,7 +21,7 @@ public abstract class DemonEntityRendererMixin extends MobEntityRenderer<DemonEn
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void injectConstructor(EntityRenderDispatcher entityRenderDispatcher, CallbackInfo ci){
+    private void injectConstructor(EntityRenderDispatcher entityRenderDispatcher, CallbackInfo ci) {
         this.addFeature(new TamedDemonEntityRenderer((DemonEntityRenderer) (Object) this));
     }
 }

@@ -1,7 +1,7 @@
 package de.aelpecyem.besmirchment.mixin.client;
 
-import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
-import de.aelpecyem.besmirchment.common.entity.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;

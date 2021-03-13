@@ -2,7 +2,7 @@ package de.aelpecyem.besmirchment.client.renderer;
 
 import de.aelpecyem.besmirchment.client.model.WerepyreEntityModel;
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.DyeableEntity;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;

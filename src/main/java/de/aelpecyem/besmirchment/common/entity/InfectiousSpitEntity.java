@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.common.entity;
 
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InfectiousSpitEntity extends LlamaSpitEntity implements DyeableEntity{
+public class InfectiousSpitEntity extends LlamaSpitEntity implements DyeableEntity {
     private final Set<StatusEffectInstance> effects = new HashSet<>();
     private static final TrackedData<Integer> COLOR = DataTracker.registerData(InfectiousSpitEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public InfectiousSpitEntity(EntityType<? extends LlamaSpitEntity> entityType, World world) {

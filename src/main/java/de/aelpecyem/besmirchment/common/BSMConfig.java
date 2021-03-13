@@ -19,6 +19,8 @@ public class BSMConfig implements ConfigData {
     public boolean enableWerepyrism = true;
     @RequiresRestart
     public boolean enableSunscreen = true;
+    @RequiresRestart
+    public boolean enableTamableDemons = true;
     @ConfigEntry.Gui.CollapsibleObject
     public Mobs mobs = new Mobs();
     public static class Mobs{

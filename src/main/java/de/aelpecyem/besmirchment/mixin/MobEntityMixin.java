@@ -1,6 +1,6 @@
 package de.aelpecyem.besmirchment.mixin;
 
-import de.aelpecyem.besmirchment.common.entity.TameableDemon;
+import de.aelpecyem.besmirchment.common.entity.interfaces.TameableDemon;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;

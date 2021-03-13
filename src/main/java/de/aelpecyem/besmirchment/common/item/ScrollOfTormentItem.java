@@ -26,7 +26,7 @@ import net.minecraft.world.explosion.Explosion;
 
 public class ScrollOfTormentItem extends Item {
     public ScrollOfTormentItem() {
-        super(new FabricItemSettings().group(Besmirchment.BESMIRCHMENT).maxCount(1).rarity(Rarity.RARE).fireproof());
+        super(new FabricItemSettings().group(Besmirchment.BESMIRCHMENT).maxCount(1).rarity(Rarity.UNCOMMON).fireproof());
     }
 
     @Override
