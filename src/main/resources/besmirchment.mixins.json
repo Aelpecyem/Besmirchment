@@ -9,6 +9,7 @@
     "BWHostileEntityMixin",
     "BWUtilMixin",
     "DemonEntityMixin",
+    "DemonTradeBuilderMixin",
     "EntityMixin",
     "LivingEntityMixin",
     "MobEntityMixin",

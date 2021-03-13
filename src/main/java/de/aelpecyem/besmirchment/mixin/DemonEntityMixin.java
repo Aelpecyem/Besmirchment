@@ -27,7 +27,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -54,6 +53,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Optional;
 import java.util.Random;
@@ -61,7 +61,6 @@ import java.util.UUID;
 
 @Mixin(DemonEntity.class)
 public abstract class DemonEntityMixin extends BWHostileEntity implements TameableDemon {
-    @Shadow(remap = false) private TradeOfferList tradeOffers;
 
     private static final TrackedData<Byte> TAMEABLE_FLAGS = DataTracker.registerData(TameableEntity.class, TrackedDataHandlerRegistry.BYTE);
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(TameableEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
@@ -85,7 +84,7 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
         this.targetSelector.add(1, new DemonTrackAttackerGoal((DemonEntity) (TameableDemon) this));
         this.targetSelector.add(2, new DemonAttackWithOwnerGoal((DemonEntity) (TameableDemon) this));
         this.targetSelector.add(3, new RevengeGoal(this));
-        this.targetSelector.add(4, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, (entity) -> !isTamed() && !(entity instanceof Pledgeable) && BWUtil.getArmorPieces(entity, (stack) -> stack.getItem() instanceof ArmorItem && ((ArmorItem)stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+        this.targetSelector.add(4, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, (entity) -> !isTamed() && !(entity instanceof Pledgeable) && BWUtil.getArmorPieces(entity, (stack) -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
     }
 
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
@@ -97,11 +96,11 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
             cir.setReturnValue(bl ? ActionResult.CONSUME : ActionResult.PASS);
         } else {
             if (this.isTamed() && player.isSneaking()) { //add guard mode instead ig?
-                if (world.random.nextFloat() < 0.1){
+                if (world.random.nextFloat() < 0.1) {
                     heal(2);
                     this.world.sendEntityStatus(this, (byte) 7);
                 }
-                if (item == Items.CAKE){
+                if (item == Items.CAKE) {
                     heal(40);
                     addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, 1200, true, true));
                     if (!player.abilities.creativeMode) {
@@ -117,7 +116,7 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
                     player.sendMessage(new TranslatableText(Besmirchment.MODID + ".message.demon_" + (isSitting() ? "sit" : "follow")), true);
                     this.jumping = false;
                     this.navigation.stop();
-                    this.setTarget( null);
+                    this.setTarget(null);
                     cir.setReturnValue(ActionResult.SUCCESS);
                 }
             } else if (Besmirchment.config.enableTamableDemons && !isTamed() && item == BSMObjects.DEMONIC_DEED && TaglockItem.hasTaglock(itemStack) && !isAttacking()) {
@@ -132,19 +131,6 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
                 this.world.sendEntityStatus(this, (byte) 7);
                 cir.setReturnValue(ActionResult.SUCCESS);
             }
-        }
-    }
-
-  /*todo fix this injection
-  @Inject(method = "getOffers", at = @At(value = "INVOKE_ASSIGN", target = "moriyashiine/bewitchment/common/entity/living/DemonEntity$TradeGenerator.build(Ljava/util/Random;)Lnet/minecraft/class_1916;", remap = false))
-    private void addScrollOfTorment(CallbackInfoReturnable<TradeOfferList> ci) {
-        addTrades(tradeOffers, random);
-    }*/
-
-    @Unique
-    private static void addTrades(TradeOfferList offers, Random random) {
-        if (Besmirchment.config.mobs.enableBeelzebub && random.nextBoolean()) {
-            offers.add(new TradeOffer(new ItemStack(BWObjects.DEMON_HEART), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, 3 + random.nextInt(4)), new ItemStack(BSMObjects.SCROLL_OF_TORMENT), 1, 69, 1));
         }
     }
 

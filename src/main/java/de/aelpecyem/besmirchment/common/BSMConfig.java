@@ -35,16 +35,16 @@ public class BSMConfig implements ConfigData {
         public final int werepyreMaxGroupCount = 1;
         @RequiresRestart
         public boolean enableBeelzebub = true;
+
+        public float tormentScrollTradeChance = 0.5F;
     }
 
     @ConfigEntry.Gui.CollapsibleObject
     public UniversalFamiliars universalFamiliars = new UniversalFamiliars();
     public static class UniversalFamiliars{
         public boolean enable = true;
-
         @ConfigEntry.BoundedDiscrete(min = -200, max = 200)
         public int villagerFamiliarReputationBase = 20;
-
         public float chickenFamiliarEggChance = 0.005F;
     }
 }
