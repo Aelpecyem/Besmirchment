@@ -1,6 +1,7 @@
 package de.aelpecyem.besmirchment.common.registry;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
+import de.aelpecyem.besmirchment.common.block.PhylacteryBlock;
 import de.aelpecyem.besmirchment.common.item.DemonicDeedItem;
 import de.aelpecyem.besmirchment.common.item.ScrollOfTormentItem;
 import de.aelpecyem.besmirchment.common.item.VampireSunscreenItem;
@@ -19,6 +20,8 @@ import net.minecraft.util.registry.Registry;
 
 public class BSMObjects {
     public static final Block ELITE_COFFIN = new CoffinBlock(DyeColor.CYAN, FabricBlockSettings.copyOf(BWObjects.BLACK_COFFIN).nonOpaque().luminance(state -> state.get(CoffinBlock.OCCUPIED) ? 3 : 10));
+    public static final Block PHYLACTERY = new PhylacteryBlock();
+
     public static final Item FINAL_BROOM = new BroomItem(new FabricItemSettings().maxCount(1).group(Besmirchment.BESMIRCHMENT), BSMEntityTypes.FINAL_BROOM);
     public static final WitchyDyeItem WITCHY_DYE = new WitchyDyeItem(new FabricItemSettings().maxCount(16).group(Besmirchment.BESMIRCHMENT));
     public static final Item SCROLL_OF_TORMENT = new ScrollOfTormentItem();
@@ -30,6 +33,7 @@ public class BSMObjects {
 
     public static void init(){
         Util.registerBlock("elite_coffin", ELITE_COFFIN);
+        Util.registerBlock("phylactery", PHYLACTERY);
         Util.register(Registry.ITEM,"final_broom", FINAL_BROOM);
         Util.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
         Util.register(Registry.ITEM,"scroll_of_torment", SCROLL_OF_TORMENT);
