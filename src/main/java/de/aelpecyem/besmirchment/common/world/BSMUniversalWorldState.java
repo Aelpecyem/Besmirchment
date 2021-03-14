@@ -42,6 +42,6 @@ public class BSMUniversalWorldState extends PersistentState {
     }
 
     public static BSMUniversalWorldState get(World world) {
-        return ((ServerWorld)world).getServer().getOverworld().getPersistentStateManager().getOrCreate(() -> new BSMUniversalWorldState("bsm_universal"), "bsm_universal");
+        return ((ServerWorld) world).getPersistentStateManager().getOrCreate(() -> new BSMUniversalWorldState("bsm_data"), "bsm_data");
     }
 }

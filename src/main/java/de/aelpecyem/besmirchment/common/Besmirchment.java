@@ -7,6 +7,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -25,11 +26,13 @@ public class Besmirchment implements ModInitializer {
         BSMContracts.init();
         BSMEntityTypes.init();
         BSMObjects.init();
+        BSMBlockEntityTypes.init();
         BSMStatusEffects.init();
         BSMTransformations.init();
         BSMSounds.init();
         ServerPlayNetworking.registerGlobalReceiver(FamiliarAbilityPacket.ID, FamiliarAbilityPacket::handle);
         ServerPlayNetworking.registerGlobalReceiver(WerepyreJumpPacket.ID, WerepyreJumpPacket::handle);
+
     }
 
     public static Identifier id(String path) {

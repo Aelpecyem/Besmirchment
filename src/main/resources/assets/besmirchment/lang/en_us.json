@@ -23,9 +23,11 @@
   "besmirchment.message.demon_sit": "The Demon will remain here",
   "besmirchment.message.demon_follow": "The Demon will follow you",
   "besmirchment.subtitles.entity.generic.spit": "Entity spits",
+  "besmirchment.subtitles.entity.lich.revives": "Lich revives",
   "besmirchment.subtitles.entity.beelzebub.ambient": "Beelzebub hisses",
   "besmirchment.subtitles.entity.beelzebub.hurt": "Beelzebub hurt",
   "besmirchment.subtitles.entity.beelzebub.death": "Beelzebub dies",
+
   "text.autoconfig.besmirchment.title": "Besmirchment",
   "text.autoconfig.besmirchment.option.enableFinalBroom": "Enable Final Broom",
   "text.autoconfig.besmirchment.option.enableWitchyDye": "Enable Witchy Dye",

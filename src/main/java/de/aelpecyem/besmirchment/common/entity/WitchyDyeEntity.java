@@ -3,6 +3,7 @@ package de.aelpecyem.besmirchment.common.entity;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
+import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -34,7 +35,7 @@ public class WitchyDyeEntity extends ThrownItemEntity {
             int color = getItem().hasTag() && getItem().getTag().contains("Color") ? getStack().getTag().getInt("Color") : -1;
             for (LivingEntity livingEntity : list) {
                 if (livingEntity instanceof DyeableEntity){
-                    if (!(livingEntity instanceof PlayerEntity) || BewitchmentAPI.isWerewolf(livingEntity, false)) {
+                    if (!(livingEntity instanceof PlayerEntity) || BewitchmentAPI.isWerewolf(livingEntity, false) || BSMTransformations.isLich(livingEntity, false)) {
                         ((DyeableEntity) livingEntity).setColor(color);
                     }
                 }

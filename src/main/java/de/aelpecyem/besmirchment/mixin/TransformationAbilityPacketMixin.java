@@ -2,6 +2,7 @@ package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
@@ -26,7 +27,7 @@ public class TransformationAbilityPacketMixin {
 
     @Inject(method = "canUseAbility", at = @At("HEAD"), cancellable = true)
     private static void canUseAbility(PlayerEntity player, CallbackInfoReturnable<Boolean> cir){
-        if (BSMTransformations.isWerepyre(player, true)){
+        if (BSMTransformations.isWerepyre(player, true) || BSMTransformations.isLich(player, false)){
             cir.setReturnValue(true);
         }
     }
@@ -34,6 +35,15 @@ public class TransformationAbilityPacketMixin {
     @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "Lmoriyashiine/bewitchment/common/network/packet/TransformationAbilityPacket;useAbility(Lnet/minecraft/class_1657;Z)V", at = @At(value = "HEAD"), cancellable = true)
     private static void useAbility(PlayerEntity player, boolean forced, CallbackInfo ci){
+        if (((TransformationAccessor)player).getTransformation() == BSMTransformations.LICH){
+            World world = player.world;
+            boolean isInAlternateForm = ((TransformationAccessor)player).getAlternateForm();
+            if (isInAlternateForm || BewitchmentAPI.usePlayerMagic(player, 10, true)) {
+                world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1.0F, 1.0F);
+                ((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
+                ci.cancel();
+            }
+        }
         if (((TransformationAccessor)player).getTransformation() == BSMTransformations.WEREPYRE && (forced || BSMTransformations.hasWerepyrePledge(player))){
             World world = player.world;
             boolean isInAlternateForm = ((TransformationAccessor)player).getAlternateForm();

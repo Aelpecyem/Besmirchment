@@ -16,10 +16,15 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class BSMTransformations {
     public static final Transformation WEREPYRE = new WerepyreTransformation();
+    public static final Transformation LICH = new Transformation();
     public static void init(){
         Util.register(BWRegistries.TRANSFORMATIONS, "werepyre", WEREPYRE);
+        Util.register(BWRegistries.TRANSFORMATIONS, "lich", LICH);
     }
 
+    public static boolean isLich(Entity entity, boolean isGost){
+        return entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == LICH && (!isGost || ((TransformationAccessor) entity).getAlternateForm());
+    }
     public static boolean isWerepyre(Entity entity, boolean includeHumanForm) {
         if (entity instanceof TransformationAccessor && ((TransformationAccessor)entity).getTransformation() == WEREPYRE) {
             return includeHumanForm || ((TransformationAccessor)entity).getAlternateForm();

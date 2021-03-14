@@ -6,11 +6,13 @@
   "mixins": [
     "BewitchmentAPIMixin",
     "BindFamiliarRitualFunctionMixin",
+    "AbstractBlockStateMixin",
     "BWHostileEntityMixin",
     "BWUtilMixin",
     "DemonEntityMixin",
     "DemonTradeBuilderMixin",
     "EntityMixin",
+    "EntityShapeContextMixin",
     "LivingEntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
@@ -21,6 +23,7 @@
     "client.ClientPlayNetworkHandlerMixin",
     "client.DemonEntityRendererMixin",
     "client.HeldItemFeatureRendererMixin",
+    "client.LivingEntityRendererMixin",
     "client.PlayerEntityRendererMixin",
     "client.WerewolfEntityRendererMixin"
   ],

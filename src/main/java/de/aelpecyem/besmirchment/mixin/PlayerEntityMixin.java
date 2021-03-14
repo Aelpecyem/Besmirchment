@@ -3,7 +3,10 @@ package de.aelpecyem.besmirchment.mixin;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -76,6 +79,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
     private void tick(CallbackInfo ci){
         if (getLastJumpTicks() < 200){
             setLastJumpTicks(getLastJumpTicks() + 1);
+        }
+        if (age % 20 == 0 && BSMTransformations.isLich(this, true)){
+            addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 40, 0, true, false, false));
+            if (!BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 1, false)){
+                TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
+            }
         }
         if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){
             if (!isOnGround() && !hasStatusEffect(StatusEffects.SLOW_FALLING)){

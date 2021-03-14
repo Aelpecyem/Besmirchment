@@ -6,6 +6,15 @@
     ],
     "subtitle": "besmirchment.subtitles.entity.generic.spit"
   },
+  "entity.lich.revive": {
+    "sounds": [
+      {
+        "name": "mob/wither/spawn",
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "besmirchment.subtitles.entity.lich.revive"
+  },
   "entity.beelzebub.ambient": {
     "sounds": [
       "mob/spider/say1",
@@ -28,6 +37,6 @@
     "sounds": [
       "mob/spider/death"
     ],
-  "subtitle": "besmirchment.subtitles.entity.beelzebub.death"
-}
+    "subtitle": "besmirchment.subtitles.entity.beelzebub.death"
+  }
 }

@@ -6,6 +6,7 @@ import net.minecraft.util.registry.Registry;
 
 public class BSMSounds {
     public static final SoundEvent ENTITY_GENERIC_SPIT = new SoundEvent(Besmirchment.id("entity.generic.spit"));
+    public static final SoundEvent LICH_REVIVE = new SoundEvent(Besmirchment.id("entity.lich.revive"));
 
     public static final SoundEvent BEELZEBUB_AMBIENT = new SoundEvent(Besmirchment.id("entity.beelzebub.ambient"));
     public static final SoundEvent BEELZEBUB_HURT = new SoundEvent(Besmirchment.id("entity.beelzebub.hurt"));

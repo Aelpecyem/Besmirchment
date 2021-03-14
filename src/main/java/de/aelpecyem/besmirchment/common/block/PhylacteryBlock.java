@@ -1,51 +1,54 @@
 package de.aelpecyem.besmirchment.common.block;
 
-import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
+import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class PhylacteryBlock extends Block implements /*BlockEntityProvider,*/ Waterloggable {
+public class PhylacteryBlock extends Block implements BlockEntityProvider, Waterloggable {
     public PhylacteryBlock() {
-        super(FabricBlockSettings.of(Material.STONE, MaterialColor.GREEN));
+        super(FabricBlockSettings.of(Material.STONE, MaterialColor.GREEN).luminance(10));
     }
 
-   /* @Nullable
+    @Nullable
     public BlockEntity createBlockEntity(BlockView world) {
-        return new PoppetShelfBlockEntity();
-    }*/
+        return new PhylacteryBlockEntity();
+    }
+
+    @Override
+    public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
+        return VoxelShapes.empty();
+    }
 
     public PistonBehavior getPistonBehavior(BlockState state) {
         return PistonBehavior.BLOCK;
     }
 
-  /*  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        boolean client = world.isClient;
-        if (!client) {
-            ((PoppetShelfBlockEntity)world.getBlockEntity(pos)).onUse(world, pos, player, hand);
-        }
+    /*  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+            boolean client = world.isClient;
+            if (!client) {
+                ((PoppetShelfBlockEntity)world.getBlockEntity(pos)).onUse(world, pos, player, hand);
+            }
 
-        return ActionResult.success(client);
-    }
-*/
+            return ActionResult.success(client);
+        }
+    */
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);

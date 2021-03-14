@@ -1,7 +1,9 @@
 package de.aelpecyem.besmirchment.common.packet;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
+import de.aelpecyem.besmirchment.common.registry.BSMSounds;
 import io.netty.buffer.Unpooled;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -13,12 +15,13 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class SparklePacket {
-    public static final Identifier ID = Besmirchment.id("familiar_ability");
+public class LichRevivePacket {
+    public static final Identifier ID = Besmirchment.id("lich_revive");
 
     public static void send(LivingEntity entity){
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -37,7 +40,12 @@ public class SparklePacket {
             if (world != null) {
                 Entity entity = world.getEntityById(id);
                 if (entity != null) {
-                    entity.world.addParticle(ParticleTypes.END_ROD, entity.getParticleX(1), entity.getRandomBodyY(), entity.getParticleZ(1), 0, 0, 0);
+                    for (int i = 0; i < 25; i++) {
+                        entity.world.addParticle(new DustParticleEffect(0.5F, 1F, 0.5F, 2F), entity.getParticleX(1), entity.getRandomBodyY(), entity.getParticleZ(1), 0, 0, 0);
+                    }
+                    if (entity.equals(client.player)){
+                        client.player.playSound(BSMSounds.LICH_REVIVE, 1, 1);
+                    }
                 }
             }
         });
