@@ -1,0 +1,24 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+    {
+      "item": "bewitchment:cleansing_balm"
+    },
+    {
+      "item": "bewitchment:aqua_cerate"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "minecraft:green_dye"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    }
+  ],
+  "inner": "normal",
+  "outer": "normal",
+  "ritual_function": "besmirchment:color",
+  "cost": 420
+}

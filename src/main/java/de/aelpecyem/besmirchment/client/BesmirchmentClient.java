@@ -5,6 +5,7 @@ import de.aelpecyem.besmirchment.client.packet.WerepyreJumpPacket;
 import de.aelpecyem.besmirchment.client.renderer.*;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
 import de.aelpecyem.besmirchment.common.packet.SparklePacket;
 import de.aelpecyem.besmirchment.common.registry.BSMBlockEntityTypes;
@@ -25,11 +26,14 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
+
+import java.awt.*;
 
 @Environment(EnvType.CLIENT)
 public class BesmirchmentClient implements ClientModInitializer {
@@ -48,7 +52,9 @@ public class BesmirchmentClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(BSMBlockEntityTypes.PHYLACTERY, PhylacteryBlockEntityRenderer::new);
         FabricModelPredicateProviderRegistry.register(BSMObjects.DEMONIC_DEED, Besmirchment.id("variant"), (stack, world, entity) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
 
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? BSMObjects.WITCHY_DYE.getColor(stack): 0xFFFFFF, BSMObjects.WITCHY_DYE);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? BSMObjects.WITCHY_DYE.getColor(stack) == WitchyDyeItem.FUNNI_NUMBER ? Color.HSBtoRGB(
+                ((MinecraftClient.getInstance().world.getTime() + MinecraftClient.getInstance().getTickDelta()) % 100) / 100F,
+                1, 1) : BSMObjects.WITCHY_DYE.getColor(stack) : 0xFFFFFF, BSMObjects.WITCHY_DYE);
 
         KeyBindingRegistryImpl.registerKeyBinding(FAMILIAR_ABILITY);
         ClientTickEvents.END_CLIENT_TICK.register(minecraftClient -> {

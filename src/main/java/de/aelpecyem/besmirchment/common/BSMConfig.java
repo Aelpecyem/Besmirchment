@@ -47,4 +47,7 @@ public class BSMConfig implements ConfigData {
         public int villagerFamiliarReputationBase = 20;
         public float chickenFamiliarEggChance = 0.005F;
     }
+
+    @RequiresRestart
+    public int twoPlusTwo = 4;
 }

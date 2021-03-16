@@ -2,6 +2,7 @@ package de.aelpecyem.besmirchment.client.renderer;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import net.fabricmc.api.EnvType;
@@ -12,6 +13,8 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+
+import java.awt.*;
 
 @Environment(EnvType.CLIENT)
 public class DyedWerewolfFeatureRenderer extends FeatureRenderer<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> {
@@ -26,6 +29,9 @@ public class DyedWerewolfFeatureRenderer extends FeatureRenderer<WerewolfEntity,
         int color = ((DyeableEntity) entity).getColor();
         if (color > -1) {
             Vec3d rgb = Vec3d.unpackRgb(color);
+            render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, (float) rgb.x, (float) rgb.y, (float) rgb.z);
+        }else if(color == WitchyDyeItem.FUNNI_NUMBER){
+            Vec3d rgb = Vec3d.unpackRgb(Color.HSBtoRGB((animationProgress % 100) / 100F, 1,1));
             render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, (float) rgb.x, (float) rgb.y, (float) rgb.z);
         }
     }

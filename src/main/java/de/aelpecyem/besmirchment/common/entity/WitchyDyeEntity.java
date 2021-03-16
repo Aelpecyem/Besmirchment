@@ -1,6 +1,7 @@
 package de.aelpecyem.besmirchment.common.entity;
 
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
@@ -42,7 +43,11 @@ public class WitchyDyeEntity extends ThrownItemEntity {
                 for (ItemStack itemStack : livingEntity.getItemsEquipped()) {
                     if (itemStack.getItem() instanceof DyeableItem){
                         if (color < 0){
-                            ((DyeableItem) itemStack.getItem()).removeColor(itemStack);
+                            if (color == WitchyDyeItem.FUNNI_NUMBER){
+                                ((DyeableItem) itemStack.getItem()).setColor(itemStack, color);
+                            }else{
+                                ((DyeableItem) itemStack.getItem()).removeColor(itemStack);
+                            }
                         }else {
                             ((DyeableItem) itemStack.getItem()).setColor(itemStack, color);
                         }

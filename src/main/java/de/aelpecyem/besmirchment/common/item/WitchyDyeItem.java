@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import java.util.Collections;
 
 public class WitchyDyeItem extends Item implements DyeableItem {
+    public static final int FUNNI_NUMBER = -69;
     public WitchyDyeItem(Item.Settings settings) {
         super(settings);
     }
@@ -76,6 +77,10 @@ public class WitchyDyeItem extends Item implements DyeableItem {
                 ItemStack stack = new ItemStack(this);
                 stacks.add(DyeableItem.blendAndSetColor(stack, Collections.singletonList(DyeItem.byColor(value))));
             }
+            ItemStack stack = new ItemStack(this);
+            setColor(stack, FUNNI_NUMBER);
+            stacks.add(stack);
+
         }
     }
 }

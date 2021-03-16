@@ -30,9 +30,9 @@ public class Besmirchment implements ModInitializer {
         BSMStatusEffects.init();
         BSMTransformations.init();
         BSMSounds.init();
+        BSMRitualFunctions.init();
         ServerPlayNetworking.registerGlobalReceiver(FamiliarAbilityPacket.ID, FamiliarAbilityPacket::handle);
         ServerPlayNetworking.registerGlobalReceiver(WerepyreJumpPacket.ID, WerepyreJumpPacket::handle);
-
     }
 
     public static Identifier id(String path) {
