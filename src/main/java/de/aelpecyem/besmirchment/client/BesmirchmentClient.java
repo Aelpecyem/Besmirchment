@@ -39,6 +39,7 @@ import java.awt.*;
 public class BesmirchmentClient implements ClientModInitializer {
     public static final KeyBinding FAMILIAR_ABILITY = new KeyBinding("key." + Besmirchment.MODID +".familiar_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_K, "itemGroup.besmirchment.group");
     public int abilityCooldown = 20;
+    public static int fogTicks = 0;
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BSMObjects.PHYLACTERY);
@@ -60,7 +61,10 @@ public class BesmirchmentClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(minecraftClient -> {
             if (minecraftClient.player != null){
                 if (BSMTransformations.isLich(minecraftClient.player, true)){
-                    minecraftClient.player.setVelocity(minecraftClient.player.getRotationVector());
+                    if (minecraftClient.options.keySprint.isPressed()){
+                        minecraftClient.player.setSprinting(true);
+                    }
+                    minecraftClient.player.setVelocity(minecraftClient.player.getRotationVector().multiply(minecraftClient.player.isSprinting() ? 0.8F : 0.5F));
                 }
                 if (minecraftClient.player.input.jumping && BSMTransformations.isWerepyre(minecraftClient.player, false) && !minecraftClient.player.isOnGround() && ((WerepyreAccessor) minecraftClient.player).getLastJumpTicks() > 5) {
                     minecraftClient.player.jump();
@@ -77,5 +81,9 @@ public class BesmirchmentClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(SparklePacket.ID, SparklePacket::handle);
         ClientPlayNetworking.registerGlobalReceiver(LichRevivePacket.ID, LichRevivePacket::handle);
+    }
+
+    public static int getFogTicks(){
+        return fogTicks;
     }
 }

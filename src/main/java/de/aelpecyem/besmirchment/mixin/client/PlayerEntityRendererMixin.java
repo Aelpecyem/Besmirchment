@@ -33,64 +33,6 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Environment(EnvType.CLIENT)
 @Mixin(value = PlayerEntityRenderer.class, priority = 999)
 public class PlayerEntityRendererMixin {
-    @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
-    private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
-        if (!player.isInvisible() && !((TrueInvisibleAccessor) player).getTrueInvisible()) {
-            int color = ((DyeableEntity) player).getColor();
-            LivingEntity entity = null;
-            boolean lich = false;
-            if (BSMTransformations.isLich(player, false) && !((TransformationAccessor)player).getAlternateForm()){
-               entity = EntityType.SKELETON.create(player.world);
-               entity.setSwimming(player.isSwimming());
-                lich = true;
-            }
-            if (BSMTransformations.isWerepyre(player, false)){
-                entity = BSMEntityTypes.WEREPYRE.create(player.world);
-                entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerepyreAccessor) player).getWerepyreVariant());
-                ((DyeableEntity) entity).setColor(color);
-                ((WerepyreEntity) entity).setLastJumpTime(((WerepyreAccessor) player).getLastJumpTicks());
-            }else if (BewitchmentAPI.isWerewolf(player, false) && color > -1) {
-                entity = BWEntityTypes.WEREWOLF.create(player.world);
-                entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
-                ((DyeableEntity) entity).setColor(color);
-            }
-            if (entity != null) {
-                if (player.getVehicle() instanceof BroomEntity) {
-                    matrixStack.translate(0.0D, MathHelper.sin((float) (player.getVehicle().age + player.getVehicle().getEntityId()) / 4.0F) / 16.0F, 0.0D);
-                }
-                entity.age = player.age;
-                entity.hurtTime = player.hurtTime;
-                entity.maxHurtTime = 2147483647;
-                entity.limbDistance = player.limbDistance;
-                entity.lastLimbDistance = player.lastLimbDistance;
-                entity.limbAngle = player.limbAngle;
-                entity.headYaw = player.headYaw;
-                entity.prevHeadYaw = player.prevHeadYaw;
-                entity.bodyYaw = player.bodyYaw;
-                entity.prevBodyYaw = player.prevBodyYaw;
-                entity.handSwinging = player.handSwinging;
-                entity.handSwingTicks = player.handSwingTicks;
-                entity.handSwingProgress = player.handSwingProgress;
-                entity.lastHandSwingProgress = player.lastHandSwingProgress;
-                entity.pitch = player.pitch;
-                entity.prevPitch = player.prevPitch;
-                entity.preferredHand = player.preferredHand;
-                entity.setStackInHand(Hand.MAIN_HAND, player.getMainHandStack());
-                entity.setStackInHand(Hand.OFF_HAND, player.getOffHandStack());
-                entity.setCurrentHand(player.getActiveHand() == null ? Hand.MAIN_HAND : player.getActiveHand());
-                entity.setSneaking(player.isSneaking());
-                entity.setPose(player.getPose());
-                if (player.hasVehicle()) {
-                    entity.startRiding(player.getVehicle(), true);
-                }
-                float width = 1.0F / (entity.getType().getWidth() / EntityType.PLAYER.getWidth());
-                matrixStack.scale(width, 1.0F / (entity.getType().getHeight() / EntityType.PLAYER.getHeight()), width);
-                MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(entity).render(entity, yaw, tickDelta, matrixStack, vertexConsumerProvider, light);
-                callbackInfo.cancel();
-            }
-        }
-    }
-
     @ModifyArgs(method = "setupTransforms", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))
     private void setupGhostSwimg(Args args, AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h) {
         if (BSMTransformations.isLich(abstractClientPlayerEntity, true)){

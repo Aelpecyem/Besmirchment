@@ -30,7 +30,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer {
 
     @Inject(method = "getRenderLayer", at = @At("HEAD"), cancellable = true)
     private void getRenderLayer(LivingEntity entity, boolean showBody, boolean translucent, boolean showOutline, CallbackInfoReturnable<RenderLayer> cir){
-        if (BSMTransformations.isLich(entity, false)){
+        if (BSMTransformations.isLich(entity, true)){
             cir.setReturnValue(RenderLayer.getEntityTranslucent(this.getTexture(entity)));
         }
     }
@@ -38,7 +38,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer {
     @SuppressWarnings("UnresolvedMixinReference")
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
     private void ghostify(Args args, LivingEntity entity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        if (BSMTransformations.isLich(entity, false)) {
+        if (BSMTransformations.isLich(entity, true)) {
             args.set(2, LightmapTextureManager.pack(15, 15));
             if (entity instanceof DyeableEntity && (((DyeableEntity) entity).getColor() >= 0 || ((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER)) {
                 Vec3d rgb = Vec3d.unpackRgb(((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER ? Color.HSBtoRGB(((entity.age + g) % 100) / 100F, 1,1) : ((DyeableEntity) entity).getColor());

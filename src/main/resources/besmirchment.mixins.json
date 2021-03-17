@@ -4,9 +4,9 @@
   "package": "de.aelpecyem.besmirchment.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AbstractBlockStateMixin",
     "BewitchmentAPIMixin",
     "BindFamiliarRitualFunctionMixin",
-    "AbstractBlockStateMixin",
     "BWHostileEntityMixin",
     "BWUtilMixin",
     "DemonEntityMixin",
@@ -17,12 +17,14 @@
     "MobEntityMixin",
     "PlayerEntityMixin",
     "TransformationAbilityPacketMixin",
-    "VillagerEntityMixin"
+    "VillagerEntityMixin",
   ],
   "client": [
+    "client.BackgroundRendererMixin",
     "client.ClientPlayNetworkHandlerMixin",
     "client.DemonEntityRendererMixin",
     "client.HeldItemFeatureRendererMixin",
+    "client.InGameOverlayRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.PlayerEntityRendererMixin",
     "client.WerewolfEntityRendererMixin"
