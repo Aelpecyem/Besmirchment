@@ -2,6 +2,7 @@ package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.client.renderer.LichRollAccessor;
 import de.aelpecyem.besmirchment.common.Besmirchment;
+import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
@@ -15,13 +16,11 @@ import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.registry.BWCurses;
-import moriyashiine.bewitchment.common.registry.BWPledges;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import moriyashiine.bewitchment.common.registry.BWTransformations;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -30,7 +29,10 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Pair;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -68,6 +70,8 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     @Shadow
     public abstract boolean isAlive();
 
+    @Shadow public abstract float getYaw(float tickDelta);
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -104,10 +108,19 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
             clearStatusEffects();
             addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
             addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 200, 0));
+            addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 200, 0));
             LichRevivePacket.send((LivingEntity) (Object) this);
             bsm_lastRevive = 0;
-            if (source.isOutOfWorld() || (bsm_lastRevive < 600 && isSneaking())) {
-                BWUtil.teleport(this, getX(), getY() + 100, getZ(), true);
+            if ((Object) this instanceof ServerPlayerEntity && (source.isOutOfWorld() || (bsm_lastRevive < 600 && isSneaking()))) {
+                Pair<ServerWorld, PhylacteryBlockEntity> phylactery = PhylacteryBlockEntity.getPhylactery((LivingEntity) (Object) this);
+                if (phylactery != null){
+                    ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+                    if (!phylactery.getLeft().equals(world)) {
+                        player.teleport(phylactery.getLeft(), getX(), getY(), getZ(), yaw, pitch);
+                    }
+                    BWUtil.attemptTeleport(this, phylactery.getRight().getPos(), 2, false);
+                    LichRevivePacket.send((LivingEntity) (Object) this);
+                }
             }
 
         }

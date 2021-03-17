@@ -1,17 +1,21 @@
 package de.aelpecyem.besmirchment.common.block;
 
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
+import de.aelpecyem.besmirchment.common.world.BSMWorldState;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -20,6 +24,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public class PhylacteryBlock extends Block implements BlockEntityProvider, Waterloggable {
     public PhylacteryBlock() {
@@ -67,34 +73,36 @@ public class PhylacteryBlock extends Block implements BlockEntityProvider, Water
     }
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-      /*  if (!world.isClient && state.getBlock() != oldState.getBlock()) {
-            BWWorldState worldState = BWWorldState.get(world);
-            worldState.poppetShelves.add(pos.asLong());
-            worldState.markDirty();
-        }*/
+        if (!world.isClient && state.getBlock() != oldState.getBlock()) {
+
+        }
     }
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
+        if (!world.isClient && placer instanceof PlayerEntity) {
+            BSMWorldState worldState = BSMWorldState.get(world);
+            Pair<ServerWorld, PhylacteryBlockEntity> existingPhylactery = PhylacteryBlockEntity.getPhylactery(placer);
+            if (existingPhylactery != null){
+                existingPhylactery.getLeft().breakBlock(existingPhylactery.getRight().getPos(), true, placer);
+            }
+            worldState.phylacteries.put(placer.getUuid(), pos);
+            worldState.markDirty();
+        }
     }
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-      /*  if (!world.isClient && state.getBlock() != newState.getBlock()) {
-            BWWorldState worldState = BWWorldState.get(world);
+        if (!world.isClient && state.getBlock() != newState.getBlock()) {
+            BSMWorldState worldState = BSMWorldState.get(world);
 
-            for(int i = worldState.poppetShelves.size() - 1; i >= 0; --i) {
-                if (worldState.poppetShelves.get(i) == pos.asLong()) {
-                    worldState.poppetShelves.remove(i);
+            for (UUID uuid : worldState.phylacteries.keySet()) {
+                if (worldState.phylacteries.get(uuid).equals(pos)){
+                    worldState.phylacteries.remove(uuid);
                     worldState.markDirty();
                 }
             }
-
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof Inventory) {
-                ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
-            }
-        }*/
+        }
 
         super.onStateReplaced(state, world, pos, newState, moved);
     }

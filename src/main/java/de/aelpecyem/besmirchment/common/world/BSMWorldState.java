@@ -1,6 +1,5 @@
 package de.aelpecyem.besmirchment.common.world;
 
-import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtHelper;
@@ -14,10 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class BSMUniversalWorldState extends PersistentState {
+public class BSMWorldState extends PersistentState {
     public final Map<UUID, BlockPos> phylacteries = new HashMap<>();
 
-    public BSMUniversalWorldState(String key) {
+    public BSMWorldState(String key) {
         super(key);
     }
 
@@ -41,7 +40,7 @@ public class BSMUniversalWorldState extends PersistentState {
         }
     }
 
-    public static BSMUniversalWorldState get(World world) {
-        return ((ServerWorld) world).getPersistentStateManager().getOrCreate(() -> new BSMUniversalWorldState("bsm_data"), "bsm_data");
+    public static BSMWorldState get(World world) {
+        return ((ServerWorld) world).getPersistentStateManager().getOrCreate(() -> new BSMWorldState("bsm_data"), "bsm_data");
     }
 }
