@@ -2,7 +2,7 @@ package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
-import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;

@@ -11,9 +11,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class PhylacteryBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
-    private int souls;
+    public static final int MAX_SOULS = 8;
+    public int souls;
     public PhylacteryBlockEntity() {
         super(BSMBlockEntityTypes.PHYLACTERY);
     }
@@ -41,19 +43,17 @@ public class PhylacteryBlockEntity extends BlockEntity implements BlockEntityCli
         fromClientTag(tag);
     }
 
-    public static Pair<ServerWorld, PhylacteryBlockEntity> getPhylactery(LivingEntity player){
-        if (player.world instanceof ServerWorld){
-            for (ServerWorld serverWorld : player.world.getServer().getWorlds()) {
-               BSMWorldState worldState = BSMWorldState.get(serverWorld);
-               if (worldState.phylacteries.containsKey(player.getUuid())){
-                   BlockEntity entity = serverWorld.getBlockEntity(worldState.phylacteries.get(player.getUuid()));
-                   if (entity instanceof PhylacteryBlockEntity){
-                       return new Pair<>(serverWorld, (PhylacteryBlockEntity) entity);
-                   }
-                   worldState.phylacteries.remove(player.getUuid());
-               }
-            }
+    public int addSouls(int amount){
+        int cachedAmount = souls;
+        this.souls = MathHelper.clamp(souls + amount, 0, MAX_SOULS);
+        return souls - cachedAmount;
+    }
+
+    public boolean drainSoul(int amount){
+        if ((souls - amount) >= 0){
+            souls -= amount;
+            return true;
         }
-        return null;
+        return false;
     }
 }

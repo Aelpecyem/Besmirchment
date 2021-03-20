@@ -1,6 +1,5 @@
 package de.aelpecyem.besmirchment.common.transformation;
 
-import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import net.minecraft.entity.LivingEntity;

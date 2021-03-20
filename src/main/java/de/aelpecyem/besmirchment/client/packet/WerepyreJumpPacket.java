@@ -2,7 +2,7 @@ package de.aelpecyem.besmirchment.client.packet;
 
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;

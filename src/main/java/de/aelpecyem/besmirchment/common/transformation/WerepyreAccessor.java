@@ -1,4 +1,4 @@
-package de.aelpecyem.besmirchment.common.entity.interfaces;
+package de.aelpecyem.besmirchment.common.transformation;
 
 public interface WerepyreAccessor {
     void setWerepyreVariant(int variant);

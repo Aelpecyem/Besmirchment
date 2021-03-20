@@ -2,6 +2,8 @@ package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
+import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
+import de.aelpecyem.besmirchment.common.transformation.LichLogic;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
@@ -27,8 +29,12 @@ public class TransformationAbilityPacketMixin {
 
     @Inject(method = "canUseAbility", at = @At("HEAD"), cancellable = true)
     private static void canUseAbility(PlayerEntity player, CallbackInfoReturnable<Boolean> cir){
-        if (BSMTransformations.isWerepyre(player, true) || BSMTransformations.isLich(player, false)){
+        if (BSMTransformations.isWerepyre(player, true)){
             cir.setReturnValue(true);
+        }
+        if (BSMTransformations.isLich(player, false)){
+            ((LichAccessor) player).updateCachedSouls();
+            cir.setReturnValue(((LichAccessor) player).getCachedSouls() >= LichLogic.STAGE_TWO_SOULS);
         }
     }
 

@@ -1,12 +1,14 @@
 package de.aelpecyem.besmirchment.common.block;
 
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
+import de.aelpecyem.besmirchment.common.transformation.LichLogic;
 import de.aelpecyem.besmirchment.common.world.BSMWorldState;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -15,7 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -46,15 +51,18 @@ public class PhylacteryBlock extends Block implements BlockEntityProvider, Water
         return PistonBehavior.BLOCK;
     }
 
-    /*  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-            boolean client = world.isClient;
-            if (!client) {
-                ((PoppetShelfBlockEntity)world.getBlockEntity(pos)).onUse(world, pos, player, hand);
-            }
+    @Override
+      public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+          boolean client = world.isClient;
+          if (!client) {
+              int soulsAdded = ((PhylacteryBlockEntity) world.getBlockEntity(pos)).addSouls(1);
+              if (soulsAdded > 0){
+                  player.damage(DamageSource.ANVIL, soulsAdded);
+              }
+          }
 
-            return ActionResult.success(client);
-        }
-    */
+          return ActionResult.success(client);
+      }
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
@@ -72,18 +80,12 @@ public class PhylacteryBlock extends Block implements BlockEntityProvider, Water
         return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
 
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!world.isClient && state.getBlock() != oldState.getBlock()) {
-
-        }
-    }
-
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
         if (!world.isClient && placer instanceof PlayerEntity) {
             BSMWorldState worldState = BSMWorldState.get(world);
-            Pair<ServerWorld, PhylacteryBlockEntity> existingPhylactery = PhylacteryBlockEntity.getPhylactery(placer);
+            Pair<ServerWorld, PhylacteryBlockEntity> existingPhylactery = LichLogic.getPhylactery(placer);
             if (existingPhylactery != null){
                 existingPhylactery.getLeft().breakBlock(existingPhylactery.getRight().getPos(), true, placer);
             }

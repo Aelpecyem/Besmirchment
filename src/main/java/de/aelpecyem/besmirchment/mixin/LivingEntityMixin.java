@@ -4,10 +4,11 @@ import de.aelpecyem.besmirchment.client.renderer.LichRollAccessor;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
-import de.aelpecyem.besmirchment.common.entity.interfaces.WerepyreAccessor;
-import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
+import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
+import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMContracts;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
+import de.aelpecyem.besmirchment.common.transformation.LichLogic;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
@@ -15,21 +16,17 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
@@ -42,10 +39,13 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.lang.invoke.SerializedLambda;
+
 @Mixin(value = LivingEntity.class, priority = 1001)
-public abstract class LivingEntityMixin extends Entity implements LichRollAccessor {
+public abstract class LivingEntityMixin extends Entity implements LichRollAccessor, LichAccessor {
     private int bsm_lastRevive = 0;
-    @Environment(EnvType.CLIENT) private int lastRoll = 100;
+    private int bsm_cachedSouls = 0;
+    @Environment(EnvType.CLIENT) private int bsm_lastRoll = 100;
     @Shadow
     protected abstract float getSoundVolume();
 
@@ -103,26 +103,11 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     @Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (!cir.getReturnValue() && BSMTransformations.isLich(this, false)) {
-            cir.setReturnValue(true);
-            setHealth(getMaxHealth());
-            clearStatusEffects();
-            addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
-            addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 200, 0));
-            addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 200, 0));
-            LichRevivePacket.send((LivingEntity) (Object) this);
-            bsm_lastRevive = 0;
-            if ((Object) this instanceof ServerPlayerEntity && (source.isOutOfWorld() || (bsm_lastRevive < 600 && isSneaking()))) {
-                Pair<ServerWorld, PhylacteryBlockEntity> phylactery = PhylacteryBlockEntity.getPhylactery((LivingEntity) (Object) this);
-                if (phylactery != null){
-                    ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-                    if (!phylactery.getLeft().equals(world)) {
-                        player.teleport(phylactery.getLeft(), getX(), getY(), getZ(), yaw, pitch);
-                    }
-                    BWUtil.attemptTeleport(this, phylactery.getRight().getPos(), 2, false);
-                    LichRevivePacket.send((LivingEntity) (Object) this);
-                }
+            if(LichLogic.revive((LivingEntity) (Object) this, source, bsm_lastRevive)){
+                cir.setReturnValue(true);
+                bsm_lastRevive = 0;
             }
-
+            updateCachedSouls();
         }
         if (Besmirchment.config.enableWerepyrism && cir.getReturnValue() && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)) {
             TransformationAccessor transformationAccessor = (TransformationAccessor) this;
@@ -174,8 +159,8 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     private void swingHand(Hand hand, CallbackInfo ci){
         if (BSMTransformations.isLich(this, true)){
             ci.cancel();
-            if (world.isClient && lastRoll >= 20){
-                lastRoll = 0;
+            if (world.isClient && bsm_lastRoll >= 20){
+                bsm_lastRoll = 0;
             }
         }
     }
@@ -183,22 +168,42 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     @Inject(method = "tickMovement", at = @At("TAIL"))
     private void tickMovement(CallbackInfo ci){
         if (world.isClient){
-            lastRoll++;
+            bsm_lastRoll++;
         }
     }
 
     @Override
     public int getLastRollTicks() {
-        return lastRoll;
+        return bsm_lastRoll;
+    }
+
+    @Override
+    public int getCachedSouls() {
+        return bsm_cachedSouls;
+    }
+
+    @Override
+    public void updateCachedSouls() {
+        Pair<ServerWorld, PhylacteryBlockEntity> phylactery = LichLogic.getPhylactery((LivingEntity) (Object) this);
+        if (phylactery != null) {
+            this.bsm_cachedSouls = phylactery.getRight().souls;
+        }else{
+            this.bsm_cachedSouls = 0;
+        }
     }
 
     @Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
     private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci) {
         tag.putInt("BSMLastRevive", bsm_lastRevive);
+        tag.putInt("BSMSoulCache", bsm_cachedSouls);
     }
 
     @Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
     private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci) {
         bsm_lastRevive = tag.getInt("BSMLastRevive");
+        bsm_cachedSouls = tag.getInt("BSMSoulCache");
+        if (world instanceof ServerWorld){
+            updateCachedSouls();
+        }
     }
 }
