@@ -1,0 +1,43 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Reach Lichdom",
+  "icon": "besmirchment:lich_gem",
+  "entry_color": "C15600",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "flag": "bsm_lichdom",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(o)Hourai! Finally, immortality :)$()$(br2)This $(l:bewitchment:rituals/rituals)Ritual$() allows the caster $(o)or closest player to it$() to reach a higher state of mortality (or immortality?)$(br)This state is called lichdom.$(br)It is defined by binding the body to an external $(item)Phylactery$(), granting a higher supply of souls. A lich without one is practically powerless."
+    },
+    {
+      "type": "crafting",
+      "recipe": "besmirchment:phylactery",
+      "text": "The  amount of souls within the Phylactery are proportional to the power of the lich, as outlined in $(l:besmirchment:rituals/reach_lichdom#quirks)Quirks of Lichdom$().$(br)It is filled using a $(item)Lich Gem$()."
+    },
+    {
+      "type": "spotlight",
+      "item": "besmirchment:lich_gem",
+      "text": "The $(item)Lich Gem$() is crafted together with the Phylactery. $(br)You will need to hold it in the offhand while killing a $(thing)pure$() being, usually a Villager.$(br)Use the souled Lich Gem on the Phylactery to fill it."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "besmirchment:rituals/reach_lichdom",
+      "text": "Starting this Ritual requires the absence of soul, or, in short terms, having the $(l:bewitchment:curses/apathy)Apathy$() Curse.$(br)It will also require the sacrifice of a demonic entity."
+    },
+    {
+      "type": "text",
+      "anchor": "quirks",
+      "title": "Quirks of Lichdom",
+      "text": "Lichdom comes with several notable quirks.$(br)For one, liches cannot die, as long as their Phylactery remains in tact. When killed, they will respawn on the spot with full health, and consume a soul from the Phylactery.$(br)That being said, only one Phylactery may stand at a time (and trying to place a new one will result in the previous one being broken)."
+    },
+    {
+      "type": "text",
+      "text": "Liches with very little souls in their Phylactery are usually $(o)very$() weak, but their powers grow the more souls they gather.$(br)With enough souls, they can even assume a ghostly form! This form is very ME-intensive, but able to phase through blocks. It can also be dyed using $(l:besmirchment:tools/witchy_dye)Witchy Dye.$()$(br2)$(o)To assume your ghost form, press [$(k:bewitchment.transformation_ability)]."
+    },
+    {
+      "type": "text",
+      "text": "Lastly, liches are considered undead. This means they are weak to $(l:bewitchment:intro/silver)Silver$(). When killed by it, they will be immediately sent back to their Phylactery, draining two souls.$(br2)$(o)When dying in rapid succession, liches can also go back to their phylactery voluntarily by sneaking.$(br2)Lichdom counts as a transformation, so liches cannot become vampires, werewolves etc.$()"
+    }
+  ]
+}
