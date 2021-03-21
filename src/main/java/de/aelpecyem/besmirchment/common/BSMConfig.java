@@ -21,6 +21,8 @@ public class BSMConfig implements ConfigData {
     public boolean enableSunscreen = true;
     @RequiresRestart
     public boolean enableTamableDemons = true;
+    @RequiresRestart
+    public boolean enableLichdom = true;
     @ConfigEntry.Gui.CollapsibleObject
     public Mobs mobs = new Mobs();
     public static class Mobs{

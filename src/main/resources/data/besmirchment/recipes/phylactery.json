@@ -1,0 +1,27 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    " E ",
+    "ESE",
+    "N N"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "item": "besmirchment:phylactery"
+  },
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "lichdom"
+    }
+  ]
+}

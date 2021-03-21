@@ -3,6 +3,7 @@ package de.aelpecyem.besmirchment.common.transformation;
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
 import de.aelpecyem.besmirchment.common.world.BSMWorldState;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
@@ -24,18 +25,18 @@ import java.util.UUID;
 
 public class LichLogic {
     public static final int STAGE_TWO_SOULS = 6;
-    private static final EntityAttributeModifier LICH_STRENGTH_MODIFIER_0 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", -2, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_STRENGTH_MODIFIER_1 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 1, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_STRENGTH_MODIFIER_2 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 2, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", -0.08, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_1 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", -0.02, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_2 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 0.04, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_0 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", -10, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_1 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", -6, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_2 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_3 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 10, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_4 = new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 20, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_ARMOR_MODIFIER= new EntityAttributeModifier(UUID.randomUUID(), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_STRENGTH_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("d6684434-1358-49a9-8447-42407dd6644a"), "Transformation modifier", -2, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_STRENGTH_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("d6684434-1358-49a9-8447-42407dd6644a"), "Transformation modifier", 1, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_STRENGTH_MODIFIER_2 = new EntityAttributeModifier(UUID.fromString("d6684434-1358-49a9-8447-42407dd6644a"), "Transformation modifier", 2, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("7412866d-2b9a-4498-9c60-b420ef8eb6ab"), "Transformation modifier", -0.04, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("7412866d-2b9a-4498-9c60-b420ef8eb6ab"), "Transformation modifier", -0.02, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_2 = new EntityAttributeModifier(UUID.fromString("7412866d-2b9a-4498-9c60-b420ef8eb6ab"), "Transformation modifier", 0.04, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", -10, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", -6, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_2 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_3 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", 10, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_4 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", 20, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_ARMOR_MODIFIER= new EntityAttributeModifier(UUID.fromString("51884d70-fae3-4061-8731-9327b39287b8"), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
 
     public static void addAttributes(LivingEntity lich, int cachedSouls) {
         EntityAttributeInstance attackDamageAttribute = lich.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
@@ -98,7 +99,8 @@ public class LichLogic {
     }
     public static boolean revive(LivingEntity lich, DamageSource source, int lastRevive) {
         Pair<ServerWorld, PhylacteryBlockEntity> phylactery = getPhylactery(lich);
-        if (phylactery != null && phylactery.getRight().drainSoul(1)) {
+        boolean silver = BewitchmentAPI.isSourceFromSilver(source);
+        if (phylactery != null && phylactery.getRight().drainSoul(silver ? 2 : 1)) {
             lich.setHealth(lich.getMaxHealth());
             lich.clearStatusEffects();
             lich.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
@@ -108,7 +110,7 @@ public class LichLogic {
             if (lich instanceof TransformationAccessor && ((TransformationAccessor) lich).getAlternateForm()){
                 ((TransformationAccessor) lich).setAlternateForm(false);
             }
-            if (lich instanceof ServerPlayerEntity && (source.isOutOfWorld() || (lastRevive < 600 && lich.isSneaking()))) {
+            if (lich instanceof ServerPlayerEntity && (silver || source.isOutOfWorld() || (lastRevive < 600 && lich.isSneaking()))) {
                 if (!phylactery.getLeft().equals(lich.world)) {
                     ((ServerPlayerEntity) lich).teleport(phylactery.getLeft(), lich.getX(), lich.getY(), lich.getZ(), lich.yaw, lich.pitch);
                 }

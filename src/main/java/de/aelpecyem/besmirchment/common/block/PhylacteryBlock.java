@@ -48,7 +48,7 @@ import java.util.UUID;
 
 public class PhylacteryBlock extends Block implements BlockEntityProvider, Waterloggable {
     public PhylacteryBlock() {
-        super(FabricBlockSettings.of(Material.STONE, MaterialColor.GREEN).luminance(10));
+        super(FabricBlockSettings.copyOf(Blocks.NETHERITE_BLOCK).materialColor(MaterialColor.GREEN).luminance(10));
     }
 
     @Nullable

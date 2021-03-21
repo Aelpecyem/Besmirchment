@@ -24,13 +24,19 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
@@ -50,7 +56,9 @@ import java.lang.invoke.SerializedLambda;
 public abstract class LivingEntityMixin extends Entity implements LichRollAccessor, LichAccessor {
     private int bsm_lastRevive = 0;
     private int bsm_cachedSouls = 0;
-    @Environment(EnvType.CLIENT) private int bsm_lastRoll = 100;
+    @Environment(EnvType.CLIENT)
+    private int bsm_lastRoll = 100;
+
     @Shadow
     protected abstract float getSoundVolume();
 
@@ -75,7 +83,11 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     @Shadow
     public abstract boolean isAlive();
 
-    @Shadow public abstract float getYaw(float tickDelta);
+    @Shadow
+    public abstract float getYaw(float tickDelta);
+
+    @Shadow
+    public abstract boolean hasStatusEffect(StatusEffect effect);
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -106,10 +118,10 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     }
 
     @Inject(method = "onKilledBy", at = @At("RETURN"))
-    private void onKilledBy(LivingEntity adversary, CallbackInfo ci){
-        if (getType().isIn(BSMTags.PURE_SOULS) && adversary != null && adversary.isHolding(BSMObjects.LICH_GEM) && adversary.getMainHandStack().getItem().equals(BWObjects.ATHAME)){
+    private void onKilledBy(LivingEntity adversary, CallbackInfo ci) {
+        if (getType().isIn(BSMTags.PURE_SOULS) && adversary != null && adversary.isHolding(BSMObjects.LICH_GEM)) {
             for (ItemStack itemStack : adversary.getItemsEquipped()) {
-                if (itemStack.getItem().equals(BSMObjects.LICH_GEM) && !LichGemItem.isSouled(itemStack)){
+                if (itemStack.getItem().equals(BSMObjects.LICH_GEM) && !LichGemItem.isSouled(itemStack)) {
                     LichGemItem.setSouled(itemStack, true);
                     playSound(BWSoundEvents.ENTITY_GENERIC_PLING, 0.5F, MathHelper.nextFloat(random, 0.7F, 1.5F));
                     break;
@@ -118,10 +130,28 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
         }
     }
 
+    @Inject(method = "eatFood", at = @At("HEAD"))
+    private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+        if (BSMTransformations.isLich(this, false) && hasStatusEffect(StatusEffects.WEAKNESS)) {
+            if (stack.getItem().equals(Items.GOLDEN_APPLE)) {
+                playSound(BWSoundEvents.ENTITY_GENERIC_TRANSFORM, 1, 1);
+                ((TransformationAccessor) this).setAlternateForm(false);
+                ((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
+                ((TransformationAccessor) this).setTransformation(BWTransformations.HUMAN);
+                ((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
+                if (world.isClient) {
+                    for (int i = 0; i < 20; i++) {
+                        world.addParticle(new DustParticleEffect(0.98F, 0.8F, 0, MathHelper.nextFloat(random, 1.2F, 3F)), getParticleX(1), getRandomBodyY(), getParticleZ(1), 0, 0, 0);
+                    }
+                }
+            }
+        }
+    }
+
     @Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
     private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (!cir.getReturnValue() && BSMTransformations.isLich(this, false)) {
-            if(LichLogic.revive((LivingEntity) (Object) this, source, bsm_lastRevive)){
+            if (LichLogic.revive((LivingEntity) (Object) this, source, bsm_lastRevive)) {
                 cir.setReturnValue(true);
                 bsm_lastRevive = 0;
             }
@@ -168,24 +198,24 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
 
     @Inject(method = "isInSwimmingPose", at = @At("HEAD"), cancellable = true)
     private void isInSwimmingPose(CallbackInfoReturnable<Boolean> cir) {
-        if (BSMTransformations.isLich(this, true)){
+        if (BSMTransformations.isLich(this, true)) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "swingHand(Lnet/minecraft/util/Hand;)V", at = @At("HEAD"), cancellable = true)
-    private void swingHand(Hand hand, CallbackInfo ci){
-        if (BSMTransformations.isLich(this, true)){
+    private void swingHand(Hand hand, CallbackInfo ci) {
+        if (BSMTransformations.isLich(this, true)) {
             ci.cancel();
-            if (world.isClient && bsm_lastRoll >= 20){
+            if (world.isClient && bsm_lastRoll >= 20) {
                 bsm_lastRoll = 0;
             }
         }
     }
 
     @Inject(method = "tickMovement", at = @At("TAIL"))
-    private void tickMovement(CallbackInfo ci){
-        if (world.isClient){
+    private void tickMovement(CallbackInfo ci) {
+        if (world.isClient) {
             bsm_lastRoll++;
         }
     }
@@ -205,11 +235,20 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
         Pair<ServerWorld, PhylacteryBlockEntity> phylactery = LichLogic.getPhylactery((LivingEntity) (Object) this);
         if (phylactery != null) {
             this.bsm_cachedSouls = phylactery.getRight().souls;
-        }else{
+        } else {
             this.bsm_cachedSouls = 0;
         }
-        if ((Object) this instanceof PlayerEntity) {
-            LichLogic.addAttributes((LivingEntity) (Object) this, bsm_cachedSouls);
+        if (BSMTransformations.isLich(this, false)) {
+            if ((Object) this instanceof PlayerEntity) {
+                LichLogic.addAttributes((LivingEntity) (Object) this, bsm_cachedSouls);
+            }
+        }
+    }
+
+    @Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
+    private void getGroup(CallbackInfoReturnable<EntityGroup> cir) {
+        if (BSMTransformations.isLich(this, false)) {
+            cir.setReturnValue(EntityGroup.UNDEAD);
         }
     }
 
@@ -223,7 +262,7 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci) {
         bsm_lastRevive = tag.getInt("BSMLastRevive");
         bsm_cachedSouls = tag.getInt("BSMSoulCache");
-        if (world instanceof ServerWorld){
+        if (world instanceof ServerWorld) {
             updateCachedSouls();
         }
     }

@@ -18,6 +18,7 @@ public class BSMConditions {
         PatchouliAPI.get().setConfigFlag("bsm_beelzebub", Besmirchment.config.mobs.enableBeelzebub);
         PatchouliAPI.get().setConfigFlag("bsm_tamable_Demons", Besmirchment.config.enableTamableDemons);
         PatchouliAPI.get().setConfigFlag("bsm_sunscreen", Besmirchment.config.enableSunscreen);
+        PatchouliAPI.get().setConfigFlag("bsm_lichdom", Besmirchment.config.enableLichdom);
         BSMUtil.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
     }
 
@@ -37,6 +38,8 @@ public class BSMConditions {
                 return Besmirchment.config.enableSunscreen;
             case "lol":
                 return Besmirchment.config.twoPlusTwo == 4;
+            case "lichdom":
+                return Besmirchment.config.enableLichdom;
         }
         return false;
     }

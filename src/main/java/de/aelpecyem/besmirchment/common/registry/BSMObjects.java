@@ -13,10 +13,14 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 public class BSMObjects {
     public static final Block ELITE_COFFIN = new CoffinBlock(DyeColor.CYAN, FabricBlockSettings.copyOf(BWObjects.BLACK_COFFIN).nonOpaque().luminance(state -> state.get(CoffinBlock.OCCUPIED) ? 3 : 10));
@@ -34,7 +38,16 @@ public class BSMObjects {
 
     public static void init(){
         BSMUtil.registerBlock("elite_coffin", ELITE_COFFIN);
-        BSMUtil.registerBlock("phylactery", PHYLACTERY);
+        BSMUtil.register(Registry.BLOCK, "phylactery", PHYLACTERY);
+        BSMUtil.register(Registry.ITEM, "phylactery", new BlockItem(PHYLACTERY, new FabricItemSettings().group(Besmirchment.BESMIRCHMENT)){
+            @Override
+            public void onCraft(ItemStack stack, World world, PlayerEntity player) {
+                super.onCraft(stack, world, player);
+                if (!world.isClient && !player.giveItemStack(new ItemStack(LICH_GEM))){
+                    player.dropItem(new ItemStack(LICH_GEM), false);
+                }
+            }
+        });
         BSMUtil.register(Registry.ITEM,"final_broom", FINAL_BROOM);
         BSMUtil.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
         BSMUtil.register(Registry.ITEM,"scroll_of_torment", SCROLL_OF_TORMENT);
