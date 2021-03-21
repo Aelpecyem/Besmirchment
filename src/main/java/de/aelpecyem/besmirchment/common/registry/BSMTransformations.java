@@ -1,5 +1,7 @@
 package de.aelpecyem.besmirchment.common.registry;
 
+import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
+import de.aelpecyem.besmirchment.common.transformation.LichTransformation;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreTransformation;
 import dev.emi.nourish.NourishComponent;
 import dev.emi.nourish.NourishMain;
@@ -12,14 +14,15 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class BSMTransformations {
     public static final Transformation WEREPYRE = new WerepyreTransformation();
-    public static final Transformation LICH = new Transformation();
+    public static final Transformation LICH = new LichTransformation();
     public static void init(){
-        Util.register(BWRegistries.TRANSFORMATIONS, "werepyre", WEREPYRE);
-        Util.register(BWRegistries.TRANSFORMATIONS, "lich", LICH);
+        BSMUtil.register(BWRegistries.TRANSFORMATIONS, "werepyre", WEREPYRE);
+        BSMUtil.register(BWRegistries.TRANSFORMATIONS, "lich", LICH);
     }
 
     public static boolean isLich(Entity entity, boolean isGost){

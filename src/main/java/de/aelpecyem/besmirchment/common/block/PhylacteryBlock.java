@@ -2,11 +2,13 @@ package de.aelpecyem.besmirchment.common.block;
 
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import de.aelpecyem.besmirchment.common.entity.LichGemItem;
+import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.LichLogic;
 import de.aelpecyem.besmirchment.common.world.BSMWorldState;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,6 +20,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
@@ -116,27 +119,24 @@ public class PhylacteryBlock extends Block implements BlockEntityProvider, Water
                 startSouls = existingPhylactery.getRight().souls;
                 existingPhylactery.getLeft().breakBlock(existingPhylactery.getRight().getPos(), true, placer);
             }
-            worldState.phylacteries.put(placer.getUuid(), pos);
+            worldState.addPhylactery(placer.getUuid(), pos);
             if (world.getBlockEntity(pos) instanceof PhylacteryBlockEntity){
                 ((PhylacteryBlockEntity) world.getBlockEntity(pos)).addSouls(startSouls);
             }
-            worldState.markDirty();
         }
     }
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!world.isClient && state.getBlock() != newState.getBlock()) {
             BSMWorldState worldState = BSMWorldState.get(world);
-            UUID foundUUID = null;
-            for (UUID uuid : worldState.phylacteries.keySet()) {
-                if (worldState.phylacteries.get(uuid).equals(pos)) {
-                    foundUUID = uuid;
-                    break;
-                }
-            }
+            UUID foundUUID = LichLogic.getPlayerForPhylactery(worldState, pos);
             if (foundUUID != null) {
-                worldState.phylacteries.remove(foundUUID);
-                worldState.markDirty();
+                worldState.removePhylactery(foundUUID);
+                for (ServerPlayerEntity player : PlayerLookup.all(world.getServer())) {
+                    if (player.getUuid().equals(foundUUID)){
+                        ((LichAccessor) player).updateCachedSouls();
+                    }
+                }
             }
         }
 

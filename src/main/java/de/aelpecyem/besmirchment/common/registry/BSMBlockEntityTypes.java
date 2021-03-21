@@ -7,6 +7,6 @@ import net.minecraft.util.registry.Registry;
 public class BSMBlockEntityTypes {
     public static final BlockEntityType<PhylacteryBlockEntity> PHYLACTERY =  BlockEntityType.Builder.create(PhylacteryBlockEntity::new, BSMObjects.PHYLACTERY).build(null);
     public static void init(){
-        Util.register(Registry.BLOCK_ENTITY_TYPE, "phylactery", PHYLACTERY);
+        BSMUtil.register(Registry.BLOCK_ENTITY_TYPE, "phylactery", PHYLACTERY);
     }
 }

@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Predicate;
 
-public class Util {
+public class BSMUtil {
     public static <T> T register(Registry<? super T> registry, String name, T entry) {
         return Registry.register(registry, Besmirchment.id(name), entry);
     }

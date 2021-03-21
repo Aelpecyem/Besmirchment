@@ -18,7 +18,7 @@ public class BSMConditions {
         PatchouliAPI.get().setConfigFlag("bsm_beelzebub", Besmirchment.config.mobs.enableBeelzebub);
         PatchouliAPI.get().setConfigFlag("bsm_tamable_Demons", Besmirchment.config.enableTamableDemons);
         PatchouliAPI.get().setConfigFlag("bsm_sunscreen", Besmirchment.config.enableSunscreen);
-        Util.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
+        BSMUtil.register(RecipeConds.RECIPE_CONDITION, "bsm_config", RecipeCondsUtil.stringParam(BSMConditions::getOption));
     }
 
     public static boolean getOption(String key){

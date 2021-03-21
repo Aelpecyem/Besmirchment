@@ -2,9 +2,11 @@ package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.EntityType;
@@ -79,6 +81,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
     private void tick(CallbackInfo ci){
         if (getLastJumpTicks() < 200){
             setLastJumpTicks(getLastJumpTicks() + 1);
+        }
+        if (BSMTransformations.isWerepyre(this, false) && ((LichAccessor) this).getCachedSouls() == 0){
+            ((MagicAccessor) this).setMagic(0);
         }
         if (age % 20 == 0 && BSMTransformations.isLich(this, true)){
             addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 40, 0, true, false, false));

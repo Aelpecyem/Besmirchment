@@ -27,12 +27,12 @@ public class BSMEntityTypes {
 
     public static final String BEELZEBUB_PLEDGE = "pledge.besmirchment.beelzebub";
     public static void init(){
-        Util.register(Registry.ENTITY_TYPE, "final_broom", FINAL_BROOM);
-        Util.register(Registry.ENTITY_TYPE, "witchy_dye", WITCHY_DYE);
-        Util.register(Registry.ENTITY_TYPE, "infectious_spit", INFECTIOUS_SPIT);
-        Util.register(Registry.ENTITY_TYPE, "werepyre", WEREPYRE);
+        BSMUtil.register(Registry.ENTITY_TYPE, "final_broom", FINAL_BROOM);
+        BSMUtil.register(Registry.ENTITY_TYPE, "witchy_dye", WITCHY_DYE);
+        BSMUtil.register(Registry.ENTITY_TYPE, "infectious_spit", INFECTIOUS_SPIT);
+        BSMUtil.register(Registry.ENTITY_TYPE, "werepyre", WEREPYRE);
         FabricDefaultAttributeRegistry.register(WEREPYRE, WerewolfEntity.createAttributes());
-        Util.register(Registry.ENTITY_TYPE, "beelzebub", BEELZEBUB);
+        BSMUtil.register(Registry.ENTITY_TYPE, "beelzebub", BEELZEBUB);
         FabricDefaultAttributeRegistry.register(BEELZEBUB, BeelzebubEntity.createAttributes());
         if (config.mobs.werepyreWeight > 0) {
             BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BSMEntityTypes.WEREPYRE.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN && (context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.EXTREME_HILLS)), BSMEntityTypes.WEREPYRE.getSpawnGroup(), BSMEntityTypes.WEREPYRE, config.mobs.werepyreWeight, config.mobs.werepyreMinGroupCount, config.mobs.werepyreMaxGroupCount);

@@ -208,6 +208,9 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
         }else{
             this.bsm_cachedSouls = 0;
         }
+        if ((Object) this instanceof PlayerEntity) {
+            LichLogic.addAttributes((LivingEntity) (Object) this, bsm_cachedSouls);
+        }
     }
 
     @Inject(method = "writeCustomDataToTag", at = @At("TAIL"))

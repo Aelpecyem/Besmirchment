@@ -9,7 +9,6 @@ import de.aelpecyem.besmirchment.common.item.VampireSunscreenItem;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import moriyashiine.bewitchment.api.item.BroomItem;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
-import moriyashiine.bewitchment.common.item.ContractItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -34,15 +33,15 @@ public class BSMObjects {
     public static final Item BEELZEBUB_SPAWN_EGG = new SpawnEggItem(BSMEntityTypes.BEELZEBUB, 0x1E0000, 0xEC0000, new FabricItemSettings().group(Besmirchment.BESMIRCHMENT));
 
     public static void init(){
-        Util.registerBlock("elite_coffin", ELITE_COFFIN);
-        Util.registerBlock("phylactery", PHYLACTERY);
-        Util.register(Registry.ITEM,"final_broom", FINAL_BROOM);
-        Util.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
-        Util.register(Registry.ITEM,"scroll_of_torment", SCROLL_OF_TORMENT);
-        Util.register(Registry.ITEM,"vampire_sunscreen", VAMPIRE_SUNSCREEN);
-        Util.register(Registry.ITEM,"demonic_deed", DEMONIC_DEED);
-        Util.register(Registry.ITEM,"lich_gem", LICH_GEM);
-        Util.register(Registry.ITEM,"werepyre_spawn_egg", WEREPYRE_SPAWN_EGG);
-        Util.register(Registry.ITEM,"beelzebub_spawn_egg", BEELZEBUB_SPAWN_EGG);
+        BSMUtil.registerBlock("elite_coffin", ELITE_COFFIN);
+        BSMUtil.registerBlock("phylactery", PHYLACTERY);
+        BSMUtil.register(Registry.ITEM,"final_broom", FINAL_BROOM);
+        BSMUtil.register(Registry.ITEM,"witchy_dye", WITCHY_DYE);
+        BSMUtil.register(Registry.ITEM,"scroll_of_torment", SCROLL_OF_TORMENT);
+        BSMUtil.register(Registry.ITEM,"vampire_sunscreen", VAMPIRE_SUNSCREEN);
+        BSMUtil.register(Registry.ITEM,"demonic_deed", DEMONIC_DEED);
+        BSMUtil.register(Registry.ITEM,"lich_gem", LICH_GEM);
+        BSMUtil.register(Registry.ITEM,"werepyre_spawn_egg", WEREPYRE_SPAWN_EGG);
+        BSMUtil.register(Registry.ITEM,"beelzebub_spawn_egg", BEELZEBUB_SPAWN_EGG);
     }
 }

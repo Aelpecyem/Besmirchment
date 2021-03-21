@@ -11,7 +11,7 @@ public class BSMStatusEffects {
     public static final StatusEffect SUNSCREEN = new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0xFFFF8F);
 
     public static void init(){
-        Util.register(Registry.STATUS_EFFECT,"love", LOVE);
-        Util.register(Registry.STATUS_EFFECT,"sunscreen", SUNSCREEN);
+        BSMUtil.register(Registry.STATUS_EFFECT,"love", LOVE);
+        BSMUtil.register(Registry.STATUS_EFFECT,"sunscreen", SUNSCREEN);
     }
 }

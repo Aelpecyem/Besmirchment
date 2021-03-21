@@ -3,7 +3,7 @@ package de.aelpecyem.besmirchment.common.item;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.BeelzebubEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
-import de.aelpecyem.besmirchment.common.registry.Util;
+import de.aelpecyem.besmirchment.common.registry.BSMUtil;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -32,7 +32,7 @@ public class ScrollOfTormentItem extends Item {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!world.isClient && user instanceof PlayerEntity && BewitchmentAPI.usePlayerMagic((PlayerEntity) user, 1, false)) {
-            EntityHitResult hit = Util.hitscanEntity(world, user, 8, (target) -> target instanceof LivingEntity && !target.isSpectator() && user.canSee(target));
+            EntityHitResult hit = BSMUtil.hitscanEntity(world, user, 8, (target) -> target instanceof LivingEntity && !target.isSpectator() && user.canSee(target));
             if (hit != null && hit.getEntity() instanceof PigEntity) {
                 world.createExplosion(hit.getEntity(), DamageSource.MAGIC, null, hit.getPos().x, hit.getPos().y, hit.getPos().z, 1, true, Explosion.DestructionType.NONE);
                 LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
@@ -52,7 +52,7 @@ public class ScrollOfTormentItem extends Item {
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         BewitchmentAPI.usePlayerMagic((PlayerEntity) user, 1, false);
         if (world.isClient) {
-            EntityHitResult hit = Util.hitscanEntity(world, user, 8, (target) -> target instanceof LivingEntity && !target.isSpectator() && user.canSee(target));
+            EntityHitResult hit = BSMUtil.hitscanEntity(world, user, 8, (target) -> target instanceof LivingEntity && !target.isSpectator() && user.canSee(target));
             if (hit != null && hit.getEntity() instanceof PigEntity) {
                 world.addParticle(ParticleTypes.ENTITY_EFFECT, hit.getEntity().getParticleX(0.5D), hit.getEntity().getRandomBodyY(), hit.getEntity().getParticleZ(0.5D), 0.45, 0, 0);
             }

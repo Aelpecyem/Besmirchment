@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Lichdom",
+  "icon": "besmirchment:lich_gem",
+  "entry_color": "C15600",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "flag": "bsm_lichdom",
+  "pages": [
+    {
+      "type": "text",
+      "text": "lol look i made the funny reference"
+    },
+    {
+      "type": "text",
+      "text": "$(o)Hourai! Immortality :)$()"
+    }
+  ]
+}

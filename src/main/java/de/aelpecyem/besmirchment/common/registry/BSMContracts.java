@@ -7,6 +7,6 @@ public class BSMContracts {
     public static final Contract CONQUEST = new Contract(true);
 
     public static void init(){
-        Util.register(BWRegistries.CONTRACTS,"conquest", CONQUEST);
+        BSMUtil.register(BWRegistries.CONTRACTS,"conquest", CONQUEST);
     }
 }

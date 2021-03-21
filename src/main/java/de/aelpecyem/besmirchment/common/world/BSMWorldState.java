@@ -32,6 +32,16 @@ public class BSMWorldState extends PersistentState {
         return tag;
     }
 
+    public void addPhylactery(UUID uuid, BlockPos pos){
+        phylacteries.put(uuid, pos);
+        markDirty();
+    }
+
+    public void removePhylactery(UUID uuid){
+        phylacteries.remove(uuid);
+        markDirty();
+    }
+
     public void fromTag(CompoundTag tag) {
         ListTag phylacteryList = tag.getList("Phylacteries", 10);
         for (Tag nbt : phylacteryList) {
