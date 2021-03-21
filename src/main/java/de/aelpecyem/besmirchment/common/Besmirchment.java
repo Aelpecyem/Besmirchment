@@ -6,6 +6,7 @@ import de.aelpecyem.besmirchment.common.registry.*;
 import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;

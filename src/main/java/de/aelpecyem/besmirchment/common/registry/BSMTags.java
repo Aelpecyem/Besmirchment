@@ -7,4 +7,6 @@ import net.minecraft.tag.Tag;
 
 public class BSMTags {
     public static Tag<EntityType<?>> ILLEGAL_FAMILIARS = TagRegistry.entityType(Besmirchment.id("illegal_familiars"));
+    public static Tag<EntityType<?>> PURE_SOULS = TagRegistry.entityType(Besmirchment.id("pure_souls"));
+
 }

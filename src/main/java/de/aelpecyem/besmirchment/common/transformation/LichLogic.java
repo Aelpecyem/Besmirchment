@@ -3,6 +3,7 @@ package de.aelpecyem.besmirchment.common.transformation;
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
 import de.aelpecyem.besmirchment.common.world.BSMWorldState;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,6 +27,9 @@ public class LichLogic {
             lich.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 200, 0));
             lich.addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 200, 0));
             LichRevivePacket.send(lich);
+            if (lich instanceof TransformationAccessor && ((TransformationAccessor) lich).getAlternateForm()){
+                ((TransformationAccessor) lich).setAlternateForm(false);
+            }
             if (lich instanceof ServerPlayerEntity && (source.isOutOfWorld() || (lastRevive < 600 && lich.isSneaking()))) {
                 if (!phylactery.getLeft().equals(lich.world)) {
                     ((ServerPlayerEntity) lich).teleport(phylactery.getLeft(), lich.getX(), lich.getY(), lich.getZ(), lich.yaw, lich.pitch);

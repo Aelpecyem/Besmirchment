@@ -4,7 +4,6 @@ import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
 import de.aelpecyem.besmirchment.client.packet.WerepyreJumpPacket;
 import de.aelpecyem.besmirchment.client.renderer.*;
 import de.aelpecyem.besmirchment.common.Besmirchment;
-import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
 import de.aelpecyem.besmirchment.common.packet.SparklePacket;
@@ -12,6 +11,7 @@ import de.aelpecyem.besmirchment.common.registry.BSMBlockEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
+import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -24,11 +24,15 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -59,6 +63,9 @@ public class BesmirchmentClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(minecraftClient -> {
             if (minecraftClient.player != null){
                 if (BSMTransformations.isLich(minecraftClient.player, true)){
+                    if (shouldObscureVision(minecraftClient.player)){
+                        fogTicks = 10;
+                    }
                     if (minecraftClient.options.keySprint.isPressed()){
                         minecraftClient.player.setSprinting(true);
                     }
@@ -76,12 +83,27 @@ public class BesmirchmentClient implements ClientModInitializer {
                 abilityCooldown--;
             }
         });
-
         ClientPlayNetworking.registerGlobalReceiver(SparklePacket.ID, SparklePacket::handle);
         ClientPlayNetworking.registerGlobalReceiver(LichRevivePacket.ID, LichRevivePacket::handle);
     }
 
     public static int getFogTicks(){
         return fogTicks;
+    }
+
+    public static boolean shouldObscureVision(PlayerEntity player){
+        BlockPos.Mutable mutable = new BlockPos.Mutable();
+
+        for(int i = 0; i < 8; ++i) {
+            double x = player.getX() + (double)(((float)(i % 2) - 0.5F) * player.getWidth() * 0.8F);
+            double y = player.getEyeY() + (double)(((float)((i >> 1) % 2) - 0.5F) * 0.1F);
+            double z = player.getZ() + (double)(((float)((i >> 2) % 2) - 0.5F) * player.getWidth() * 0.8F);
+            mutable.set(x, y, z);
+            BlockState blockState = player.world.getBlockState(mutable);
+            if (blockState.getRenderType() != BlockRenderType.INVISIBLE && blockState.shouldBlockVision(player.world, mutable)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

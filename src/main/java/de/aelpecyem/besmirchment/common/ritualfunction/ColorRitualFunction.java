@@ -41,7 +41,7 @@ import java.util.function.Predicate;
 
 public class ColorRitualFunction extends RitualFunction {
     public ColorRitualFunction() {
-        super(ParticleTypes.CRIT, null);
+        super(ParticleTypes.ENCHANTED_HIT, null);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ColorRitualFunction extends RitualFunction {
     @Override
     public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
         super.tick(world, glyphPos, effectivePos, catFamiliar);
-        System.out.println("h");
+        //moriya pls fix
         if (world.isClient) {
             Random random = world.getRandom();
             Color color = Color.getHSBColor(random.nextFloat(), 1, 1);

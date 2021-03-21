@@ -3,7 +3,10 @@ package de.aelpecyem.besmirchment.mixin;
 import de.aelpecyem.besmirchment.client.renderer.LichRollAccessor;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
+import de.aelpecyem.besmirchment.common.entity.LichGemItem;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
+import de.aelpecyem.besmirchment.common.registry.BSMObjects;
+import de.aelpecyem.besmirchment.common.registry.BSMTags;
 import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMContracts;
@@ -26,10 +29,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -97,6 +102,19 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     private void tick(CallbackInfo ci) {
         if (!world.isClient && bsm_lastRevive < 1000 && isAlive()) {
             bsm_lastRevive++;
+        }
+    }
+
+    @Inject(method = "onKilledBy", at = @At("RETURN"))
+    private void onKilledBy(LivingEntity adversary, CallbackInfo ci){
+        if (getType().isIn(BSMTags.PURE_SOULS) && adversary != null && adversary.isHolding(BSMObjects.LICH_GEM) && adversary.getMainHandStack().getItem().equals(BWObjects.ATHAME)){
+            for (ItemStack itemStack : adversary.getItemsEquipped()) {
+                if (itemStack.getItem().equals(BSMObjects.LICH_GEM) && !LichGemItem.isSouled(itemStack)){
+                    LichGemItem.setSouled(itemStack, true);
+                    playSound(BWSoundEvents.ENTITY_GENERIC_PLING, 0.5F, MathHelper.nextFloat(random, 0.7F, 1.5F));
+                    break;
+                }
+            }
         }
     }
 
