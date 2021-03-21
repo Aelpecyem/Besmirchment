@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:curses",
-  "name": "Lichdom",
+  "name": "Reach Lichdom",
   "icon": "besmirchment:lich_gem",
   "entry_color": "C15600",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",

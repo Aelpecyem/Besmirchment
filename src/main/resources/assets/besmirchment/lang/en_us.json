@@ -15,7 +15,7 @@
   "tooltip.besmirchment.empty": "Empty",
   "message.besmirchment.phylactery_soul": "The phylactery contains %d soul",
   "message.besmirchment.phylactery_souls": "The phylactery contains %d souls",
-
+  "message.besmirchment.no_liches": "This rite cannot be cast by liches",
   "entity.besmirchment.final_broom": "§cFi§6na§el §aB§br§9oo§dm",
   "entity.besmirchment.witchy_dye": "Witchy Dye",
   "entity.besmirchment.witchy_bleach": "Witchy Bleach",
@@ -34,6 +34,7 @@
   "besmirchment.subtitles.entity.beelzebub.hurt": "Beelzebub hurt",
   "besmirchment.subtitles.entity.beelzebub.death": "Beelzebub dies",
   "ritual.besmirchment.rituals.color_typhoon": "Dazzling Color Typhoon",
+  "ritual.besmirchment.rituals.reach_lichdom": "Reach Lichdom",
   "text.autoconfig.besmirchment.title": "Besmirchment",
   "text.autoconfig.besmirchment.option.enableFinalBroom": "Enable Final Broom",
   "text.autoconfig.besmirchment.option.enableWitchyDye": "Enable Witchy Dye",

@@ -1,0 +1,24 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+    {
+      "item": "bewitchment:grim_elixir"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    },
+    {
+      "item": "minecraft:zombie_skull"
+    },
+    {
+      "item": "bewitchment:demon_heart"
+    },
+    {
+      "item": "bewitchment:ectoplasm"
+    }
+  ],
+  "inner": "eldritch",
+  "outer": "fiery",
+  "ritual_function": "besmirchment:reach_lichdom",
+  "cost": 999
+}
