@@ -20,5 +20,10 @@
   "inner": "eldritch",
   "outer": "fiery",
   "ritual_function": "besmirchment:reach_lichdom",
-  "cost": 999
+  "cost": 999,
+  "frc:conditions": [
+  {
+    "besmirchment:bsm_config": "lichdom"
+  }
+]
 }

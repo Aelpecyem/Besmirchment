@@ -15,13 +15,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.UUID;
 
@@ -35,9 +32,7 @@ public class LichLogic {
     private static final EntityAttributeModifier LICH_MOVEMENT_SPEED_MODIFIER_2 = new EntityAttributeModifier(UUID.fromString("7412866d-2b9a-4498-9c60-b420ef8eb6ab"), "Transformation modifier", 0.04, EntityAttributeModifier.Operation.ADDITION);
     private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", -10, EntityAttributeModifier.Operation.ADDITION);
     private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", -6, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_2 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_3 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", 10, EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_4 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", 20, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier LICH_HEALTH_MODIFIER_2 = new EntityAttributeModifier(UUID.fromString("2ee98b9b-7180-46ac-97ce-d8f7307bffb4"), "Transformation modifier", -1, EntityAttributeModifier.Operation.ADDITION);
     private static final EntityAttributeModifier LICH_ARMOR_MODIFIER= new EntityAttributeModifier(UUID.fromString("51884d70-fae3-4061-8731-9327b39287b8"), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
 
     public static void addAttributes(LivingEntity lich, int cachedSouls) {
@@ -55,8 +50,6 @@ public class LichLogic {
         healthAttribute.removeModifier(LICH_HEALTH_MODIFIER_0);
         healthAttribute.removeModifier(LICH_HEALTH_MODIFIER_1);
         healthAttribute.removeModifier(LICH_HEALTH_MODIFIER_2);
-        healthAttribute.removeModifier(LICH_HEALTH_MODIFIER_3);
-        healthAttribute.removeModifier(LICH_HEALTH_MODIFIER_4);
         armorAttribute.removeModifier(LICH_ARMOR_MODIFIER);
         if (cachedSouls < 0){
             return;
@@ -79,20 +72,13 @@ public class LichLogic {
                 movementSpeedAttribute.addPersistentModifier(LICH_MOVEMENT_SPEED_MODIFIER_2);
                 break;
             case 5:
-                healthAttribute.addPersistentModifier(LICH_HEALTH_MODIFIER_3);
                 attackDamageAttribute.addPersistentModifier(LICH_STRENGTH_MODIFIER_1);
                 armorAttribute.addPersistentModifier(LICH_ARMOR_MODIFIER);
                 movementSpeedAttribute.addPersistentModifier(LICH_MOVEMENT_SPEED_MODIFIER_2);
                 break;
             case 6:
-                healthAttribute.addPersistentModifier(LICH_HEALTH_MODIFIER_3);
-                attackDamageAttribute.addPersistentModifier(LICH_STRENGTH_MODIFIER_2);
-                armorAttribute.addPersistentModifier(LICH_ARMOR_MODIFIER);
-                movementSpeedAttribute.addPersistentModifier(LICH_MOVEMENT_SPEED_MODIFIER_2);
-                break;
             case 7:
             case 8:
-                healthAttribute.addPersistentModifier(LICH_HEALTH_MODIFIER_4);
                 attackDamageAttribute.addPersistentModifier(LICH_STRENGTH_MODIFIER_2);
                 armorAttribute.addPersistentModifier(LICH_ARMOR_MODIFIER);
                 movementSpeedAttribute.addPersistentModifier(LICH_MOVEMENT_SPEED_MODIFIER_2);
