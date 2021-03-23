@@ -37,7 +37,7 @@
     },
     {
       "type": "text",
-      "text": "Lastly, liches are considered undead. This means they are weak to $(l:bewitchment:intro/silver)Silver$(). When killed by it, they will be immediately sent back to their Phylactery, draining two souls.$(br2)$(o)When dying in rapid succession, liches can also go back to their phylactery voluntarily by sneaking.$(br2)Lichdom counts as a transformation, so liches cannot become vampires, werewolves etc.$()"
+      "text": "Lastly, liches are considered undead, many may run away from them. This also means that they are weak to $(l:bewitchment:intro/silver)Silver$(). When killed by it, they will be immediately sent back to their Phylactery, draining two souls, and NOT be revived.$(br2)$(o)When being revived in rapid succession, liches can also go back to their phylactery voluntarily by sneaking.$(br2)Lichdom counts as a transformation, so liches cannot become vampires, werewolves etc.$()"
     }
   ]
 }

@@ -15,8 +15,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -117,7 +119,7 @@ public class LichLogic {
                 BWUtil.attemptTeleport(lich, phylactery.getRight().getPos(), 2, false);
                 LichRevivePacket.send(lich);
             }
-            return true;
+            return silver;
         }
         return false;
     }

@@ -13,11 +13,13 @@
     "DemonTradeBuilderMixin",
     "EntityMixin",
     "EntityShapeContextMixin",
+    "FleeEntityGoalMixin",
     "LivingEntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
     "TransformationAbilityPacketMixin",
     "VillagerEntityMixin",
+    "VillagerHostilesSensorMixin"
   ],
   "client": [
     "client.BackgroundRendererMixin",
