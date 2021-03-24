@@ -8,7 +8,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "Werepyrism is a hybrid $(l:bewitchment:curses/conducting_curses)Curse$() formed by combining $(l:bewitchment:curses/lycanthropy)Lycanthropy$() with $(l:bewitchment:curses/vampirism)Vampirism$().$(br)$(l:besmirchment:creatures/werepyre)Werepyres$() suffer the same symptoms as the other two, though they may not fly in their beast form. Instead, they are able to flap vigorously."
+      "text": "Werepyrism is a hybrid $(l:bewitchment:curses/conducting_curses)Curse$() formed by combining $(l:bewitchment:curses/lycanthropy)Lycanthropy$() with $(l:bewitchment:curses/vampirism)Vampirism$().$(br)$(l:besmirchment:creatures/werepyre)Werepyres$() suffer the same symptoms as the other two, though they may not fly in their beast form. Instead, they are able to flap vigorously. Since their spiritual surface is that of a werewolf and not of a vampire, the sun will not burn them in their human form, though it will weaken them."
     },
     {
       "type": "text",

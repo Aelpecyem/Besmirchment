@@ -26,10 +26,13 @@ public class BWUtilMixin {
         if (BSMTransformations.isWerepyre(player, true)) {
             boolean pledged = BSMTransformations.hasWerepyrePledge(player);
             if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
-                if (!player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
+                if (alternateForm && !player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
                     player.setOnFireFor(8);
                 }else if (player.age % 20 == 0){
-                    SparklePacket.send(player);
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 1, true, true));
+                    if (player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)) {
+                        SparklePacket.send(player);
+                    }
                 }
             }
             HungerManager hungerManager = player.getHungerManager();
@@ -54,6 +57,7 @@ public class BWUtilMixin {
         if (!player.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
             player.setOnFireFor(duration);
         }else if(player.age % 20 == 0){
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 1, true, true));
             SparklePacket.send(player);
         }
     }

@@ -7,7 +7,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "This horrid offspring between a $(l:bewitchment:creatures/vampire)Vampire$() and $(l:bewitchment:creatures/werewolf)Werewolf$() spawns in taigas and mountains.$(br)Due to their size, they are not able to fly freely, despite their wings, though they may use their wings to fling themselves towards their prey, which is usually humanoid.$(br)Werepyres only appear on full moons and turn back to their non-beast form when morning breaks$()."
+      "text": "This horrid offspring between a $(l:bewitchment:creatures/vampire)Vampire$() and $(l:bewitchment:creatures/werewolf)Werewolf$() spawns in taigas, icy biomes, and forests on a full moon.$(br)Due to their size, they are not able to fly freely, despite their wings, though they may use their wings to fling themselves towards their prey, which is usually humanoid.$(br)Werepyres only appear on full moons and turn back to their non-beast form when morning breaks$()."
     },
     {
       "type": "entity",

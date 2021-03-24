@@ -8,7 +8,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "As it turns out, the burning wrath of the sun is a terrible inconvenience for $(l:bewitchment:creatures/vampire)Vampires$(). Thankfully, there is a solution to this.$(br)$(item)Vampire Sunscreen$(), when applied, will reflect all sun rays from Vampires, causing them to gently sparkle instead."
+      "text": "As it turns out, the burning wrath of the sun is a terrible inconvenience for $(l:bewitchment:creatures/vampire)Vampires$(). Thankfully, there is a solution to this.$(br)$(item)Vampire Sunscreen$(), when applied, will reflect all sun rays from Vampires, causing them to gently sparkle instead.$(br)Nevertheless, this will drastically weaken its vampiric user."
     },
     {
       "type": "bewitchment:oil",
