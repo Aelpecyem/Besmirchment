@@ -34,7 +34,7 @@ public class VampireSunscreenItem extends Item {
         if (!world.isClient) {
             user.addStatusEffect(new StatusEffectInstance(BSMStatusEffects.SUNSCREEN, 3600, 0, true, true));
         }
-
+        stack.decrement(1);
         if (stack.isEmpty()) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else {
