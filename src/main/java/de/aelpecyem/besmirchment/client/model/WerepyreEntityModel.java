@@ -219,11 +219,10 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         rWingFur01.setTextureOffset(90, 11).addCuboid(-2.5F, 1.0F, -2.0F, 10.0F, 8.0F, 2.0F, 0.0F, true);
 
         lLeg01 = new ModelPart(this);
-        lLeg01.setPivot(2.7F, 1.4F, 7.2F);
-        setRotationAngle(lLeg01, -0.6109F, -0.2269F, -0.0873F);
+        lLeg01.setPivot(2.7f, 10.2f, -0.4f);
         lLeg01.setTextureOffset(11, 46).addCuboid(-2.3F, -1.1F, -1.9F, 5.0F, 13.0F, 5.0F, 0.0F, false);
+        stomach.addChild(lLeg01);
 
-        //private final ModelPart BipedLeftLeg;
         ModelPart lLeg02 = new ModelPart(this);
         lLeg02.setPivot(0.0F, 9.8F, 0.5F);
         lLeg01.addChild(lLeg02);
@@ -245,7 +244,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         ModelPart lFootClaw01 = new ModelPart(this);
         lFootClaw01.setPivot(-1.3F, 0.5F, -2.6F);
         lFoot.addChild(lFootClaw01);
-        setRotationAngle(lFootClaw01, 0.2269F, 0.3229F, 0.0F);
+        setRotationAngle(lFootClaw01, 0.2269F, 0.1047F, 0.0F);
         lFootClaw01.setTextureOffset(1, 48).addCuboid(-0.5F, -0.5F, -1.7F, 1.0F, 2.0F, 3.0F, 0.0F, false);
 
         ModelPart lFootClaw02 = new ModelPart(this);
@@ -257,13 +256,13 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         ModelPart lFootClaw03 = new ModelPart(this);
         lFootClaw03.setPivot(1.3F, 0.5F, -2.6F);
         lFoot.addChild(lFootClaw03);
-        setRotationAngle(lFootClaw03, 0.2269F, -0.3229F, 0.0F);
+        setRotationAngle(lFootClaw03, 0.2269F, -0.1047F, 0.0F);
         lFootClaw03.setTextureOffset(1, 48).addCuboid(-0.5F, -0.5F, -1.7F, 1.0F, 2.0F, 3.0F, 0.0F, false);
 
         rLeg01 = new ModelPart(this);
-        rLeg01.setPivot(-2.7F, 1.4F, 7.2F);
-        setRotationAngle(rLeg01, -0.6109F, 0.2269F, 0.0873F);
+        rLeg01.setPivot(-2.7f, 10.2f, -0.4f);
         rLeg01.setTextureOffset(11, 46).addCuboid(-2.7F, -1.1F, -1.9F, 5.0F, 13.0F, 5.0F, 0.0F, true);
+        stomach.addChild(rLeg01);
 
         ModelPart rLeg02 = new ModelPart(this);
         rLeg02.setPivot(0.0F, 9.8F, 0.5F);
@@ -286,7 +285,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         ModelPart rFootClaw01 = new ModelPart(this);
         rFootClaw01.setPivot(1.3F, 0.5F, -2.6F);
         rFoot.addChild(rFootClaw01);
-        setRotationAngle(rFootClaw01, 0.2269F, -0.3229F, 0.0F);
+        setRotationAngle(rFootClaw01, 0.2269F, -0.1047F, 0.0F);
         rFootClaw01.setTextureOffset(1, 48).addCuboid(-0.5F, -0.5F, -1.7F, 1.0F, 2.0F, 3.0F, 0.0F, true);
 
         ModelPart rFootClaw02 = new ModelPart(this);
@@ -298,7 +297,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         ModelPart rFootClaw03 = new ModelPart(this);
         rFootClaw03.setPivot(-1.3F, 0.5F, -2.6F);
         rFoot.addChild(rFootClaw03);
-        setRotationAngle(rFootClaw03, 0.2269F, 0.3229F, 0.0F);
+        setRotationAngle(rFootClaw03, 0.2269F, 0.1047F, 0.0F);
         rFootClaw03.setTextureOffset(1, 48).addCuboid(-0.5F, -0.5F, -1.7F, 1.0F, 2.0F, 3.0F, 0.0F, true);
 
         neck = new ModelPart(this);
@@ -445,11 +444,6 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(lClaw03, 0.1047F, 0.0F, 0.2269F);
         lClaw03.setTextureOffset(27, 0).addCuboid(-1.4F, 1.2F, -0.5F, 2.0F, 5.0F, 1.0F, 0.0F, false);
 
-        ModelPart leftHandItem = new ModelPart(this);
-        leftHandItem.setPivot(-1.0F, 8.5F, -0.5F);
-        lArm02.addChild(leftHandItem);
-
-
         rArm01 = new ModelPart(this);
         rArm01.setPivot(-5.5F, -15.0F, 2.0F);
         setRotationAngle(rArm01, 0.1745F, 0.0873F, 0.2356F);
@@ -552,8 +546,6 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         neck.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         lArm01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         rArm01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        lLeg01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        rLeg01.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     public void setRotationAngle(ModelPart bone, float x, float y, float z) {
