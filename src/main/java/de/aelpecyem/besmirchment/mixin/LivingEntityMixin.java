@@ -252,6 +252,13 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
         }
     }
 
+    @Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
+    private void handleFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Boolean> callbackInfo) {
+        if (BSMTransformations.isWerepyre(this, false) && fallDistance <= 12) {
+            callbackInfo.setReturnValue(false);
+        }
+    }
+
     @Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
     private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci) {
         tag.putInt("BSMLastRevive", bsm_lastRevive);
