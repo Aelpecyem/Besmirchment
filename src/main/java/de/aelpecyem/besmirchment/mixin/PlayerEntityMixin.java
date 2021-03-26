@@ -9,6 +9,8 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -38,6 +40,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
     private static final TrackedData<Integer> COLOR = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     private static final TrackedData<Integer> WEREPYRE_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Environment(EnvType.CLIENT)
+    public float bsmJumpBeginProgress = 0;
 
     @Shadow @Nullable
     public abstract ItemEntity dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership);
@@ -82,6 +87,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
         if (getLastJumpTicks() < 200){
             setLastJumpTicks(getLastJumpTicks() + 1);
         }
+        if (world.isClient){
+            if (getLastJumpTicks() > 20) {
+                if (bsmJumpBeginProgress > 0) {
+                    bsmJumpBeginProgress -= 0.1;
+                }
+            }else if (bsmJumpBeginProgress < 1){
+                bsmJumpBeginProgress += 0.1;
+            }
+        }
         if (!world.isClient && BSMTransformations.isLich(this, false) && ((LichAccessor) this).getCachedSouls() == 0){
             ((MagicAccessor) this).setMagic(0);
         }
@@ -99,6 +113,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
                 dropItem(new ItemStack(Items.EGG), true, true);
             }
         }
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    public float getLastJumpProgress() {
+        return bsmJumpBeginProgress;
     }
 
     @Inject(method = "onDeath", at = @At("TAIL"))

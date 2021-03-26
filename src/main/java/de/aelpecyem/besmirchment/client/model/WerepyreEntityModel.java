@@ -7,6 +7,7 @@ package de.aelpecyem.besmirchment.client.model;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -16,11 +17,25 @@ import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityModel<WerepyreEntity> {
-    private final ModelPart lWing01;
-    private final ModelPart rWing01;
     private final ModelPart neck;
     private final ModelPart body;
     private final ModelPart tail01;
+
+    private final ModelPart lWing01;
+    private final ModelPart lWingMembrane01;
+    private final ModelPart lWingMembrane02;
+    private final ModelPart lWing02;
+    private final ModelPart lWing03;
+    private final ModelPart lWing04;
+    private final ModelPart lWing05;
+
+    private final ModelPart rWing01;
+    private final ModelPart rWingMembrane01;
+    private final ModelPart rWingMembrane02;
+    private final ModelPart rWing02;
+    private final ModelPart rWing03;
+    private final ModelPart rWing04;
+    private final ModelPart rWing05;
     private final ModelPart lLeg01;
     private final ModelPart rLeg01;
     private final ModelPart lArm01;
@@ -106,25 +121,25 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(lWing01, -0.2618F, 0.5236F, -0.2618F);
         lWing01.setTextureOffset(78, 99).addCuboid(-1.7F, -0.5F, -1.1F, 2.0F, 4.0F, 9.0F, 0.0F, false);
 
-        ModelPart lWing02 = new ModelPart(this);
+        lWing02 = new ModelPart(this);
         lWing02.setPivot(0.346F, 0.3487F, 9.1164F);
         lWing01.addChild(lWing02);
         setRotationAngle(lWing02, 1.3526F, 0.0F, 0.0F);
         lWing02.setTextureOffset(93, 114).addCuboid(-1.7243F, -1.5568F, -1.8828F, 2.0F, 3.0F, 11.0F, 0.0F, false);
 
-        ModelPart lWing03 = new ModelPart(this);
+        lWing03 = new ModelPart(this);
         lWing03.setPivot(0.1F, -0.5F, 9.1F);
         lWing02.addChild(lWing03);
         setRotationAngle(lWing03, -0.1222F, 0.0F, 0.0F);
         lWing03.setTextureOffset(108, 99).addCuboid(-1.7F, -0.7F, -1.9F, 2.0F, 13.0F, 3.0F, 0.0F, false);
 
-        ModelPart lWing04 = new ModelPart(this);
+        lWing04 = new ModelPart(this);
         lWing04.setPivot(0.0F, 11.7F, 0.0F);
         lWing03.addChild(lWing04);
         setRotationAngle(lWing04, -1.0472F, 0.0F, 0.0F);
         lWing04.setTextureOffset(118, 99).addCuboid(-1.2F, -0.4F, -0.9F, 1.0F, 17.0F, 2.0F, 0.0F, false);
 
-        ModelPart lWing05 = new ModelPart(this);
+        lWing05 = new ModelPart(this);
         lWing05.setPivot(-0.7F, 17.0F, 0.0F);
         lWing04.addChild(lWing05);
         setRotationAngle(lWing05, -0.6981F, 0.0F, 0.0F);
@@ -135,7 +150,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         lWing04.addChild(lWingMembrane03);
         lWingMembrane03.setTextureOffset(0, 62).addCuboid(-0.6F, -9.6F, -29.5F, 0.0F, 37.0F, 29.0F, 0.0F, false);
 
-        ModelPart lWingMembrane02 = new ModelPart(this);
+        lWingMembrane02 = new ModelPart(this);
         lWingMembrane02.setPivot(-0.046F, 0.5513F, 7.4836F);
         lWing02.addChild(lWingMembrane02);
         setRotationAngle(lWingMembrane02, -1.5795F, 0.0F, 0.0F);
@@ -147,7 +162,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(lWingFur2, 0.0F, -1.5272F, 0.2182F);
         lWingFur2.setTextureOffset(90, 24).addCuboid(-4.5F, 0.0F, -2.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
 
-        ModelPart lWingMembrane01 = new ModelPart(this);
+        lWingMembrane01 = new ModelPart(this);
         lWingMembrane01.setPivot(0.0F, 5.9F, -5.0F);
         lWing01.addChild(lWingMembrane01);
         setRotationAngle(lWingMembrane01, -0.3491F, 0.0F, 0.0F);
@@ -165,36 +180,36 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(rWing01, -0.2618F, -0.5236F, 0.2618F);
         rWing01.setTextureOffset(78, 99).addCuboid(-0.3F, -0.5F, -1.1F, 2.0F, 4.0F, 9.0F, 0.0F, true);
 
-        ModelPart rWing02 = new ModelPart(this);
+        rWing02 = new ModelPart(this);
         rWing02.setPivot(-0.346F, 0.3487F, 9.1164F);
         rWing01.addChild(rWing02);
         setRotationAngle(rWing02, 1.3526F, 0.0F, 0.0F);
         rWing02.setTextureOffset(93, 114).addCuboid(-0.2757F, -1.5568F, -1.8828F, 2.0F, 3.0F, 11.0F, 0.0F, true);
 
-        ModelPart rWing03 = new ModelPart(this);
+        rWing03 = new ModelPart(this);
         rWing03.setPivot(-0.1F, -0.5F, 9.1F);
         rWing02.addChild(rWing03);
         setRotationAngle(rWing03, -0.1222F, 0.0F, 0.0F);
         rWing03.setTextureOffset(108, 99).addCuboid(-0.3F, -0.7F, -1.9F, 2.0F, 13.0F, 3.0F, 0.0F, true);
 
-        ModelPart rWing04 = new ModelPart(this);
+        rWing04 = new ModelPart(this);
         rWing04.setPivot(0.0F, 11.7F, 0.0F);
         rWing03.addChild(rWing04);
         setRotationAngle(rWing04, -1.0472F, 0.0F, 0.0F);
         rWing04.setTextureOffset(118, 99).addCuboid(0.2F, -0.4F, -0.9F, 1.0F, 17.0F, 2.0F, 0.0F, true);
 
-        ModelPart rWing05 = new ModelPart(this);
+        rWing05 = new ModelPart(this);
         rWing05.setPivot(0.7F, 17.0F, 0.0F);
         rWing04.addChild(rWing05);
         setRotationAngle(rWing05, -0.6981F, 0.0F, 0.0F);
         rWing05.setTextureOffset(124, 99).addCuboid(-0.7F, -1.0F, -1.0F, 1.0F, 15.0F, 1.0F, 0.0F, true);
 
-        ModelPart rWingMembrane01 = new ModelPart(this);
-        rWingMembrane01.setPivot(0.0F, 7.7F, -0.4F);
-        rWing04.addChild(rWingMembrane01);
-        rWingMembrane01.setTextureOffset(0, 62).addCuboid(0.6F, -9.6F, -29.5F, 0.0F, 37.0F, 29.0F, 0.0F, true);
+        ModelPart rWingMembrane03 = new ModelPart(this);
+        rWingMembrane03.setPivot(0.0F, 7.7F, -0.4F);
+        rWing04.addChild(rWingMembrane03);
+        rWingMembrane03.setTextureOffset(0, 62).addCuboid(0.6F, -9.6F, -29.5F, 0.0F, 37.0F, 29.0F, 0.0F, true);
 
-        ModelPart rWingMembrane02 = new ModelPart(this);
+        rWingMembrane02 = new ModelPart(this);
         rWingMembrane02.setPivot(0.046F, 0.5513F, 7.4836F);
         rWing02.addChild(rWingMembrane02);
         setRotationAngle(rWingMembrane02, -1.5795F, 0.0F, 0.0F);
@@ -206,11 +221,11 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         setRotationAngle(rWingFur02, 0.0F, 1.5272F, -0.2182F);
         rWingFur02.setTextureOffset(90, 24).addCuboid(-3.5F, 0.0F, -2.0F, 8.0F, 7.0F, 2.0F, 0.0F, true);
 
-        ModelPart rWingMembrane03 = new ModelPart(this);
-        rWingMembrane03.setPivot(0.0F, 5.9F, -5.0F);
-        rWing01.addChild(rWingMembrane03);
-        setRotationAngle(rWingMembrane03, -0.3491F, 0.0F, 0.0F);
-        rWingMembrane03.setTextureOffset(0, 50).addCuboid(0.7F, -9.2F, 0.6F, 0.0F, 22.0F, 16.0F, 0.0F, true);
+        rWingMembrane01 = new ModelPart(this);
+        rWingMembrane01.setPivot(0.0F, 5.9F, -5.0F);
+        rWing01.addChild(rWingMembrane01);
+        setRotationAngle(rWingMembrane01, -0.3491F, 0.0F, 0.0F);
+        rWingMembrane01.setTextureOffset(0, 50).addCuboid(0.7F, -9.2F, 0.6F, 0.0F, 22.0F, 16.0F, 0.0F, true);
 
         ModelPart rWingFur01 = new ModelPart(this);
         rWingFur01.setPivot(2.0F, 1.5F, 7.1F);
@@ -518,16 +533,38 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         rLeg01.roll += 0.0873f;
         tail01.roll = MathHelper.sin(ageInTicks / 8) / 8;
 
-        lWing01.yaw = 0.5236F;
-        rWing01.yaw = -0.5236F;
-        if (entity.getLastJumpTime() < 20){
-            lWing01.yaw += (1 + MathHelper.sin(ageInTicks)) / 3;
-            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks)) / 3;
-        }else{
-            lWing01.yaw += (1 + MathHelper.sin(ageInTicks / 8)) / 8;
-            rWing01.yaw -= (1 + MathHelper.sin(ageInTicks / 8)) / 8;
+        boolean flying = entity.getLastJumpTime() <= 20;
+        if (flying) {
+            if (entity.jumpBeginProgress < 1) {
+                entity.jumpBeginProgress += MinecraftClient.getInstance().getTickDelta() / 10F;
+            }
+        }else if (entity.jumpBeginProgress > 0){
+            entity.jumpBeginProgress -= MinecraftClient.getInstance().getTickDelta() / 10F;
         }
-        if (entity.isSneaking()) {
+        lWing01.yaw = MathHelper.lerp(entity.jumpBeginProgress, 0.5236F, 1.0036F);
+        rWing01.yaw = MathHelper.lerp(entity.jumpBeginProgress, -0.5236F, -1.0036F);
+
+        lWing02.pitch = MathHelper.lerp(entity.jumpBeginProgress, 1.3526F, 1.0036F);
+        rWing02.pitch = MathHelper.lerp(entity.jumpBeginProgress, 1.3526F, 1.0036F);
+
+        lWing03.pitch = MathHelper.lerp(entity.jumpBeginProgress, -0.1222F, 0.9687F);
+        rWing03.pitch = MathHelper.lerp(entity.jumpBeginProgress, -0.1222F, 0.9687F);
+
+        lWing04.pitch = MathHelper.lerp(entity.jumpBeginProgress, -1.0472F, -0.2182F);
+        rWing04.pitch = MathHelper.lerp(entity.jumpBeginProgress, -1.0472F, -0.2182F);
+
+        lWingMembrane02.pitch = MathHelper.lerp(entity.jumpBeginProgress, -1.5795F, -0.7505F);
+        rWingMembrane02.pitch = MathHelper.lerp(entity.jumpBeginProgress, -1.5795F, -0.7505F);
+
+        if (flying){
+            lWing01.yaw += MathHelper.sin(ageInTicks / 1.5F) / 3;
+            rWing01.yaw += -MathHelper.sin(ageInTicks / 1.5F) / 3;
+        }else{
+            lWing01.yaw +=  MathHelper.sin(ageInTicks / 8) / 8;
+            rWing01.yaw += -MathHelper.sin(ageInTicks / 8) / 8;
+        }
+
+        if (flying || entity.isSneaking()) {
             neck.pivotY += 2;
             neck.pivotZ -= 4;
             body.pivotY += 2;

@@ -7,6 +7,8 @@ import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,12 +19,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = BewitchmentAPI.class, remap = false)
 public class BewitchmentAPIMixin {
+    @Environment(EnvType.CLIENT)
     @Inject(method = "Lmoriyashiine/bewitchment/api/BewitchmentAPI;getTransformedPlayerEntity(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1309;", at = @At("RETURN"), cancellable = true)
     private static void getTransformedPlayerEntity(PlayerEntity player, CallbackInfoReturnable<LivingEntity> cir){
         if (BSMTransformations.isWerepyre(player, false)){
             WerepyreEntity entity = BSMEntityTypes.WEREPYRE.create(player.world);
             entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerepyreAccessor) player).getWerepyreVariant());
             entity.setLastJumpTime(((WerepyreAccessor) player).getLastJumpTicks());
+            entity.jumpBeginProgress = ((WerepyreAccessor) player).getLastJumpProgress();
             cir.setReturnValue(entity);
         }
         if (cir.getReturnValue() instanceof DyeableEntity){

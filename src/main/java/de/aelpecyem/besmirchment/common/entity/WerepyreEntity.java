@@ -5,6 +5,8 @@ import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.DespawnAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -32,6 +34,8 @@ public class WerepyreEntity extends BWHostileEntity{
     public static final TrackedData<Integer> JUMP_TICKS = DataTracker.registerData(WerepyreEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     private boolean despawns = false;
+    @Environment(EnvType.CLIENT)
+    public float jumpBeginProgress = 0;
 
     public WerepyreEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -39,6 +43,9 @@ public class WerepyreEntity extends BWHostileEntity{
 
     public void tick() {
         super.tick();
+        if (world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
+            setOnFireFor(8);
+        }
         if (!this.world.isClient && this.despawns && this.age % 20 == 0 && this.world.isDay() && isValidMoonPhase(world)) {
             VillagerEntity entity = EntityType.VILLAGER.create(this.world);
             if (entity instanceof DespawnAccessor) {
@@ -64,8 +71,21 @@ public class WerepyreEntity extends BWHostileEntity{
         if (getLastJumpTime() < 200) {
             setLastJumpTime(getLastJumpTime() + 1);
         }
+        if (world.isClient){
+            if (getLastJumpTime() > 20) {
+                if (jumpBeginProgress > 0) {
+                    jumpBeginProgress -= 0.1;
+                }
+            }else if (jumpBeginProgress < 1){
+                jumpBeginProgress += 0.1;
+            }
+        }
     }
 
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+        return super.handleFallDamage(Math.max(fallDistance - 12, 0), damageMultiplier);
+    }
 
     protected boolean hasShiny() {
         return true;
@@ -158,7 +178,7 @@ public class WerepyreEntity extends BWHostileEntity{
     }
 
     public boolean canJump(){
-        return getLastJumpTime() > 8;
+        return getLastJumpTime() > 5;
     }
 
     public static boolean isValidMoonPhase(WorldAccess world) {
