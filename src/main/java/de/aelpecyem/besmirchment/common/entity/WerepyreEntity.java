@@ -43,7 +43,7 @@ public class WerepyreEntity extends BWHostileEntity{
 
     public void tick() {
         super.tick();
-        if (world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
+        if (!world.isClient && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
             setOnFireFor(8);
         }
         if (!this.world.isClient && this.despawns && this.age % 20 == 0 && this.world.isDay() && isValidMoonPhase(world)) {
