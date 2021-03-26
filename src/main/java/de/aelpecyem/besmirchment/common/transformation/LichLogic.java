@@ -105,7 +105,7 @@ public class LichLogic {
                 BWUtil.attemptTeleport(lich, phylactery.getRight().getPos(), 2, false);
                 LichRevivePacket.send(lich);
             }
-            return silver;
+            return !silver;
         }
         return false;
     }

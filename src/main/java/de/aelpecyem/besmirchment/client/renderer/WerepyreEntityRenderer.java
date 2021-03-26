@@ -4,6 +4,7 @@ import de.aelpecyem.besmirchment.client.model.WerepyreEntityModel;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
+import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,7 +35,7 @@ public class WerepyreEntityRenderer extends MobEntityRenderer<WerepyreEntity, We
     }
 
     public Identifier getTexture(WerepyreEntity entity) {
-        if (((DyeableEntity) entity).getColor() >= 0){
+        if (((DyeableEntity) entity).getColor() >= 0 || ((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER){
             return UNTINTED_TEXTURE;
         }
         if (TEXTURES == null) {
@@ -44,6 +45,6 @@ public class WerepyreEntityRenderer extends MobEntityRenderer<WerepyreEntity, We
                 TEXTURES[i] = Besmirchment.id("textures/entity/werepyre/" + i + ".png");
             }
         }
-        return TEXTURES[entity.getDataTracker().get(BWHostileEntity.VARIANT)];
+         return TEXTURES[entity.getDataTracker().get(BWHostileEntity.VARIANT)];
     }
 }

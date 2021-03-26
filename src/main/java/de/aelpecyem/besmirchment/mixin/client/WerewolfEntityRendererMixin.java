@@ -3,6 +3,7 @@ package de.aelpecyem.besmirchment.mixin.client;
 import de.aelpecyem.besmirchment.client.renderer.DyedWerewolfFeatureRenderer;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
 import moriyashiine.bewitchment.client.renderer.entity.living.WerewolfEntityRenderer;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -34,7 +35,7 @@ public abstract class WerewolfEntityRendererMixin extends MobEntityRenderer<Were
     //when colored, use only the untinted parts for the model, the rest is done with the layer
     @Inject(method = "getTexture", at = @At("HEAD"), cancellable = true)
     private void getTexture(WerewolfEntity entity, CallbackInfoReturnable<Identifier> cir){
-        if (((DyeableEntity) entity).getColor() >= 0){
+        if (((DyeableEntity) entity).getColor() >= 0 || ((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER){
             cir.setReturnValue(UNTINTED_TEXTURE);
         }
     }
