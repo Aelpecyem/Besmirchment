@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+	"minecraft:bedrock",
+    "minecraft:obsidian",
+    "bewitchment:salt_line",
+    "bewitchment:salt_block",
+    "bewitchment:silver_block"
+  ]
+}
