@@ -12,7 +12,7 @@
     },
     {
       "type": "text",
-      "text": "There are two ways become a $(l:besmirchment:creatures/werepyre)Werepyre$():$(li)Become infected by one, under the same conditions as you would for $(l:bewitchment:curses/lycanthropy)Lycanthropy$() or$(li1)Become infected by a $(l:bewitchment:creatures/vampire)Vampire$() under the same conditions as you would for $(l:bewitchment:curses/vampirism)Vamprisim$(), but as a Werewolf.$(br2)$(o)You should probably ashamed for wanting this.$()"
+      "text": "There are two ways become a $(l:besmirchment:creatures/werepyre)Werepyre$():$(li)Become infected by one, under the same conditions as you would for $(l:bewitchment:curses/lycanthropy)Lycanthropy$() or$(li1)Become infected by a $(l:bewitchment:creatures/vampire)Vampire$() under the same conditions as you would for $(l:bewitchment:curses/vampirism)Vamprisim$(), but as a Werewolf.$(br2)$(o)You should probably be ashamed for wanting this.$()"
     }
   ]
 }

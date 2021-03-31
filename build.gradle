@@ -12,7 +12,7 @@ group = project.maven_group
 
 repositories {
 	maven {
-		name = "pehkui"
+		name = "Bewitchment"
 		url = "https://www.cursemaven.com"
 	}
 	maven {
@@ -81,7 +81,7 @@ dependencies {
 	modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
 
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-//	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 	modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 
 	modImplementation "io.github.emilyalexandra:nourish:${project.nourish_version}"

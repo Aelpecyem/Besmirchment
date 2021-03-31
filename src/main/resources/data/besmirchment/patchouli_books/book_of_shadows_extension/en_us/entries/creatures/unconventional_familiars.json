@@ -8,10 +8,10 @@
   "pages": [
     {
       "type": "text",
-      "text": "By using a $(l:besmirchment:brewing/love)Love Potion$() and casting a Ritual of $(l:bewitchment:rituals/binding)Binding$(), one can force rather unconventional familiars.$(br)These familiars generally do not grant extraordinary powers that help with witchcraft, though they do offer some benefits."
+      "text": "By using a $(l:besmirchment:brewing/love)Love Potion$() and casting a Ritual of $(l:bewitchment:rituals/binding)Binding$(), one can force rather unconventional Familiars.$(br)These Familiars generally do not grant extraordinary powers that help with witchcraft, though they do offer some benefits."
     },{
       "type": "text",
-      "text": "Such forced familiars will usually not bow themselves to the will of their owner. Generally speaking, forcing anything to become a familiar is a horrible idea, and you really should $(o)not$() do that.$(br)Nevertheless, some unconventional familiars will be listed here."
+      "text": "Such forced Familiars will usually not bow themselves to the will of their owner. Generally speaking, forcing anything to become a familiar is a horrible idea, and you really should $(o)not$() do that.$(br)Nevertheless, some unconventional Familiars will be listed here."
     },
     {
       "type": "entity",
@@ -31,28 +31,28 @@
       "type": "entity",
       "entity": "minecraft:pig",
       "scale": 0.6,
-      "text": "With a Pig familiar, food buffs you. You also drop $(item)Porkchop$()."
+      "text": "With a Pig Familiar, food buffs you. You also drop $(item)Porkchop$()."
     },{
       "type": "entity",
       "entity": "minecraft:sheep",
       "scale": 0.6,
-      "text": "A Sheep familiar allows you to eat grass by pressing $(k:besmirchment.familiar_ability) when you're hungry."
+      "text": "A Sheep Familiar allows you to eat grass by pressing $(k:besmirchment.familiar_ability) when you're hungry."
     },{
       "type": "entity",
       "entity": "minecraft:parrot",
       "scale": 0.6,
-      "text": "Parrot-witches can use their active familiar ability to assume another player's identity for a bit."
+      "text": "Parrot-witches can use their active Familiar ability to assume another player's identity for a bit."
     },{
       "type": "entity",
       "entity": "minecraft:cow",
       "scale": 0.6,
-      "text": "Press $(k:besmirchment.familiar_ability) while holding an $(item)Empty Bucket$() and find out what this wonderful familiar does!"
+      "text": "Press $(k:besmirchment.familiar_ability) while holding an $(item)Empty Bucket$() and find out what this wonderful Familiar does!"
     },
     {
       "type": "entity",
       "entity": "minecraft:llama",
       "scale": 0.6,
-      "text": "A Llama familiar allows you to spit, transferring all of your negative potion effects."
+      "text": "A Llama Familiar allows you to spit, transferring all of your negative potion effects."
     }
   ]
 }
