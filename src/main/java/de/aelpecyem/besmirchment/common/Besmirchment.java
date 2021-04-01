@@ -2,8 +2,10 @@ package de.aelpecyem.besmirchment.common;
 
 import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
 import de.aelpecyem.besmirchment.client.packet.WerepyreJumpPacket;
+import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.registry.*;
 import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
+import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
@@ -49,7 +51,11 @@ public class Besmirchment implements ModInitializer {
                 ((LichAccessor) handler.player).updateCachedSouls();
             }
         });
-        ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, b) -> ((LichAccessor)newPlayer).updateCachedSouls());
+        ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, b) -> {
+            ((LichAccessor)newPlayer).updateCachedSouls();
+            ((WerepyreAccessor)newPlayer).setWerepyreVariant(((WerepyreAccessor) oldPlayer).getWerepyreVariant());
+            ((DyeableEntity)newPlayer).setColor(((DyeableEntity) oldPlayer).getColor());
+        });
     }
 
     public static Identifier id(String path) {

@@ -13,7 +13,7 @@
     {
       "type": "crafting",
       "recipe": "besmirchment:phylactery",
-      "text": "The  amount of souls within the Phylactery are proportional to the power of the lich, as outlined in $(l:besmirchment:rituals/reach_lichdom#quirks)Quirks of Lichdom$().$(br)It is filled using a $(item)Lich Gem$()."
+      "text": "The  amount of souls within the Phylactery are proportional to the power of the lich, as outlined in $(l:besmirchment:rituals/lichdom#quirks)Quirks of Lichdom$().$(br)It is filled using a $(item)Lich Gem$()."
     },
     {
       "type": "spotlight",
