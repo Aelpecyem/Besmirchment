@@ -8,23 +8,16 @@ import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.CraftRequestC2SPacket;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.predicate.PlayerPredicate;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.GameMode;
 
 public class Besmirchment implements ModInitializer {
     public static final String MODID = "besmirchment";

@@ -32,9 +32,13 @@ public class TransformationAbilityPacketMixin {
         if (BSMTransformations.isWerepyre(player, true)){
             cir.setReturnValue(true);
         }
-        if (BSMTransformations.isLich(player, false)){
-            ((LichAccessor) player).updateCachedSouls();
-            cir.setReturnValue(((LichAccessor) player).getCachedSouls() >= LichLogic.STAGE_TWO_SOULS);
+        if (BSMTransformations.isLich(player, false)) {
+            if (((TransformationAccessor) player).getAlternateForm()) {
+                cir.setReturnValue(true);
+            } else {
+                ((LichAccessor) player).updateCachedSouls();
+                cir.setReturnValue(((LichAccessor) player).getCachedSouls() >= LichLogic.STAGE_TWO_SOULS);
+            }
         }
     }
 
