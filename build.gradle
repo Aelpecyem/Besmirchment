@@ -51,6 +51,20 @@ repositories {
 		name = "Conditional Crafting"
 		url = "https://ytg1234.github.io/maven"
 	}
+
+	maven {
+		name = "dblsaiko"
+		url = "https://maven.dblsaiko.net/"
+	}
+	maven {
+		name = "Cotton"
+		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
+	}
+	maven {
+		name = "CurseForge"
+		url = "https://minecraft.curseforge.com/api/maven"
+	}
+
 	maven {
 		name = "jitpack"
 		url = "https://jitpack.io"
@@ -87,6 +101,13 @@ dependencies {
 	modImplementation "io.github.emilyalexandra:nourish:${project.nourish_version}"
 	modImplementation "curse.maven:bewitchment-394915:${project.bewitchment_version}"
 	include(modImplementation("io.github.ytg1234:fabric-recipe-conditions:${project.conditional_recipes_version}"))
+
+
+	modImplementation ("grondag:canvas-mc116:1.0.+"){
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "me.shedaniel.cloth")
+		exclude(group: "io.github.prospector")
+	}
 }
 
 processResources {

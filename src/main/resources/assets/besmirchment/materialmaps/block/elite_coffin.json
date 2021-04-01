@@ -1,0 +1,10 @@
+{
+  "defaultMap": {
+    "spriteMap": [
+      {
+        "sprite": "besmirchment:block/elite_coffin_cushion",
+        "material": "canvas:emissive_no_diffuse"
+      }
+    ]
+  }
+}
