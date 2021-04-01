@@ -54,7 +54,7 @@ public class WitchyDyeEntity extends ThrownItemEntity {
                     }
                 }
             }
-            this.world.syncWorldEvent(2007, this.getBlockPos(), BSMObjects.WITCHY_DYE.getColor(this.getStack()));
+            this.world.syncWorldEvent(2007, this.getBlockPos(), BSMObjects.WITCHY_DYE.getColor(this.getItem()));
             this.remove();
         }
     }
