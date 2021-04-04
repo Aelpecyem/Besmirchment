@@ -13,6 +13,14 @@
       "type": "bewitchment:oil",
       "recipe": "besmirchment:oil_crafting/witchy_bleach",
       "text": "To create $(item)Witchy Dye$(), first brew $(item)Witchy Bleach$() in your $(l:bewitchment:tools/witch_cauldron)Cauldron$().$(br)You can add its dyeing properties by combining it with any $(item)Dye$(), otherwise it'll act as a bleach to remove color."
+    },
+    {
+      "type": "text",
+      "text": "The following $(l:bewitchment:rituals/rituals)Ritual$() will randomly dye any Witchy Bleach added to it.$(br)Do note that the bleach to be dyed needs to be added $(o)after$() starting the Ritual."
+    },{
+      "type": "bewitchment:ritual",
+      "recipe": "besmirchment:rituals/color_typhoon",
+      "text": "Gorgeous."
     }
   ]
 }

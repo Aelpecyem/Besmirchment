@@ -36,8 +36,6 @@ public class BSMConditions {
                 return Besmirchment.config.universalFamiliars.enable;
             case "sunscreen":
                 return Besmirchment.config.enableSunscreen;
-            case "lol":
-                return Besmirchment.config.twoPlusTwo == 4;
             case "lichdom":
                 return Besmirchment.config.enableLichdom;
         }

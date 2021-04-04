@@ -20,5 +20,10 @@
   "inner": "normal",
   "outer": "normal",
   "ritual_function": "besmirchment:color",
-  "cost": 420
+  "cost": 420,
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "witchy_dye"
+    }
+  ]
 }
