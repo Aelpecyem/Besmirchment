@@ -53,7 +53,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.invoke.SerializedLambda;
 
-@Mixin(value = LivingEntity.class, priority = 1001)
+@Mixin(value = LivingEntity.class, priority = 999)
 public abstract class LivingEntityMixin extends Entity implements LichRollAccessor, LichAccessor {
     private int bsm_lastRevive = 0;
     private int bsm_cachedSouls = 0;
@@ -158,40 +158,54 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
             }
             updateCachedSouls();
         }
-        if (Besmirchment.config.enableWerepyrism && cir.getReturnValue() && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)) {
-            TransformationAccessor transformationAccessor = (TransformationAccessor) this;
-            if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF) { //no vampire because they can't use totems
-                if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {
-                    transformationAccessor.getTransformation().onRemoved((LivingEntity) (Object) this);
-                    transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
-                    transformationAccessor.getTransformation().onAdded((LivingEntity) (Object) this);
-                    PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-                    if ((Object) this instanceof PlayerEntity) {
-                        SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
-                    }
-                    world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
+        if (!world.isClient && Besmirchment.config.enableWerepyrism && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)) {
+            ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
+            if (!poppet.isEmpty()) { //copy death protection code because there is no poppet event yet
+                if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+                    poppet.decrement(1);
                 }
-            } else if (transformationAccessor.getTransformation() == BWTransformations.HUMAN) {
-                if (source.getSource() instanceof WerepyreEntity || (BSMTransformations.isWerepyre(source.getSource(), true) && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource()))) {
-                    transformationAccessor.getTransformation().onRemoved((LivingEntity) (Object) this);
-                    transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
-                    transformationAccessor.getTransformation().onAdded((LivingEntity) (Object) this);
-                    PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-                    if ((Object) this instanceof PlayerEntity) {
-                        SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
-                    }
-                    if (this instanceof WerepyreAccessor) {
-                        int variant = -1;
-                        if (source.getSource() instanceof WerepyreEntity) {
-                            variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
-                        } else if (source.getSource() instanceof WerepyreAccessor && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource())) {
-                            variant = ((WerepyreAccessor) source.getSource()).getWerepyreVariant();
+                setHealth(1);
+                clearStatusEffects();
+                addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+                addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+                addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+                cir.setReturnValue(true);
+            }
+            if (cir.getReturnValue()) {
+                TransformationAccessor transformationAccessor = (TransformationAccessor) this;
+                if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF) { //no vampire because they can't use totems
+                    if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {
+                        transformationAccessor.getTransformation().onRemoved((LivingEntity) (Object) this);
+                        transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
+                        transformationAccessor.getTransformation().onAdded((LivingEntity) (Object) this);
+                        PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
+                        if ((Object) this instanceof PlayerEntity) {
+                            SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
                         }
-                        if (variant > -1) {
-                            ((WerepyreAccessor) this).setWerepyreVariant(variant);
-                        }
+                        world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
                     }
-                    world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
+                } else if (transformationAccessor.getTransformation() == BWTransformations.HUMAN) {
+                    if (source.getSource() instanceof WerepyreEntity || (BSMTransformations.isWerepyre(source.getSource(), true) && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource()))) {
+                        transformationAccessor.getTransformation().onRemoved((LivingEntity) (Object) this);
+                        transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
+                        transformationAccessor.getTransformation().onAdded((LivingEntity) (Object) this);
+                        PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
+                        if ((Object) this instanceof PlayerEntity) {
+                            SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
+                        }
+                        if (this instanceof WerepyreAccessor) {
+                            int variant = -1;
+                            if (source.getSource() instanceof WerepyreEntity) {
+                                variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
+                            } else if (source.getSource() instanceof WerepyreAccessor && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource())) {
+                                variant = ((WerepyreAccessor) source.getSource()).getWerepyreVariant();
+                            }
+                            if (variant > -1) {
+                                ((WerepyreAccessor) this).setWerepyreVariant(variant);
+                            }
+                        }
+                        world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
+                    }
                 }
             }
         }
