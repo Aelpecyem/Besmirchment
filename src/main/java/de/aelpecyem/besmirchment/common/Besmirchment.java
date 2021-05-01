@@ -42,7 +42,6 @@ public class Besmirchment implements ModInitializer {
     public static final ItemGroup BESMIRCHMENT = FabricItemGroupBuilder.create(Besmirchment.id("group")).icon(() -> new ItemStack(BSMObjects.FINAL_BROOM)).build();
     public static BSMConfig config;
 
-    //todo redo part werewolf logic of werepyres
     @Override
     public void onInitialize() {
         AutoConfig.register(BSMConfig.class, GsonConfigSerializer::new);

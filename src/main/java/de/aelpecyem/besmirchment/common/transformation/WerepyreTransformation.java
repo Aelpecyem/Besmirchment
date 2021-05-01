@@ -31,7 +31,7 @@ public class WerepyreTransformation extends Transformation {
         }
     }
 
-    public static void handleStats(PlayerEntity player, boolean alternateForm, boolean hasWerepyrePledge) { //todo fix sneaking pose
+    public static void handleStats(PlayerEntity player, boolean alternateForm, boolean hasWerepyrePledge) {
         EntityAttributeInstance attackDamageAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
         EntityAttributeInstance armorToughnessAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
         EntityAttributeInstance movementSpeedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
