@@ -43,7 +43,7 @@ public class TransformationAbilityPacketMixin {
     }
 
     @SuppressWarnings("UnresolvedMixinReference")
-    @Inject(method = "Lmoriyashiine/bewitchment/common/network/packet/TransformationAbilityPacket;useAbility(Lnet/minecraft/class_1657;Z)V", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "useAbility", at = @At(value = "HEAD"), cancellable = true)
     private static void useAbility(PlayerEntity player, boolean forced, CallbackInfo ci){
         if (((TransformationAccessor)player).getTransformation() == BSMTransformations.LICH){
             World world = player.world;

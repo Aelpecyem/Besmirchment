@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BewitchmentAPI.class, remap = false)
 public class BewitchmentAPIMixin {
     @Environment(EnvType.CLIENT)
-    @Inject(method = "Lmoriyashiine/bewitchment/api/BewitchmentAPI;getTransformedPlayerEntity(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1309;", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getTransformedPlayerEntity", at = @At("RETURN"), cancellable = true)
     private static void getTransformedPlayerEntity(PlayerEntity player, CallbackInfoReturnable<LivingEntity> cir){
         if (BSMTransformations.isWerepyre(player, false)){
             WerepyreEntity entity = BSMEntityTypes.WEREPYRE.create(player.world);
@@ -40,7 +40,7 @@ public class BewitchmentAPIMixin {
         }
     }
 
-    @Inject(method = "isWerewolf(Lnet/minecraft/class_1297;Z)Z", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isWerewolf", at = @At("HEAD"), cancellable = true)
     private static void isWerewolf(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){
         if (BSMTransformations.isWerepyre(entity, includeHumanForm)){
             cir.setReturnValue(true);

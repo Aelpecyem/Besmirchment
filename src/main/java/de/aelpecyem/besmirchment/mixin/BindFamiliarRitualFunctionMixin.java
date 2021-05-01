@@ -31,7 +31,7 @@ public abstract class BindFamiliarRitualFunctionMixin extends RitualFunction {
         super(startParticle, sacrifice);
     }
 
-    @Inject(method = "start(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_1263;Z)V", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/entity/LivingEntity.saveSelfToTag(Lnet/minecraft/nbt/CompoundTag;)Z", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+    @Inject(method = "start", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/entity/LivingEntity.saveSelfToTag(Lnet/minecraft/nbt/CompoundTag;)Z", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar, CallbackInfo ci, boolean succeeded, ItemStack taglock, LivingEntity livingEntity, PlayerEntity closestPlayer, CompoundTag entityTag){
         if (Besmirchment.config.universalFamiliars.enable && livingEntity.hasStatusEffect(BSMStatusEffects.LOVE) && !livingEntity.getType().isIn(BSMTags.ILLEGAL_FAMILIARS)){
             ((FamiliarAccessor)livingEntity).setFamiliar(true);

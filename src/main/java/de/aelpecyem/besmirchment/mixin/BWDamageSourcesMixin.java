@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static moriyashiine.bewitchment.common.registry.BWDamageSources.isEffective;
 
-@Mixin(BWDamageSources.class)
+@Mixin(value = BWDamageSources.class, remap = false)
 public class BWDamageSourcesMixin {
     @Inject(method = "handleDamage", at = @At("TAIL"), cancellable = true)
     private static void handleDamage(LivingEntity entity, DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
