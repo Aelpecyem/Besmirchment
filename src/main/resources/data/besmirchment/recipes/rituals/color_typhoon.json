@@ -25,5 +25,7 @@
     {
       "besmirchment:bsm_config": "witchy_dye"
     }
-  ]
+  ],
+
+  "running_time": 200
 }

@@ -1,0 +1,27 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "GBG",
+    "BHB",
+    "GBG"
+  ],
+  "key": {
+    "H": {
+      "item": "bewitchment:demon_heart"
+    },
+    "G": {
+      "item": "bewitchment:dragons_blood_resin"
+    },
+    "B": {
+      "item": "bewitchment:bottle_of_blood"
+    }
+  },
+  "result": {
+    "item": "besmirchment:scroll_of_torment"
+  },
+  "frc:conditions": [
+    {
+      "besmirchment:bsm_config": "beelzebub"
+    }
+  ]
+}

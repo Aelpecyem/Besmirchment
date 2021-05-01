@@ -60,8 +60,10 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
             StatusEffects.NAUSEA,
             BWStatusEffects.MORTAL_COIL
     };
+    private final Set<UUID> pledgedPlayerUUIDS = new HashSet<>();
     private final ServerBossBar bossBar;
     private int timeSinceLastAttack = 0;
+
     public BeelzebubEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         bossBar = new ServerBossBar(getDisplayName(), BossBar.Color.RED, BossBar.Style.PROGRESS);
@@ -140,6 +142,11 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
     }
 
     @Override
+    public Collection<UUID> getPledgedPlayerUUIDs() {
+        return pledgedPlayerUUIDS;
+    }
+
+    @Override
     public EntityType<?> getMinionType() {
         return random.nextBoolean() ? EntityType.BEE : EntityType.CAVE_SPIDER;
     }
@@ -147,6 +154,11 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
     @Override
     public Collection<StatusEffectInstance> getMinionBuffs() {
         return Sets.newHashSet(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1), new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 0), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+    }
+
+    @Override
+    public int getTimeSinceLastAttack() {
+        return timeSinceLastAttack;
     }
 
     @Override
@@ -276,12 +288,14 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
             bossBar.setName(getDisplayName());
         }
         timeSinceLastAttack = tag.getInt("TimeSinceLastAttack");
+        fromTagPledgeable(tag);
     }
 
     @Override
     public void writeCustomDataToTag(CompoundTag tag) {
         super.writeCustomDataToTag(tag);
         tag.putInt("TimeSinceLastAttack", timeSinceLastAttack);
+        toTagPledgeable(tag);
     }
 
     @Override
@@ -302,6 +316,6 @@ public class BeelzebubEntity extends BWHostileEntity implements Pledgeable {
         goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
         goalSelector.add(3, new LookAroundGoal(this));
         targetSelector.add(0, new RevengeGoal(this));
-        targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid()))));
+        targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged((PlayerEntity) entity, getPledgeID()))));
     }
 }

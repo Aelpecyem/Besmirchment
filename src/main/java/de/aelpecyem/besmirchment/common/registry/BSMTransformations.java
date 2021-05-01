@@ -37,7 +37,7 @@ public class BSMTransformations {
     }
 
     public static boolean hasWerepyrePledge(PlayerEntity player){
-        return BewitchmentAPI.isPledged(player.world, "pledge.besmirchment.beelzebub", player.getUuid());
+        return BewitchmentAPI.isPledged(player, "pledge.besmirchment.beelzebub");
     }
 
     public static void handleNourish(PlayerEntity player){

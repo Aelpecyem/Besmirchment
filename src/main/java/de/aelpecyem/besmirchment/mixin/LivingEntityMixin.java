@@ -1,29 +1,20 @@
 package de.aelpecyem.besmirchment.mixin;
 
 import de.aelpecyem.besmirchment.client.renderer.LichRollAccessor;
-import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.block.entity.PhylacteryBlockEntity;
 import de.aelpecyem.besmirchment.common.entity.LichGemItem;
-import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
+import de.aelpecyem.besmirchment.common.registry.BSMContracts;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
 import de.aelpecyem.besmirchment.common.registry.BSMTags;
-import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
-import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
-import de.aelpecyem.besmirchment.common.registry.BSMContracts;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
+import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.LichLogic;
-import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
-import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.entity.living.VampireEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -32,7 +23,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -50,8 +40,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.lang.invoke.SerializedLambda;
 
 @Mixin(value = LivingEntity.class, priority = 999)
 public abstract class LivingEntityMixin extends Entity implements LichRollAccessor, LichAccessor {
@@ -90,6 +78,8 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
     @Shadow
     public abstract boolean hasStatusEffect(StatusEffect effect);
 
+    @Shadow public abstract boolean isSleeping();
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -103,18 +93,31 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
                     return amount * 2;
                 }
             }
-            ContractAccessor accessor = (ContractAccessor) this;
-            if (accessor.hasNegativeEffects() && accessor.hasContract(BSMContracts.CONQUEST)) {
-                return amount * 2;
-            }
         }
         return amount;
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci) {
-        if (!world.isClient && bsm_lastRevive < 1000 && isAlive()) {
-            bsm_lastRevive++;
+        if (!world.isClient) {
+            if (bsm_lastRevive < 1000 && isAlive()) {
+                bsm_lastRevive++;
+            }
+            LivingEntity livingEntity = (LivingEntity) (Object) this;
+            int damage = 0;
+            if (livingEntity.getMainHandStack().getItem() == BWObjects.GARLIC && BSMTransformations.isWerepyre(this, true)) {
+                damage++;
+            }
+            if (livingEntity.getOffHandStack().getItem() == BWObjects.GARLIC && BSMTransformations.isWerepyre(this, true)) {
+                damage++;
+            }
+            if (damage > 0) {
+                damage(BWDamageSources.MAGIC_COPY, damage);
+            }
+            //mathematically equal to not changing the blood at all
+            if (BWTags.HAS_BLOOD.contains(getType()) && BSMTransformations.isWerepyre(this, true) && random.nextFloat() < (isSleeping() ? 1 / 50f : 1 / 500f)) {
+                ((BloodAccessor) livingEntity).drainBlood(1, false);
+            }
         }
     }
 
@@ -133,13 +136,13 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
 
     @Inject(method = "eatFood", at = @At("HEAD"))
     private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
-        if (BSMTransformations.isLich(this, false) && hasStatusEffect(StatusEffects.WEAKNESS)) {
+        if ((Object) this instanceof PlayerEntity && BSMTransformations.isLich(this, false) && hasStatusEffect(StatusEffects.WEAKNESS)) {
             if (stack.getItem().equals(Items.GOLDEN_APPLE)) {
                 playSound(BWSoundEvents.ENTITY_GENERIC_TRANSFORM, 1, 1);
                 ((TransformationAccessor) this).setAlternateForm(false);
-                ((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
+                ((TransformationAccessor) this).getTransformation().onRemoved((PlayerEntity) (Object) this);
                 ((TransformationAccessor) this).setTransformation(BWTransformations.HUMAN);
-                ((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
+                ((TransformationAccessor) this).getTransformation().onAdded((PlayerEntity) (Object) this);
                 if (world.isClient) {
                     for (int i = 0; i < 20; i++) {
                         world.addParticle(new DustParticleEffect(0.98F, 0.8F, 0, MathHelper.nextFloat(random, 1.2F, 3F)), getParticleX(1), getRandomBodyY(), getParticleZ(1), 0, 0, 0);
@@ -157,57 +160,6 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
                 bsm_lastRevive = 0;
             }
             updateCachedSouls();
-        }
-        if (!world.isClient && Besmirchment.config.enableWerepyrism && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)) {
-            ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
-            if (!poppet.isEmpty()) { //copy death protection code because there is no poppet event yet
-                if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-                    poppet.decrement(1);
-                }
-                setHealth(1);
-                clearStatusEffects();
-                addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
-                addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
-                addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
-                cir.setReturnValue(true);
-            }
-            if (cir.getReturnValue()) {
-                TransformationAccessor transformationAccessor = (TransformationAccessor) this;
-                if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF) { //no vampire because they can't use totems
-                    if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {
-                        transformationAccessor.getTransformation().onRemoved((LivingEntity) (Object) this);
-                        transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
-                        transformationAccessor.getTransformation().onAdded((LivingEntity) (Object) this);
-                        PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-                        if ((Object) this instanceof PlayerEntity) {
-                            SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
-                        }
-                        world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-                    }
-                } else if (transformationAccessor.getTransformation() == BWTransformations.HUMAN) {
-                    if (source.getSource() instanceof WerepyreEntity || (BSMTransformations.isWerepyre(source.getSource(), true) && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource()))) {
-                        transformationAccessor.getTransformation().onRemoved((LivingEntity) (Object) this);
-                        transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
-                        transformationAccessor.getTransformation().onAdded((LivingEntity) (Object) this);
-                        PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-                        if ((Object) this instanceof PlayerEntity) {
-                            SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
-                        }
-                        if (this instanceof WerepyreAccessor) {
-                            int variant = -1;
-                            if (source.getSource() instanceof WerepyreEntity) {
-                                variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
-                            } else if (source.getSource() instanceof WerepyreAccessor && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource())) {
-                                variant = ((WerepyreAccessor) source.getSource()).getWerepyreVariant();
-                            }
-                            if (variant > -1) {
-                                ((WerepyreAccessor) this).setWerepyreVariant(variant);
-                            }
-                        }
-                        world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-                    }
-                }
-            }
         }
     }
 
@@ -258,9 +210,9 @@ public abstract class LivingEntityMixin extends Entity implements LichRollAccess
                 LichLogic.addAttributes((LivingEntity) (Object) this, bsm_cachedSouls);
             }
         }
-        if (BSMTransformations.isLich(this, true)) {
+       /* if (BSMTransformations.isLich(this, true)) {
             TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
-        }
+        }*/
     }
 
     @Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)

@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.mixin.client;
 
+import de.aelpecyem.besmirchment.client.BesmirchmentClient;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
@@ -11,6 +12,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,10 +43,10 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer {
         if (BSMTransformations.isLich(entity, true)) {
             args.set(2, LightmapTextureManager.pack(15, 15));
             if (entity instanceof DyeableEntity && (((DyeableEntity) entity).getColor() >= 0 || ((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER)) {
-                Vec3d rgb = Vec3d.unpackRgb(((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER ? Color.HSBtoRGB(((entity.age + g) % 100) / 100F, 1,1) : ((DyeableEntity) entity).getColor());
-                args.set(4, (float) rgb.x);
-                args.set(5, (float) rgb.y);
-                args.set(6, (float) rgb.z);
+                Vector3f rgb = new Vector3f(Vec3d.unpackRgb(((DyeableEntity) entity).getColor() == WitchyDyeItem.FUNNI_NUMBER ? BesmirchmentClient.HSBtoRGB(((entity.age + g) % 100) / 100F, 1,1) : ((DyeableEntity) entity).getColor()));
+                args.set(4, rgb.getX());
+                args.set(5, rgb.getY());
+                args.set(6, rgb.getZ());
             }else{
                 args.set(4, 0.5F);
                 args.set(5, 1F);

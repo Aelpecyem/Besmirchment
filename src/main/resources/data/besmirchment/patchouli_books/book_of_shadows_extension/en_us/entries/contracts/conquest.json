@@ -8,7 +8,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The forgotten horseman of $(marked)Conquest$() fights but with a $(item)Bow$().$(br)While under this contract, damage from $(marked)projectiles$() is doubled.$(br)This may count both ways. "
+      "text": "The forgotten horseman of $(marked)Conquest$() fights but with a $(item)Bow$().$(br)While under this contract, your damage from $(marked)projectiles$() is doubled. "
     }
   ]
 }

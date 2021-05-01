@@ -6,12 +6,17 @@ import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWPledges;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,17 +39,25 @@ public class BewitchmentAPIMixin {
             ((DyeableEntity) returnEntity).setColor(((DyeableEntity) player).getColor());
         }
     }
-    @Inject(method = "isVampire(Lnet/minecraft/class_1297;Z)Z", at = @At("HEAD"), cancellable = true)
-    private static void isVampire(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){
-        if (BSMTransformations.isWerepyre(entity, includeHumanForm)){
-            cir.setReturnValue(includeHumanForm);
-        }
-    }
 
     @Inject(method = "isWerewolf(Lnet/minecraft/class_1297;Z)Z", at = @At("HEAD"), cancellable = true)
     private static void isWerewolf(Entity entity, boolean includeHumanForm, CallbackInfoReturnable<Boolean> cir){
         if (BSMTransformations.isWerepyre(entity, includeHumanForm)){
             cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "isPledged", at = @At("HEAD"), cancellable = true)
+    private static void isPledged(PlayerEntity player, String pledge, CallbackInfoReturnable<Boolean> cir){
+        if (pledge.equals(BWPledges.HERNE) && BSMTransformations.hasWerepyrePledge(player)){
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "getPoppet", at = @At("HEAD"), cancellable = true)
+    private static void getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory, CallbackInfoReturnable<ItemStack> cir){
+        if (item == BWObjects.VAMPIRIC_POPPET && (BSMTransformations.isWerepyre(owner, true) ||BSMTransformations.isWerepyre(specificInventory, true))){
+            cir.setReturnValue(ItemStack.EMPTY);
         }
     }
 }

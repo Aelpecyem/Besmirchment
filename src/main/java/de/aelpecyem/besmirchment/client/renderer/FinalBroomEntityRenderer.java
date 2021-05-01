@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.client.renderer;
 
+import de.aelpecyem.besmirchment.client.BesmirchmentClient;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.FinalBroomEntity;
 import moriyashiine.bewitchment.api.client.model.BroomEntityModel;
@@ -28,13 +29,13 @@ public class FinalBroomEntityRenderer extends BroomEntityRenderer<FinalBroomEnti
     @Override
     public void render(FinalBroomEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
-        Vec3d rgb = Vec3d.unpackRgb(Color.HSBtoRGB(((entity.age + tickDelta) % 100) / 100F, 1, 1));
+        Vector3f rgb = new Vector3f(Vec3d.unpackRgb(BesmirchmentClient.HSBtoRGB(((entity.age + tickDelta) % 100) / 100F, 1, 1)));
         matrices.push();
         matrices.translate(0.0D, -1.0D, 0.0D);
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90.0F - yaw + 90.0F));
         matrices.translate(0.0D, 0.0D, -0.35D);
         bristleModel.setAngles(entity, yaw, 0.0F, (float)(entity.age + entity.getEntityId()), 0.0F, 0.0F);
-        bristleModel.render(matrices, vertexConsumers.getBuffer(bristleModel.getLayer(TEXTURE_BRISTLES)), 15728640, OverlayTexture.DEFAULT_UV, (float) rgb.x, (float)rgb.y, (float)rgb.z, 1.0F);
+        bristleModel.render(matrices, vertexConsumers.getBuffer(bristleModel.getLayer(TEXTURE_BRISTLES)), 15728640, OverlayTexture.DEFAULT_UV, rgb.getX(), rgb.getY(), rgb.getZ(), 1.0F);
         matrices.pop();
     }
 

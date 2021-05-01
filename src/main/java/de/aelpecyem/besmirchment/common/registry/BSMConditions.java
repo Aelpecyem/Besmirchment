@@ -38,6 +38,8 @@ public class BSMConditions {
                 return Besmirchment.config.enableSunscreen;
             case "lichdom":
                 return Besmirchment.config.enableLichdom;
+            case "beelzebub":
+                return Besmirchment.config.mobs.enableBeelzebub;
         }
         return false;
     }

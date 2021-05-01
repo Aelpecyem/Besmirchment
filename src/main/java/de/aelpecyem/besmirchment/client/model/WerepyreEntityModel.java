@@ -538,7 +538,7 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
             if (entity.jumpBeginProgress < 1) {
                 entity.jumpBeginProgress += MinecraftClient.getInstance().getTickDelta() / 10F;
             }
-        }else if (entity.jumpBeginProgress > 0){
+        } else if (entity.jumpBeginProgress > 0) {
             entity.jumpBeginProgress -= MinecraftClient.getInstance().getTickDelta() / 10F;
         }
         lWing01.yaw = MathHelper.lerp(entity.jumpBeginProgress, 0.5236F, 1.0036F);
@@ -556,15 +556,15 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
         lWingMembrane02.pitch = MathHelper.lerp(entity.jumpBeginProgress, -1.5795F, -0.7505F);
         rWingMembrane02.pitch = MathHelper.lerp(entity.jumpBeginProgress, -1.5795F, -0.7505F);
 
-        if (flying){
+        if (flying) {
             lWing01.yaw += MathHelper.sin(ageInTicks / 1.5F) / 3;
             rWing01.yaw += -MathHelper.sin(ageInTicks / 1.5F) / 3;
-        }else{
-            lWing01.yaw +=  MathHelper.sin(ageInTicks / 8) / 8;
+        } else {
+            lWing01.yaw += MathHelper.sin(ageInTicks / 8) / 8;
             rWing01.yaw += -MathHelper.sin(ageInTicks / 8) / 8;
         }
 
-        if (flying || entity.isSneaking()) {
+        if (flying) {
             neck.pivotY += 2;
             neck.pivotZ -= 4;
             body.pivotY += 2;
@@ -574,6 +574,18 @@ public class WerepyreEntityModel<T extends WerepyreEntity> extends BipedEntityMo
             lArm01.pivotZ -= 4;
             rArm01.pivotY += 2;
             rArm01.pivotZ -= 4;
+        } else if (entity.isSneaking()) {
+            neck.pivotY += 2;
+            neck.pivotZ -= 4;
+            body.pivotY += 2;
+            body.pivotZ -= 4;
+            body.pitch += 0.5f;
+            lArm01.pivotY += 2;
+            lArm01.pivotZ -= 4;
+            rArm01.pivotY += 2;
+            rArm01.pivotZ -= 4;
+            rLeg01.pitch -= 0.5f;
+            lLeg01.pitch -= 0.5f;
         }
     }
 

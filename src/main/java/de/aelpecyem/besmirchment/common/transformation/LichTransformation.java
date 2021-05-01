@@ -5,20 +5,22 @@ import moriyashiine.bewitchment.api.registry.Transformation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.registry.Registry;
 
 public class LichTransformation extends Transformation {
     public LichTransformation() {
     }
 
-    public void onAdded(LivingEntity entity) {
+    @Override
+    public void onAdded(PlayerEntity entity) {
         if (entity instanceof LichAccessor) {
             ((LichAccessor) entity).updateCachedSouls();
         }
     }
 
-
-    public void onRemoved(LivingEntity entity) {
+    @Override
+    public void onRemoved(PlayerEntity entity) {
         if (entity instanceof LichAccessor) {
             ((LichAccessor) entity).updateCachedSouls();
             LichLogic.addAttributes(entity, -1);

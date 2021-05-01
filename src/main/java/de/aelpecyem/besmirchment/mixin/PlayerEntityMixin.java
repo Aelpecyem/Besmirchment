@@ -5,10 +5,16 @@ import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
 import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
+import de.aelpecyem.besmirchment.common.transformation.WerepyreTransformation;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
@@ -21,6 +27,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -95,24 +102,37 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
             }else if (bsmJumpBeginProgress < 1){
                 bsmJumpBeginProgress += 0.1;
             }
-        }
-        if (!world.isClient && BSMTransformations.isLich(this, false) && ((LichAccessor) this).getCachedSouls() == 0){
-            ((MagicAccessor) this).setMagic(0);
-        }
-        if (age % 20 == 0 && BSMTransformations.isLich(this, true)){
-            addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 40, 0, true, false, false));
-            if (!BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 1, false)){
-                TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
+        } else {
+            if (BSMTransformations.isLich(this, false) && ((LichAccessor) this).getCachedSouls() == 0){
+                ((MagicAccessor) this).setMagic(0);
+            }
+            if (age % 20 == 0){
+                if (BSMTransformations.isLich(this, true)) {
+                    addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 40, 0, true, false, false));
+                    if (!BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 1, false)) {
+                        TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
+                    }
+                }
+                if (BSMTransformations.isWerepyre(this, true)){
+                    BSMTransformations.handleNourish((PlayerEntity) (Object) this);
+                    if (((TransformationAccessor) this).getAlternateForm() && ((RespawnTimerAccessor) this).getRespawnTimer() <= 0 && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
+                        //todo respect vampire burn event once it's out
+                        setOnFireFor(8);
+                    }
+                    WerepyreTransformation.handleStats((PlayerEntity) (Object) this, ((TransformationAccessor) this).getAlternateForm(), BSMTransformations.hasWerepyrePledge((PlayerEntity) (Object) this));
+                }
+            }
+            if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){
+                if (!isOnGround() && !hasStatusEffect(StatusEffects.SLOW_FALLING)){
+                    addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 20, 0, false, false, false));
+                }
+                if (random.nextFloat() < Besmirchment.config.universalFamiliars.chickenFamiliarEggChance){
+                    dropItem(new ItemStack(Items.EGG), true, true);
+                }
             }
         }
-        if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){
-            if (!isOnGround() && !hasStatusEffect(StatusEffects.SLOW_FALLING)){
-                addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 20, 0, false, false, false));
-            }
-            if (random.nextFloat() < Besmirchment.config.universalFamiliars.chickenFamiliarEggChance){
-                dropItem(new ItemStack(Items.EGG), true, true);
-            }
-        }
+
+
     }
 
     @Override
@@ -130,9 +150,31 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
 
     @Inject(method = "eatFood", at = @At("HEAD"))
     private void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
-        if (!world.isClient && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.PIG) {
-            addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100, 0, true, false));
-            addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 100, 0, true, false));
+        if (!world.isClient) {
+            if (BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.PIG) {
+                addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100, 0, true, false));
+                addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 100, 0, true, false));
+            }
+            FoodComponent foodComponent = stack.getItem().getFoodComponent();
+            if (foodComponent != null) {
+                boolean werepyre = BSMTransformations.isWerepyre(this, true);
+                if (werepyre) {
+                    addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100, 1));
+                    addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 1));
+                    addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 1));
+                    addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 1));
+                }
+                if (werepyre && (stack.getItem() == BWObjects.GARLIC || stack.getItem() == BWObjects.GRILLED_GARLIC || stack.getItem() == BWObjects.GARLIC_BREAD)) {
+                    damage(BWDamageSources.MAGIC_COPY, Float.MAX_VALUE);
+                }
+            }
+        }
+    }
+
+    @Inject(method = "canFoodHeal", at = @At("RETURN"), cancellable = true)
+    private void canFoodHeal(CallbackInfoReturnable<Boolean> callbackInfo) {
+        if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire(this, true)) {
+            callbackInfo.setReturnValue(false);
         }
     }
 

@@ -2,7 +2,8 @@ package de.aelpecyem.besmirchment.common.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.entity.interfaces.DespawnAccessor;
+import moriyashiine.bewitchment.common.entity.living.VampireEntity;
+import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
@@ -46,23 +47,7 @@ public class WerepyreEntity extends BWHostileEntity{
         if (!world.isClient && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
             setOnFireFor(8);
         }
-        if (!this.world.isClient && this.despawns && this.age % 20 == 0 && this.world.isDay() && isValidMoonPhase(world)) {
-            VillagerEntity entity = EntityType.VILLAGER.create(this.world);
-            if (entity instanceof DespawnAccessor) {
-                PlayerLookup.tracking(this).forEach((player) -> {
-                    SpawnSmokeParticlesPacket.send(player, this);
-                });
-                entity.updatePositionAndAngles(this.getX(), this.getY(), this.getZ(), this.random.nextFloat() * 360.0F, 0.0F);
-                entity.setHealth(entity.getMaxHealth() * (this.getHealth() / this.getMaxHealth()));
-                entity.setFireTicks(this.getFireTicks());
-                for (StatusEffectInstance statusEffect : getStatusEffects()) {
-                    entity.addStatusEffect(statusEffect);
-                }
-                ((DespawnAccessor) entity).setDespawnTimer(1200);
-                this.world.spawnEntity(entity);
-                this.remove();
-            }
-        }
+        //todo villager werepyres
     }
 
     @Override

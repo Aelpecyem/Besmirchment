@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.client.renderer;
 
+import de.aelpecyem.besmirchment.client.BesmirchmentClient;
 import de.aelpecyem.besmirchment.client.model.WerepyreEntityModel;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
@@ -11,6 +12,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
@@ -28,11 +30,11 @@ public class DyedWerepyreFeatureRenderer extends FeatureRenderer<WerepyreEntity,
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, WerepyreEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         int color = ((DyeableEntity) entity).getColor();
         if (color > -1) {
-            Vec3d rgb = Vec3d.unpackRgb(color);
-            render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, (float) rgb.x, (float) rgb.y, (float) rgb.z);
+            Vector3f rgb = new Vector3f(Vec3d.unpackRgb(color));
+            render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, rgb.getX(), rgb.getY(), rgb.getZ());
         }else if(color == WitchyDyeItem.FUNNI_NUMBER){
-            Vec3d rgb = Vec3d.unpackRgb(Color.HSBtoRGB((animationProgress % 100) / 100F, 1,1));
-            render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, (float) rgb.x, (float) rgb.y, (float) rgb.z);
+            Vector3f rgb = new Vector3f(Vec3d.unpackRgb(BesmirchmentClient.HSBtoRGB((animationProgress % 100) / 100F, 1,1)));
+            render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, rgb.getX(), rgb.getY(), rgb.getZ());
         }
     }
 }
