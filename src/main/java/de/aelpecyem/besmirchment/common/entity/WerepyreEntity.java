@@ -1,9 +1,9 @@
 package de.aelpecyem.besmirchment.common.entity;
 
+import de.aelpecyem.besmirchment.common.entity.interfaces.VillagerWerepyreAccessor;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.entity.living.VampireEntity;
-import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
@@ -15,7 +15,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.SheepEntity;
@@ -33,8 +32,8 @@ import java.util.Random;
 
 public class WerepyreEntity extends BWHostileEntity{
     public static final TrackedData<Integer> JUMP_TICKS = DataTracker.registerData(WerepyreEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public CompoundTag storedVillager;
 
-    private boolean despawns = false;
     @Environment(EnvType.CLIENT)
     public float jumpBeginProgress = 0;
 
@@ -47,7 +46,24 @@ public class WerepyreEntity extends BWHostileEntity{
         if (!world.isClient && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
             setOnFireFor(8);
         }
-        //todo villager werepyres
+        if (storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
+            VillagerEntity entity = EntityType.VILLAGER.create(world);
+            if (entity instanceof VillagerWerepyreAccessor) {
+                PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
+                world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
+                entity.fromTag(storedVillager);
+                entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
+                entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
+                entity.setFireTicks(getFireTicks());
+                entity.clearStatusEffects();
+                getStatusEffects().forEach(entity::addStatusEffect);
+                ((CurseAccessor) entity).getCurses().clear();
+                ((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
+                ((VillagerWerepyreAccessor) entity).setStoredWerepyre(toTag(new CompoundTag()));
+                world.spawnEntity(entity);
+                remove();
+            }
+        }
     }
 
     @Override
@@ -115,7 +131,9 @@ public class WerepyreEntity extends BWHostileEntity{
             }
         }
 
-        this.despawns = spawnReason == SpawnReason.NATURAL;
+      // if (spawnReason == SpawnReason.NATURAL) {
+            storedVillager = EntityType.VILLAGER.create((World) world).toTag(new CompoundTag());
+       // }
         return data;
     }
 
@@ -135,14 +153,12 @@ public class WerepyreEntity extends BWHostileEntity{
 
     public void readCustomDataFromTag(CompoundTag tag) {
         super.readCustomDataFromTag(tag);
-        this.despawns = tag.getBoolean("Despawns");
         setLastJumpTime(tag.getInt("LastJumpTicks"));
     }
 
 
     public void writeCustomDataToTag(CompoundTag tag) {
         super.writeCustomDataToTag(tag);
-        tag.putBoolean("Despawns", this.despawns);
         tag.putInt("LastJumpTicks", getLastJumpTime());
     }
 
