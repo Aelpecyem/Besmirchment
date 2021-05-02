@@ -4,12 +4,14 @@ import de.aelpecyem.besmirchment.client.packet.FamiliarAbilityPacket;
 import de.aelpecyem.besmirchment.client.packet.WerepyreJumpPacket;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
+import de.aelpecyem.besmirchment.common.packet.SparklePacket;
 import de.aelpecyem.besmirchment.common.registry.*;
 import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.AllowVampireBurn;
 import moriyashiine.bewitchment.api.event.BloodSetEvents;
 import moriyashiine.bewitchment.api.event.BloodSuckEvents;
 import moriyashiine.bewitchment.api.event.ReviveEvents;
@@ -28,6 +30,8 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
@@ -115,6 +119,16 @@ public class Besmirchment implements ModInitializer {
                 }
             }
             return ActionResult.PASS;
+        });
+        AllowVampireBurn.EVENT.register(playerEntity -> {
+            if(playerEntity.hasStatusEffect(BSMStatusEffects.SUNSCREEN)){
+                if (playerEntity.age % 20 == 0) {
+                    playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 1, true, true));
+                    SparklePacket.send(playerEntity);
+                }
+                return false;
+            }
+            return true;
         });
     }
 

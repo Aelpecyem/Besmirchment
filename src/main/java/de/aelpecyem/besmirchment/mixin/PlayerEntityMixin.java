@@ -7,6 +7,9 @@ import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreTransformation;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.AllowVampireBurn;
+import moriyashiine.bewitchment.api.event.AllowVampireHeal;
+import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
@@ -26,6 +29,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
@@ -114,12 +118,37 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
                     }
                 }
                 if (BSMTransformations.isWerepyre(this, true)){
+                    boolean beelzebubPledge = BSMTransformations.hasWerepyrePledge((PlayerEntity) (Object) this);
                     BSMTransformations.handleNourish((PlayerEntity) (Object) this);
-                    if (((TransformationAccessor) this).getAlternateForm() && ((RespawnTimerAccessor) this).getRespawnTimer() <= 0 && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
-                        //todo respect vampire burn event once it's out
+                    if (((TransformationAccessor) this).getAlternateForm() && ((RespawnTimerAccessor) this).getRespawnTimer() <= 0 && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())
+                            && AllowVampireBurn.EVENT.invoker().allowBurn((PlayerEntity) (Object) this)) {
                         setOnFireFor(8);
                     }
-                    WerepyreTransformation.handleStats((PlayerEntity) (Object) this, ((TransformationAccessor) this).getAlternateForm(), BSMTransformations.hasWerepyrePledge((PlayerEntity) (Object) this));
+                    WerepyreTransformation.handleStats((PlayerEntity) (Object) this, ((TransformationAccessor) this).getAlternateForm(), beelzebubPledge);
+                    HungerManager hungerManager = ((PlayerEntity) (Object) this).getHungerManager();
+                    if (((BloodAccessor) this).getBlood() > 0 && AllowVampireHeal.EVENT.invoker().allowHeal((PlayerEntity) (Object) this, beelzebubPledge)) {
+                        if (age % (beelzebubPledge ? 30 : 40) == 0) {
+                            if (getHealth() < getMaxHealth()) {
+                                heal(1);
+                                hungerManager.addExhaustion(3);
+                            }
+                            if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && ((BloodAccessor) this).drainBlood(1, false)) {
+                                hungerManager.add(1, 20);
+                            }
+                        }
+                    }
+                    else {
+                        if (((TransformationAccessor) this).getAlternateForm()) {
+                            TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
+                        }
+                        hungerManager.addExhaustion(Float.MAX_VALUE);
+                    }
+                    if (((TransformationAccessor) this).getAlternateForm()) {
+                        hungerManager.addExhaustion(0.5f);
+                        if (!beelzebubPledge) {
+                            TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
+                        }
+                    }
                 }
             }
             if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){
