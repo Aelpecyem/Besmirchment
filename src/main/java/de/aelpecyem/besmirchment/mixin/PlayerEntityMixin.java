@@ -137,18 +137,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
                             }
                         }
                     }
-                    else {
-                        if (((TransformationAccessor) this).getAlternateForm()) {
-                            TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
-                        }
-                        hungerManager.addExhaustion(Float.MAX_VALUE);
-                    }
-                    if (((TransformationAccessor) this).getAlternateForm()) {
-                        hungerManager.addExhaustion(0.5f);
-                        if (!beelzebubPledge) {
-                            TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
-                        }
-                    }
                 }
             }
             if (isSneaking() && BewitchmentAPI.getFamiliar((PlayerEntity) (Object)this) == EntityType.CHICKEN){

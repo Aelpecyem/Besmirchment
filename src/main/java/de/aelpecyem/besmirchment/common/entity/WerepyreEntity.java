@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumSet;
 import java.util.Random;
 
-public class WerepyreEntity extends BWHostileEntity{
+public class WerepyreEntity extends BWHostileEntity {
     public static final TrackedData<Integer> JUMP_TICKS = DataTracker.registerData(WerepyreEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public CompoundTag storedVillager;
 
@@ -43,7 +43,7 @@ public class WerepyreEntity extends BWHostileEntity{
 
     public void tick() {
         super.tick();
-        if (!world.isClient && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())){
+        if (!world.isClient && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
             setOnFireFor(8);
         }
         if (storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
@@ -72,12 +72,12 @@ public class WerepyreEntity extends BWHostileEntity{
         if (getLastJumpTime() < 200) {
             setLastJumpTime(getLastJumpTime() + 1);
         }
-        if (world.isClient){
+        if (world.isClient) {
             if (getLastJumpTime() > 20) {
                 if (jumpBeginProgress > 0) {
                     jumpBeginProgress -= 0.1;
                 }
-            }else if (jumpBeginProgress < 1){
+            } else if (jumpBeginProgress < 1) {
                 jumpBeginProgress += 0.1;
             }
         }
@@ -131,9 +131,9 @@ public class WerepyreEntity extends BWHostileEntity{
             }
         }
 
-      // if (spawnReason == SpawnReason.NATURAL) {
+        if (spawnReason == SpawnReason.NATURAL) {
             storedVillager = EntityType.VILLAGER.create((World) world).toTag(new CompoundTag());
-       // }
+        }
         return data;
     }
 
@@ -143,11 +143,11 @@ public class WerepyreEntity extends BWHostileEntity{
         dataTracker.startTracking(JUMP_TICKS, 40);
     }
 
-    public int getLastJumpTime(){
+    public int getLastJumpTime() {
         return dataTracker.get(JUMP_TICKS);
     }
 
-    public void setLastJumpTime(int ticks){
+    public void setLastJumpTime(int ticks) {
         dataTracker.set(JUMP_TICKS, ticks);
     }
 
@@ -178,7 +178,7 @@ public class WerepyreEntity extends BWHostileEntity{
         return 5;
     }
 
-    public boolean canJump(){
+    public boolean canJump() {
         return getLastJumpTime() > 5;
     }
 
@@ -186,6 +186,7 @@ public class WerepyreEntity extends BWHostileEntity{
         int phase = BewitchmentAPI.getMoonPhase(world);
         return phase == 0;
     }
+
     public static boolean canSpawn(EntityType<WerepyreEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return world.getDifficulty() != Difficulty.PEACEFUL && world.getLevelProperties().getTime() > 24000L && isValidMoonPhase(world);
     }

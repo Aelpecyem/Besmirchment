@@ -72,9 +72,9 @@ public class Besmirchment implements ModInitializer {
             ((DyeableEntity) newPlayer).setColor(((DyeableEntity) oldPlayer).getColor());
         });
         ReviveEvents.ON_REVIVE.register((playerEntity, source, itemStack) -> {
-            if (((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY)) {
+            if (((CurseAccessor) playerEntity).hasCurse(BWCurses.SUSCEPTIBILITY)) {
                 TransformationAccessor transformationAccessor = (TransformationAccessor) playerEntity;
-                if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF || transformationAccessor.getTransformation() == BWTransformations.HUMAN) { //no vampire because they can't use totems
+                if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF || transformationAccessor.getTransformation() == BWTransformations.HUMAN) { //no vampires
                     boolean sourceVampire = source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && source.getSource() instanceof PlayerEntity && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.LILITH));
                     boolean sourceWerepyre = source.getSource() instanceof WerepyreEntity || (BSMTransformations.isWerepyre(source.getSource(), true) && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource()));
                     if (sourceVampire || sourceWerepyre) {
