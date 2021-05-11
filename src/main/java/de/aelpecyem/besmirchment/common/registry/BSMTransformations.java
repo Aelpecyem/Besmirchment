@@ -1,5 +1,6 @@
 package de.aelpecyem.besmirchment.common.registry;
 
+import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.transformation.LichAccessor;
 import de.aelpecyem.besmirchment.common.transformation.LichTransformation;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreTransformation;
@@ -32,7 +33,7 @@ public class BSMTransformations {
         if (entity instanceof TransformationAccessor && ((TransformationAccessor)entity).getTransformation() == WEREPYRE) {
             return includeHumanForm || ((TransformationAccessor)entity).getAlternateForm();
         } else {
-            return entity instanceof WerewolfEntity;
+            return entity instanceof WerepyreEntity;
         }
     }
 

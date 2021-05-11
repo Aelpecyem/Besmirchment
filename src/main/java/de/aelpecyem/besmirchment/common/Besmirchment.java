@@ -18,6 +18,7 @@ import moriyashiine.bewitchment.api.event.ReviveEvents;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -74,10 +75,11 @@ public class Besmirchment implements ModInitializer {
         ReviveEvents.ON_REVIVE.register((playerEntity, source, itemStack) -> {
             if (((CurseAccessor) playerEntity).hasCurse(BWCurses.SUSCEPTIBILITY)) {
                 TransformationAccessor transformationAccessor = (TransformationAccessor) playerEntity;
-                if (transformationAccessor.getTransformation() == BWTransformations.WEREWOLF || transformationAccessor.getTransformation() == BWTransformations.HUMAN) { //no vampires
+                Transformation transformation = transformationAccessor.getTransformation();
+                if (transformation == BWTransformations.WEREWOLF || transformation == BWTransformations.HUMAN) { //no vampires
                     boolean sourceVampire = source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && source.getSource() instanceof PlayerEntity && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.LILITH));
                     boolean sourceWerepyre = source.getSource() instanceof WerepyreEntity || (BSMTransformations.isWerepyre(source.getSource(), true) && BSMTransformations.hasWerepyrePledge((PlayerEntity) source.getSource()));
-                    if (sourceVampire || sourceWerepyre) {
+                    if ((transformation == BWTransformations.WEREWOLF && sourceVampire) || (transformation == BWTransformations.HUMAN && sourceWerepyre)) {
                         transformationAccessor.getTransformation().onRemoved(playerEntity);
                         transformationAccessor.setTransformation(BSMTransformations.WEREPYRE);
                         transformationAccessor.getTransformation().onAdded(playerEntity);

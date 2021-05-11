@@ -6,6 +6,7 @@ import de.aelpecyem.besmirchment.mixin.PlayerEntityMixin;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.Transformation;
+import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -27,7 +28,11 @@ public class WerepyreTransformation extends Transformation {
     @Override
     public void onAdded(PlayerEntity entity) {
         if (entity instanceof WerepyreAccessor) {
-            ((WerepyreAccessor)entity).setWerepyreVariant(entity.getRandom().nextInt(WerepyreEntity.getVariantsStatic()));
+            int variant = 0;
+            if (entity.getRandom().nextInt(8192) != 0) {
+                variant = 1 + entity.getRandom().nextInt(WerepyreEntity.getVariantsStatic() - 1);
+            }
+            ((WerepyreAccessor) entity).setWerepyreVariant(variant);
         }
     }
 
