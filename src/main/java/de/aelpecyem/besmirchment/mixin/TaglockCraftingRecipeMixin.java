@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TaglockCraftingRecipe.class)
 public class TaglockCraftingRecipeMixin {
-    @Inject(method = "isTaglockCraftable", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isTaglockCraftable", at = @At("HEAD"), cancellable = true, remap = false)
     private static void isTaglockCraftable(ItemStack stack, CallbackInfoReturnable<Boolean> cir){
         if (stack.getItem() == BSMObjects.DEMONIC_DEED){
             cir.setReturnValue(TaglockItem.getTaglockUUID(stack) == null);
