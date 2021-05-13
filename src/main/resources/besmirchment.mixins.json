@@ -19,6 +19,7 @@
     "LivingEntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
+    "TaglockCraftingRecipeMixin",
     "TransformationAbilityPacketMixin",
     "VillagerEntityMixin",
     "VillagerHostilesSensorMixin"
