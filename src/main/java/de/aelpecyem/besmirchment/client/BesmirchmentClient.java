@@ -71,7 +71,7 @@ public class BesmirchmentClient implements ClientModInitializer {
                     }
                     minecraftClient.player.setVelocity(minecraftClient.player.getRotationVector().multiply(minecraftClient.player.isSprinting() ? 0.8F : 0.5F));
                 }
-                if (minecraftClient.player.input.jumping && BSMTransformations.isWerepyre(minecraftClient.player, false) && !minecraftClient.player.isOnGround() && ((WerepyreAccessor) minecraftClient.player).getLastJumpTicks() > 5) {
+                if (minecraftClient.player.input != null && minecraftClient.player.input.jumping && BSMTransformations.isWerepyre(minecraftClient.player, false) && !minecraftClient.player.isOnGround() && ((WerepyreAccessor) minecraftClient.player).getLastJumpTicks() > 5) {
                     minecraftClient.player.jump();
                     WerepyreJumpPacket.send();
                 }
