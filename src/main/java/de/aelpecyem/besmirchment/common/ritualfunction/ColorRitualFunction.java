@@ -1,9 +1,9 @@
 package de.aelpecyem.besmirchment.common.ritualfunction;
 
-import de.aelpecyem.besmirchment.client.BesmirchmentClient;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import de.aelpecyem.besmirchment.common.registry.BSMObjects;
+import de.aelpecyem.besmirchment.common.registry.BSMUtil;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
@@ -42,7 +41,7 @@ public class ColorRitualFunction extends RitualFunction {
         super.tick(world, glyphPos, effectivePos, catFamiliar);
         if (world.isClient) {
             Random random = world.getRandom();
-            Vector3f rgb = new Vector3f(Vec3d.unpackRgb(BesmirchmentClient.HSBtoRGB(random.nextFloat(), 1, 1)));
+            Vector3f rgb = new Vector3f(Vec3d.unpackRgb(BSMUtil.HSBtoRGB(random.nextFloat(), 1, 1)));
             world.addParticle(new DustParticleEffect(rgb.getX(), rgb.getY(), rgb.getZ(), 1 + random.nextFloat()), effectivePos.getX() + 0.5 + random.nextGaussian() * 2, effectivePos.getY() + random.nextFloat() * 2, effectivePos.getZ() + 0.5 + random.nextGaussian() * 2, random.nextGaussian(), random.nextGaussian(), random.nextGaussian());
         }else if (world.getTime() % 10 == 0){
             int amount = catFamiliar ? 12 : 4;
@@ -50,14 +49,14 @@ public class ColorRitualFunction extends RitualFunction {
             List<Entity> entityList = world.getEntitiesByClass(Entity.class, box, entity -> (entity instanceof DyeableEntity || entity instanceof SheepEntity || (entity instanceof ItemEntity && ((ItemEntity) entity).getStack().getItem() instanceof DyeableItem)));
             for (int i = 0; i < Math.min(amount, entityList.size()); i++) {
                 Entity entity = entityList.get(i);
-                int color = BesmirchmentClient.HSBtoRGB(world.random.nextFloat(), 1, 1);
+                int color = BSMUtil.HSBtoRGB(world.random.nextFloat(), 1, 1);
                 if (entity instanceof DyeableEntity && !(entity instanceof PlayerEntity)){
                     ((DyeableEntity) entity).setColor(color);
                 }else if (entity instanceof ItemEntity && ((ItemEntity) entity).getStack().getItem() instanceof DyeableItem){
                     if (((ItemEntity) entity).getStack().getItem() instanceof WitchyDyeItem){
                         for (int i1 = 0; i1 < ((ItemEntity) entity).getStack().getCount(); i1++) {
                             ItemStack stack = new ItemStack(BSMObjects.WITCHY_DYE);
-                            BSMObjects.WITCHY_DYE.setColor(stack, world.random.nextFloat() < 0.1F ? WitchyDyeItem.FUNNI_NUMBER : BesmirchmentClient.HSBtoRGB(world.random.nextFloat(), 1, 1));
+                            BSMObjects.WITCHY_DYE.setColor(stack, world.random.nextFloat() < 0.1F ? WitchyDyeItem.FUNNI_NUMBER : BSMUtil.HSBtoRGB(world.random.nextFloat(), 1, 1));
                             world.spawnEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), stack));
                         }
                         entity.remove();

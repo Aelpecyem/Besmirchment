@@ -7,10 +7,7 @@ import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
 import de.aelpecyem.besmirchment.common.packet.LichRevivePacket;
 import de.aelpecyem.besmirchment.common.packet.SparklePacket;
-import de.aelpecyem.besmirchment.common.registry.BSMBlockEntityTypes;
-import de.aelpecyem.besmirchment.common.registry.BSMEntityTypes;
-import de.aelpecyem.besmirchment.common.registry.BSMObjects;
-import de.aelpecyem.besmirchment.common.registry.BSMTransformations;
+import de.aelpecyem.besmirchment.common.registry.*;
 import de.aelpecyem.besmirchment.common.transformation.WerepyreAccessor;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.fabricmc.api.ClientModInitializer;
@@ -35,8 +32,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.glfw.GLFW;
 
-import java.awt.*;
-
 @Environment(EnvType.CLIENT)
 public class BesmirchmentClient implements ClientModInitializer {
     public static final KeyBinding FAMILIAR_ABILITY = new KeyBinding("key." + Besmirchment.MODID +".familiar_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_K, "itemGroup.besmirchment.group");
@@ -55,7 +50,7 @@ public class BesmirchmentClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(BSMBlockEntityTypes.PHYLACTERY, PhylacteryBlockEntityRenderer::new);
         FabricModelPredicateProviderRegistry.register(BSMObjects.DEMONIC_DEED, Besmirchment.id("variant"), (stack, world, entity) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
 
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? BSMObjects.WITCHY_DYE.getColor(stack) == WitchyDyeItem.FUNNI_NUMBER ? BesmirchmentClient.HSBtoRGB(
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? BSMObjects.WITCHY_DYE.getColor(stack) == WitchyDyeItem.FUNNI_NUMBER ? BSMUtil.HSBtoRGB(
                 ((MinecraftClient.getInstance().world.getTime() + MinecraftClient.getInstance().getTickDelta()) % 100) / 100F,
                 1, 1) : BSMObjects.WITCHY_DYE.getColor(stack) : 0xFFFFFF, BSMObjects.WITCHY_DYE);
 
@@ -107,49 +102,4 @@ public class BesmirchmentClient implements ClientModInitializer {
         return false;
     }
 
-    public static int HSBtoRGB(float hue, float saturation, float brightness){
-        int r = 0, g = 0, b = 0;
-        if (saturation == 0) {
-            r = g = b = (int) (brightness * 255.0f + 0.5f);
-        } else {
-            float h = (hue - (float)Math.floor(hue)) * 6.0f;
-            float f = h - (float)java.lang.Math.floor(h);
-            float p = brightness * (1.0f - saturation);
-            float q = brightness * (1.0f - saturation * f);
-            float t = brightness * (1.0f - (saturation * (1.0f - f)));
-            switch ((int) h) {
-                case 0:
-                    r = (int) (brightness * 255.0f + 0.5f);
-                    g = (int) (t * 255.0f + 0.5f);
-                    b = (int) (p * 255.0f + 0.5f);
-                    break;
-                case 1:
-                    r = (int) (q * 255.0f + 0.5f);
-                    g = (int) (brightness * 255.0f + 0.5f);
-                    b = (int) (p * 255.0f + 0.5f);
-                    break;
-                case 2:
-                    r = (int) (p * 255.0f + 0.5f);
-                    g = (int) (brightness * 255.0f + 0.5f);
-                    b = (int) (t * 255.0f + 0.5f);
-                    break;
-                case 3:
-                    r = (int) (p * 255.0f + 0.5f);
-                    g = (int) (q * 255.0f + 0.5f);
-                    b = (int) (brightness * 255.0f + 0.5f);
-                    break;
-                case 4:
-                    r = (int) (t * 255.0f + 0.5f);
-                    g = (int) (p * 255.0f + 0.5f);
-                    b = (int) (brightness * 255.0f + 0.5f);
-                    break;
-                case 5:
-                    r = (int) (brightness * 255.0f + 0.5f);
-                    g = (int) (p * 255.0f + 0.5f);
-                    b = (int) (q * 255.0f + 0.5f);
-                    break;
-            }
-        }
-        return 0xff000000 | (r << 16) | (g << 8) | (b << 0);
-    }
 }

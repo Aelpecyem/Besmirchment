@@ -1,11 +1,11 @@
 package de.aelpecyem.besmirchment.client.renderer;
 
-import de.aelpecyem.besmirchment.client.BesmirchmentClient;
 import de.aelpecyem.besmirchment.client.model.WerepyreEntityModel;
 import de.aelpecyem.besmirchment.common.Besmirchment;
 import de.aelpecyem.besmirchment.common.entity.interfaces.DyeableEntity;
 import de.aelpecyem.besmirchment.common.entity.WerepyreEntity;
 import de.aelpecyem.besmirchment.common.item.WitchyDyeItem;
+import de.aelpecyem.besmirchment.common.registry.BSMUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -15,8 +15,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-
-import java.awt.*;
 
 @Environment(EnvType.CLIENT)
 public class DyedWerepyreFeatureRenderer extends FeatureRenderer<WerepyreEntity, WerepyreEntityModel<WerepyreEntity>> {
@@ -33,7 +31,7 @@ public class DyedWerepyreFeatureRenderer extends FeatureRenderer<WerepyreEntity,
             Vector3f rgb = new Vector3f(Vec3d.unpackRgb(color));
             render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, rgb.getX(), rgb.getY(), rgb.getZ());
         }else if(color == WitchyDyeItem.FUNNI_NUMBER){
-            Vector3f rgb = new Vector3f(Vec3d.unpackRgb(BesmirchmentClient.HSBtoRGB((animationProgress % 100) / 100F, 1,1)));
+            Vector3f rgb = new Vector3f(Vec3d.unpackRgb(BSMUtil.HSBtoRGB((animationProgress % 100) / 100F, 1,1)));
             render(this.getContextModel(), this.getContextModel(), TINTED_TEXTURE, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, rgb.getX(), rgb.getY(), rgb.getZ());
         }
     }
