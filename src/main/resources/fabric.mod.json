@@ -42,7 +42,7 @@
   },
 
   "depends": {
-    "bewitchment": ">=1.16.5-11",
+    "bewitchment": ">=1.16.5-15",
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x"

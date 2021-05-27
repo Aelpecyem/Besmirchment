@@ -48,7 +48,7 @@ public class TransformationAbilityPacketMixin {
         if (((TransformationAccessor)player).getTransformation() == BSMTransformations.LICH){
             World world = player.world;
             boolean isInAlternateForm = ((TransformationAccessor)player).getAlternateForm();
-            if (isInAlternateForm || BewitchmentAPI.usePlayerMagic(player, 10, true)) {
+            if (isInAlternateForm || BewitchmentAPI.drainMagic(player, 10, true)) {
                 world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1.0F, 1.0F);
                 ((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
                 ci.cancel();

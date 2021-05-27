@@ -113,7 +113,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DyeableE
             if (age % 20 == 0){
                 if (BSMTransformations.isLich(this, true)) {
                     addStatusEffect(new StatusEffectInstance(BWStatusEffects.ETHEREAL, 40, 0, true, false, false));
-                    if (!BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 1, false)) {
+                    if (!BewitchmentAPI.drainMagic((PlayerEntity) (Object) this, 1, false)) {
                         TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
                     }
                 }

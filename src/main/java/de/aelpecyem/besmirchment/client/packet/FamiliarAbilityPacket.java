@@ -73,12 +73,12 @@ public class FamiliarAbilityPacket {
             Vec3d vec3d3 = vec3d.add(vec3d2.x * 16, vec3d2.y * 16, vec3d2.z * 16);
             double distance = Math.pow(16, 2);
             EntityHitResult hit = ProjectileUtil.getEntityCollision(world, player, vec3d, vec3d3, player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(1.0D, 1.0D, 1.0D), (target) -> target instanceof PlayerEntity && !target.isSpectator() && player.canSee(target));
-            if (hit != null && hit.getEntity() instanceof PlayerEntity && BewitchmentAPI.usePlayerMagic(player,50, true)){
+            if (hit != null && hit.getEntity() instanceof PlayerEntity && BewitchmentAPI.drainMagic(player,50, true)){
                 PlayerEntity polyMorphPlayer = (PlayerEntity) hit.getEntity();
                 ((PolymorphAccessor) player).setPolymorphUUID(polyMorphPlayer.getUuid());
                 ((PolymorphAccessor) player).setPolymorphName(polyMorphPlayer.getDisplayName().getString());
                 player.addStatusEffect(new StatusEffectInstance(BWStatusEffects.POLYMORPH, 2400, 0, true, false, false));
-                BewitchmentAPI.usePlayerMagic(player,50, false);
+                BewitchmentAPI.drainMagic(player,50, false);
             }
         }else if (EntityType.COW.equals(familiar) && player.isHolding(Items.BUCKET)){
             Hand hand = player.getMainHandStack().getItem() == Items.BUCKET ? Hand.MAIN_HAND : Hand.OFF_HAND;
