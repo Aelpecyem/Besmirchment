@@ -72,8 +72,8 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
         super(entityType, world);
     }
 
-    @Override //look i did the bad
-    protected void initGoals() {
+    @Inject(method = "initGoals", at = @At("HEAD"), cancellable = true) //look i did the bad
+    private void initGoals(CallbackInfo ci) {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new DemonSitGoal((DemonEntity) (TameableDemon) this));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1.0D, true));
@@ -87,6 +87,7 @@ public abstract class DemonEntityMixin extends BWHostileEntity implements Tameab
         this.targetSelector.add(2, new DemonAttackWithOwnerGoal((DemonEntity) (TameableDemon) this));
         this.targetSelector.add(3, new RevengeGoal(this));
         this.targetSelector.add(4, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, (entity) -> !isTamed() && !(entity instanceof Pledgeable) && BWUtil.getArmorPieces(entity, (stack) -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+        ci.cancel();
     }
 
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
