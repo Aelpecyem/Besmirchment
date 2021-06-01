@@ -64,8 +64,8 @@ import java.util.UUID;
 @Mixin(DemonEntity.class)
 public abstract class DemonEntityMixin extends BWHostileEntity implements TameableDemon {
 
-    private static final TrackedData<Byte> TAMEABLE_FLAGS = DataTracker.registerData(TameableEntity.class, TrackedDataHandlerRegistry.BYTE);
-    private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(TameableEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+    private static final TrackedData<Byte> TAMEABLE_FLAGS = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BYTE);
+    private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     private boolean sitting;
 
     protected DemonEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
